@@ -2,9 +2,7 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 
-public class BlankCell implements Cell {
-  private ArrayList<Coord> directRefs;
-  private Coord location;
+public class BlankCell extends AbstractCell {
 
   /**
    * Public constructor for BlankCell.
@@ -12,17 +10,17 @@ public class BlankCell implements Cell {
    * @param location represents location in spreadsheet
    */
   public BlankCell(Coord location) {
-    this.location = location;
-    this.directRefs = new ArrayList<>();
+    super(location);
   }
 
-  @Override
-  public ArrayList referencedBy() {
-    return directRefs;
-  }
-
-  @Override
-  public String getCellName() {
-    return location.toString();
+  /**
+   * Public constructor for when cell is represented by BlankCell
+   * in worksheet, or when cell has existing direct references.
+   *
+   * @param existingRefs ArrayList of direct references to existing BlankCell
+   * @param location coordinates for where cell is to be created in spreadsheet
+   */
+  protected BlankCell(Coord location, ArrayList<Coord> existingRefs) {
+    super(location, existingRefs);
   }
 }
