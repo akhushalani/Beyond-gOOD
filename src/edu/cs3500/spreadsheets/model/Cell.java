@@ -12,4 +12,11 @@ public interface Cell {
    * @return ArrayList of Coords that reference this cell.
    */
   ArrayList referencedBy();
+
+  /**
+   * Gets the name of the cell coordinates for output.
+   *
+   * @return the cell name
+   */
+  String getCellName();
 }

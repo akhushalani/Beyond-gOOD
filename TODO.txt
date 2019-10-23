@@ -1,0 +1,2 @@
+- When initializing new Cell, check for existing direct refs. Use BlankCell.
+- Fix referencedBy in all classes implementing Cell to check for indirect references and cyclical references.
