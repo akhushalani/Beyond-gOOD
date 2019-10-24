@@ -1,6 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
-public class DoubleValue extends Value<Double> {
+public class DoubleValue extends AbstractValue<Double> {
   /**
    * Public constructor for DoubleValue.
    *

@@ -1,6 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
-public class BooleanValue extends Value<Boolean> {
+public class BooleanValue extends AbstractValue<Boolean> {
   /**
    * Public constructor for BooleanValue.
    *

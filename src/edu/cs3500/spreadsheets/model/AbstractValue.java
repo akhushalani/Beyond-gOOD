@@ -1,6 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
-public abstract class Value<ValueType> implements Formula {
+public abstract class AbstractValue<ValueType> implements Formula {
   protected ValueType value;
 
   /**
@@ -15,10 +15,5 @@ public abstract class Value<ValueType> implements Formula {
   @Override
   public Formula evaluate() {
     return this;
-  }
-
-  @Override
-  public boolean evaluable() {
-    return true;
   }
 }
