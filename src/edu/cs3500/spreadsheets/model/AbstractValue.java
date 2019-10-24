@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.HashMap;
+
 /**
  * Formulas that evaluate to values directly.
  * @param <ValueType> The datatype for the value that the formula evaluates to.
@@ -17,7 +19,7 @@ public abstract class AbstractValue<ValueType> implements Formula {
   }
 
   @Override
-  public Formula evaluate() {
+  public Formula evaluate(HashMap<Coord, Cell> spreadsheet) {
     return this;
   }
 }

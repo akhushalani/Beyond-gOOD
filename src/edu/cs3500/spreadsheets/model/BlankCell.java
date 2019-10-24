@@ -3,7 +3,7 @@ package edu.cs3500.spreadsheets.model;
 import java.util.ArrayList;
 
 /**
- * Cells which contain no value. These cells are a type of ValueCell.
+ * Cells which contain no value.
  */
 public class BlankCell extends AbstractCell {
 
