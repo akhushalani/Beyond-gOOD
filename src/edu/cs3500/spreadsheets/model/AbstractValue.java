@@ -1,5 +1,9 @@
 package edu.cs3500.spreadsheets.model;
 
+/**
+ * Formulas that evaluate to values directly.
+ * @param <ValueType> The datatype for the value that the formula evaluates to.
+ */
 public abstract class AbstractValue<ValueType> implements Formula {
   protected ValueType value;
 

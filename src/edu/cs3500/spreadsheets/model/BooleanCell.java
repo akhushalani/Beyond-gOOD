@@ -2,6 +2,9 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 
+/**
+ * Cells which contain a boolean value. These cells are a type of ValueCell.
+ */
 public class BooleanCell extends ValueCell {
   private boolean value;
 

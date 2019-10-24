@@ -2,6 +2,9 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract implementation of Cell. Contains common fields and methods for its extending classes.
+ */
 public abstract class AbstractCell implements Cell {
   protected ArrayList<Coord> directRefs;
   protected Coord location;

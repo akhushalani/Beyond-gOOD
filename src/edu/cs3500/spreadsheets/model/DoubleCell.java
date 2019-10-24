@@ -2,6 +2,9 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 
+/**
+ * Cells which contain a double value. These cells are a type of ValueCell.
+ */
 public class DoubleCell extends ValueCell {
   private double value;
 

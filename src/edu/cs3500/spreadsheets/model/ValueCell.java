@@ -2,6 +2,9 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract implementation of AbstractCell that represents cells that can hold a value.
+ */
 public abstract class ValueCell extends AbstractCell {
   /**
    * Public constructor for when cell is null in worksheet.
