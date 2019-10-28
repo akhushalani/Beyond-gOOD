@@ -4,18 +4,23 @@ import java.util.HashMap;
 
 /**
  * Formulas that evaluate to values directly.
- * @param <ValueType> The datatype for the value that the formula evaluates to.
+ * @param <T> The datatype for the value that the formula evaluates to.
  */
-public abstract class AbstractValue<ValueType> implements Formula {
-  protected ValueType value;
+public abstract class AbstractValue<T> implements Formula {
+  protected T value;
 
   /**
    * Gets the value of the Formula.
    *
    * @return value of formula
    */
-  public final ValueType getValue() {
+  public final T getValue() {
     return value;
+  }
+
+  @Override
+  public String getPrintString() {
+    return value + "";
   }
 
   @Override

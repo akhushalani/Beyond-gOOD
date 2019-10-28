@@ -12,4 +12,6 @@ public interface Formula {
    * @return
    */
   Formula evaluate(HashMap<Coord, Cell> spreadsheet);
+
+  String getPrintString();
 }

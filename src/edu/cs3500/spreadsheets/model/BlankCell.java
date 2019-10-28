@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Cells which contain no value.
@@ -16,14 +17,23 @@ public class BlankCell extends AbstractCell {
     super(location);
   }
 
-  /**
-   * Public constructor for when cell is represented by BlankCell
-   * in worksheet, or when cell has existing direct references.
-   *
-   * @param existingRefs ArrayList of direct references to existing BlankCell
-   * @param location coordinates for where cell is to be created in spreadsheet
-   */
-  protected BlankCell(Coord location, ArrayList<Coord> existingRefs) {
-    super(location, existingRefs);
+  @Override
+  public ArrayList<Coord> references() {
+    return new ArrayList<>();
+  }
+
+  @Override
+  public String evaluate(HashMap<Coord, Cell> worksheet) {
+    return "";
+  }
+
+  @Override
+  public String getEditString() {
+    return "";
+  }
+
+  @Override
+  public Formula getFormula() {
+    return null;
   }
 }

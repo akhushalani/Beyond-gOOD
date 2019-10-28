@@ -2,3 +2,5 @@
 - Fix referencedBy in all classes implementing Cell to check for indirect references and cyclical references.
 - Fix initializing formula cells by checking for validity of formula
 - Ask Lerner about getValue being public
+- Implement evaluate in Reference
+- HashMap<Coord, String> displaying editString for any given Coord in the controller

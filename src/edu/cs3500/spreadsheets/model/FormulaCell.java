@@ -1,12 +1,14 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Cells which contain a formula to be evaluated.
  */
 public class FormulaCell extends AbstractCell {
   private Formula formula;
+  private String editString;
 
   /**
    * Public constructor for when cell is null in worksheet.
@@ -30,5 +32,20 @@ public class FormulaCell extends AbstractCell {
   protected FormulaCell(Coord location, ArrayList<Coord> existingRefs, Formula formula) {
     super(location, existingRefs);
     this.formula = formula;
+  }
+
+  @Override
+  public String evaluate(HashMap<Coord, Cell> worksheet) {
+    return this.formula.evaluate(worksheet).getPrintString();
+  }
+
+  @Override
+  public Formula getFormula() {
+    return this.formula;
+  }
+
+  @Override
+  public String getEditString() {
+    return this.editString;
   }
 }

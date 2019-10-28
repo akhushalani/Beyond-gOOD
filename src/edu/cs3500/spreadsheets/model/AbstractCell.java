@@ -21,9 +21,9 @@ public abstract class AbstractCell implements Cell {
 
   /**
    * Public constructor for when cell is represented by BlankCell
-   * in worksheet, i.e. when cell has existing direct references.
+   * in worksheet, i.e. when cell contains existing direct references.
    *
-   * @param existingRefs ArrayList of direct references to existing BlankCell
+   * @param existingRefs ArrayList of direct references
    * @param location coordinates fro where cell is to be created in spreadsheet
    */
   protected AbstractCell(Coord location, ArrayList<Coord> existingRefs) {
@@ -32,7 +32,7 @@ public abstract class AbstractCell implements Cell {
   }
 
   @Override
-  public ArrayList referencedBy() {
+  public ArrayList<Coord> references() {
     return directRefs;
   }
 
