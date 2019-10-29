@@ -16,7 +16,7 @@ public class FormulaCell extends AbstractCell {
    * @param location coordinates for where cell is to be created in spreadsheet
    * @param formula formula to be evaluated in cell
    */
-  protected FormulaCell(Coord location, Formula formula) {
+  public FormulaCell(Coord location, Formula formula) {
     super(location);
     this.formula = formula;
   }
@@ -29,14 +29,14 @@ public class FormulaCell extends AbstractCell {
    * @param location coordinates fro where cell is to be created in spreadsheet
    * @param formula formula to be evaluated in cell
    */
-  protected FormulaCell(Coord location, ArrayList<Coord> existingRefs, Formula formula) {
+  public FormulaCell(Coord location, ArrayList<Coord> existingRefs, Formula formula) {
     super(location, existingRefs);
     this.formula = formula;
   }
 
   @Override
   public String evaluate(HashMap<Coord, Cell> worksheet) {
-    return this.formula.evaluate(worksheet).getPrintString();
+    return this.formula.evaluate(worksheet).getPrintString(worksheet);
   }
 
   @Override

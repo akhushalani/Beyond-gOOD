@@ -9,6 +9,10 @@ public class BeyondGoodWorksheet implements Worksheet {
     worksheet = new HashMap<>();
   }
 
+  public BeyondGoodWorksheet(HashMap<Coord, Cell> worksheet) {
+    this.worksheet = worksheet;
+  }
+
   @Override
   public Cell getCellAt(Coord coord) {
     return worksheet.get(coord);
