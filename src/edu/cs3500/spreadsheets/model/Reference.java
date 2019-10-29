@@ -2,9 +2,17 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.HashMap;
 
+/**
+ * Represents a type of formula that is a reference to another Cell in a worksheet.
+ */
 public class Reference implements Formula {
   private Coord refLocation;
 
+  /**
+   * The constructor for a Reference that takes in a refLocation as a Coord, with that
+   *    Coord representing the Cell to which the Reference should Reference.
+   * @param refLocation
+   */
   public Reference(Coord refLocation) {
     this.refLocation = refLocation;
   }

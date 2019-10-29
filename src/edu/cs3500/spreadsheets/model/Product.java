@@ -3,7 +3,17 @@ package edu.cs3500.spreadsheets.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Represents the excel function Product, which returns a DoubleValue.
+ */
 public class Product extends AbstractFunction<DoubleValue> {
+
+  /**
+   * Represents a constructor for the Product function in excel, which takes in an ArrayList of
+   *     Formulas.
+   * @param args represents the arguments for the Product function represented as an ArrayList
+   *     of Formulas.
+   */
   public Product(ArrayList<Formula> args) {
     super(args);
   }

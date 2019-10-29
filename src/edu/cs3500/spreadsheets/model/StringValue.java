@@ -7,9 +7,10 @@ package edu.cs3500.spreadsheets.model;
 public class StringValue extends AbstractValue<String> {
 
   /**
-   * Public constructor for StringValue.
+   * Public constructor for StringValue that takes in a String that will represent the value of the
+   *    String value.
    *
-   * @param value String value
+   * @param value represents the String that will be the value of this StringValue.
    */
   public StringValue(String value) {
     this.value = value;

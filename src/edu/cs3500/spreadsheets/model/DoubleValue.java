@@ -5,6 +5,7 @@ package edu.cs3500.spreadsheets.model;
  * abstract class and are a type of Formula.
  */
 public class DoubleValue extends AbstractValue<Double> {
+
   /**
    * Public constructor for DoubleValue.
    *

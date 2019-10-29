@@ -14,6 +14,10 @@ public interface Cell {
    */
   ArrayList<Coord> references();
 
+  /**
+   * Returns the Formula within the given cell.
+   * @return the Formula that the given cell contains as a Formula.
+   */
   Formula getFormula();
 
   /**
@@ -23,9 +27,23 @@ public interface Cell {
    */
   String getCellName();
 
+  /**
+   * Get the shorthand String representation of the given Cell.
+   * @return the String representation of the given Cell as a String.
+   */
   String getEditString();
 
+  /**
+   * Evaluates the given Cell to a String representation value.
+   * @param worksheet the worksheet within which the Cell and its references exist.
+   * @return the String representation of the cell value
+   */
   String evaluate(HashMap<Coord, Cell> worksheet);
 
+  /**
+   * Evaluates whether or not the given cell has a cyclic reference.
+   * @param location the location of the cell in the worksheet.
+   * @return boolean value whether or not the Cell has a cyclic reference.
+   */
   boolean cyclicReference(Coord location);
 }
