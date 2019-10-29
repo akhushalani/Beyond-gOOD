@@ -45,37 +45,41 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
     FunctionCheckSexpVisitor functionChecker = new FunctionCheckSexpVisitor();
     if (l.get(0).accept(functionChecker)) {
       ArrayList<Formula> functionArgs = new ArrayList<>();
+      ArrayList<Coord> refList = new ArrayList<>();
       FunctionArgsSexpVisitor argsVisitor = new FunctionArgsSexpVisitor();
+      ReferenceSexpVisitor refVisitor = new ReferenceSexpVisitor();
       for (int i = 0; i < l.size(); i++) {
         if (i != l.size() - 1) {
           l.get(i).accept(argsVisitor);
+          l.get(i).accept(refVisitor);
         } else {
           functionArgs = l.get(i).accept(argsVisitor);
+          refList = l.get(i).accept(refVisitor);
         }
       }
 
       FunctionNameVisitor nameVisitor = new FunctionNameVisitor();
       switch (l.get(0).accept(nameVisitor)) {
         case "AND":
-          return new FormulaCell(location, new And(functionArgs));
+          return new FormulaCell(location, refList, new And(functionArgs));
         case "CONCAT":
-          return new FormulaCell(location, new Concatenate(functionArgs));
+          return new FormulaCell(location, refList, new Concatenate(functionArgs));
         case "DIV":
-          return new FormulaCell(location, new Divide(functionArgs));
+          return new FormulaCell(location, refList, new Divide(functionArgs));
         case ">":
-          return new FormulaCell(location, new GreaterThan(functionArgs));
+          return new FormulaCell(location, refList, new GreaterThan(functionArgs));
         case "<":
-          return new FormulaCell(location, new LessThan(functionArgs));
+          return new FormulaCell(location, refList, new LessThan(functionArgs));
         case "NOT":
-          return new FormulaCell(location, new Not(functionArgs));
+          return new FormulaCell(location, refList, new Not(functionArgs));
         case "OR":
-          return new FormulaCell(location, new Or(functionArgs));
+          return new FormulaCell(location, refList, new Or(functionArgs));
         case "PRODUCT":
-          return new FormulaCell(location, new Product(functionArgs));
+          return new FormulaCell(location, refList, new Product(functionArgs));
         case "SUB":
-          return new FormulaCell(location, new Subtract(functionArgs));
+          return new FormulaCell(location, refList, new Subtract(functionArgs));
         case "SUM":
-          return new FormulaCell(location, new Sum(functionArgs));
+          return new FormulaCell(location, refList, new Sum(functionArgs));
         default:
           // will never run
           throw new IllegalArgumentException("Should not run.");
@@ -93,7 +97,9 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
   @Override
   public Cell visitSymbol(String s) {
     if (validReference(s)) {
-      return new FormulaCell(location, new Reference(parseCoord(s)));
+      ArrayList<Coord> refList = new ArrayList<>();
+      refList.add(parseCoord(s));
+      return new FormulaCell(location, refList, new Reference(parseCoord(s)));
     } else {
       throw new IllegalArgumentException("Invalid input. " +
               "Input must be a boolean, number, String, or formula.");

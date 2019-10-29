@@ -46,7 +46,7 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
     if (l.get(0).accept(functionChecker)) {
       ArrayList<Formula> innerArgs = new ArrayList<>();
       FunctionArgsSexpVisitor argsVisitor = new FunctionArgsSexpVisitor();
-      for (int i = 0; i < l.size(); i++) {
+      for (int i = 1; i < l.size(); i++) {
         if (i != l.size() - 1) {
           l.get(i).accept(argsVisitor);
         } else {
