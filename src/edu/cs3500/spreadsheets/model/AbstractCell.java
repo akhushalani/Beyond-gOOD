@@ -40,4 +40,9 @@ public abstract class AbstractCell implements Cell {
   public String getCellName() {
     return location.toString();
   }
+
+  @Override
+  public boolean cyclicReference(Coord location) {
+    return directRefs.contains(location);
+  }
 }

@@ -19,7 +19,12 @@ public class Reference implements Formula {
   }
 
   @Override
-  public String getPrintString() {
+  public String getPrintString(HashMap<Coord, Cell> worksheet) {
     return refLocation.toString();
+  }
+
+  @Override
+  public ValueType getValueType() {
+    return ValueType.NONE;
   }
 }

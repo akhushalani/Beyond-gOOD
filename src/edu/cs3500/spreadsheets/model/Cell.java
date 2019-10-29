@@ -26,4 +26,6 @@ public interface Cell {
   String getEditString();
 
   String evaluate(HashMap<Coord, Cell> worksheet);
+
+  boolean cyclicReference(Coord location);
 }

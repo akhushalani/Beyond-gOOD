@@ -16,6 +16,26 @@ public class BeyondGoodWorksheet implements Worksheet {
 
   @Override
   public void setCell(Coord coord, Cell cell) {
-    worksheet.put(coord, cell);
+    if (!cyclicReference(coord, cell)) {
+      worksheet.put(coord, cell);
+    } else {
+      throw new IllegalArgumentException("Cell contains a cylic reference.");
+    }
+  }
+
+  private boolean cyclicReference(Coord location, Cell cell) {
+    boolean cyclic = false;
+    for (Coord ref : cell.references()) {
+      cyclic = cyclic || referenceBetween(location, ref);
+    }
+    return cell.cyclicReference(location) || cyclic;
+  }
+
+  private boolean referenceBetween(Coord loc1, Coord loc2) {
+    boolean cyclic = false;
+    for (Coord ref : getCellAt(loc2).references()) {
+      cyclic = cyclic || referenceBetween(loc1, ref);
+    }
+    return cyclic;
   }
 }

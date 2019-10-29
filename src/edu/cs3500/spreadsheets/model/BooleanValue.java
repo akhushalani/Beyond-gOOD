@@ -13,4 +13,9 @@ public class BooleanValue extends AbstractValue<Boolean> {
   public BooleanValue(boolean value) {
     this.value = value;
   }
+
+  @Override
+  public ValueType getValueType() {
+    return ValueType.BOOLEAN;
+  }
 }

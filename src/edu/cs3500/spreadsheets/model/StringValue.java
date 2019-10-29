@@ -14,4 +14,9 @@ public class StringValue extends AbstractValue<String> {
   public StringValue(String value) {
     this.value = value;
   }
+
+  @Override
+  public ValueType getValueType() {
+    return ValueType.STRING;
+  }
 }

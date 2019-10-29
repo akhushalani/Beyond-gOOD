@@ -19,7 +19,7 @@ public abstract class AbstractValue<T> implements Formula {
   }
 
   @Override
-  public String getPrintString() {
+  public String getPrintString(HashMap<Coord, Cell> worksheet) {
     return value + "";
   }
 

@@ -11,12 +11,17 @@ public abstract class AbstractFunction<T extends Formula> implements Function<T>
   }
 
   @Override
-  public Formula evaluate(HashMap<Coord, Cell> spreadsheet) {
-    return evaluateFunction(args);
+  public Formula evaluate(HashMap<Coord, Cell> worksheet) {
+    return evaluateFunction(args, worksheet);
   }
 
   @Override
-  public String getPrintString() {
-    return evaluateFunction(args).getPrintString();
+  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+    return evaluateFunction(args, worksheet).getPrintString(worksheet);
+  }
+
+  @Override
+  public ValueType getValueType() {
+    return ValueType.NONE;
   }
 }

@@ -13,4 +13,9 @@ public class DoubleValue extends AbstractValue<Double> {
   public DoubleValue(double value) {
     this.value = value;
   }
+
+  @Override
+  public ValueType getValueType() {
+    return ValueType.DOUBLE;
+  }
 }

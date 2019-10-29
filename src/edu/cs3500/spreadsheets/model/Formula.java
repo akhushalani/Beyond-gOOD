@@ -13,5 +13,7 @@ public interface Formula {
    */
   Formula evaluate(HashMap<Coord, Cell> spreadsheet);
 
-  String getPrintString();
+  String getPrintString(HashMap<Coord, Cell> worksheet);
+
+  ValueType getValueType();
 }
