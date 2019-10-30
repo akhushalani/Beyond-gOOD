@@ -5,6 +5,7 @@ import java.util.HashMap;
 import edu.cs3500.spreadsheets.sexp.CellSexpVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
 import edu.cs3500.spreadsheets.sexp.Sexp;
+import edu.cs3500.spreadsheets.sexp.ValueCellSexpVisitor;
 
 /**
  * Represents a factory class for BeyondGoodWorksheets.
@@ -35,10 +36,19 @@ public class BeyondGoodWorksheetBuilder
   public WorksheetReader.WorksheetBuilder<BeyondGoodWorksheet>
   createCell(int col, int row, String contents) {
     Parser p = new Parser();
-    Sexp sexpContents = p.parse(contents);
-    Coord coord = new Coord(col, row);
-    CellSexpVisitor cellVisitor = new CellSexpVisitor(coord);
-    this.worksheet.put(coord, sexpContents.accept(cellVisitor));
+    if (contents == null) {
+      throw new IllegalArgumentException("Contents cannot be null.");
+    } else if (contents.substring(0, 1).equals('=')) {
+      Sexp sexpContents = p.parse(contents);
+      Coord coord = new Coord(col, row);
+      CellSexpVisitor cellVisitor = new CellSexpVisitor(coord);
+      this.worksheet.put(coord, sexpContents.accept(cellVisitor));
+    } else {
+      Sexp sexpContents = p.parse(contents);
+      Coord coord = new Coord(col, row);
+      ValueCellSexpVisitor valueCellVisitor = new ValueCellSexpVisitor(coord);
+      this.worksheet.put(coord, sexpContents.accept(valueCellVisitor));
+    }
 
     return new BeyondGoodWorksheetBuilder(this.worksheet);
   }
