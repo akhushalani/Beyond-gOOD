@@ -3,7 +3,17 @@ package edu.cs3500.spreadsheets.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Represents the excel function Not, which returns a BooleanValue.
+ */
 public class Not extends AbstractFunction<BooleanValue> {
+
+  /**
+   * Represents a constructor for the Not function in excel, which takes in an ArrayList of
+   *     Formulas.
+   * @param args represents the arguments for the Not function represented as an ArrayList
+   *     of Formulas.
+   */
   public Not(ArrayList<Formula> args) {
     super(args);
   }

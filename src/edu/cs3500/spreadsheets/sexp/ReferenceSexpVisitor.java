@@ -6,9 +6,18 @@ import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.Coord;
 
+/**
+ * Visitor class that handles cell references when represented either as symbols (single references
+ *      or cell block references) or as Lists of SExpressions (a function with arguments that can be
+ *      any kind of SExp themselves) and appends them to an ArrayList of references.
+ */
 public class ReferenceSexpVisitor implements SexpVisitor<ArrayList<Coord>> {
   private ArrayList<Coord> refList;
 
+  /**
+   * Public constructor for ReferenceSexpVisitor that establishes the list of references within
+   *     the given SExp.
+   */
   public ReferenceSexpVisitor() {
     this.refList = new ArrayList<>();
   }
@@ -72,6 +81,8 @@ public class ReferenceSexpVisitor implements SexpVisitor<ArrayList<Coord>> {
     return this.refList;
   }
 
+  // Returns a boolean value that represents whether a given String contains valid Cell
+  // Reference(s).
   private boolean validReference(String s) {
     Pattern p = Pattern.compile("[^a-zA-Z0-9]");
     boolean validChars = !p.matcher(s).find();
@@ -102,6 +113,7 @@ public class ReferenceSexpVisitor implements SexpVisitor<ArrayList<Coord>> {
     return firstNum > lastLetter;
   }
 
+  // Takes a Cell Reference as a String and returns its Coord equivalent.
   private Coord parseCoord(String s) {
     int firstNum = 0;
     int lastLetter = 0;

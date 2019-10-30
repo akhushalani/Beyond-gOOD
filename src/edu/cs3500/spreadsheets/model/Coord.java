@@ -9,6 +9,11 @@ public class Coord {
   public final int row;
   public final int col;
 
+  /**
+   * Represents a constructor for the Coord class that takes in a int col and an int row.
+   * @param col represents the column of the Coord.
+   * @param row represents the row of the Coord.
+   */
   public Coord(int col, int row) {
     if (row < 1 || col < 1) {
       throw new IllegalArgumentException("Coordinates should be strictly positive");
