@@ -2,13 +2,13 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Cells which contain a formula to be evaluated.
  */
 public class FormulaCell extends AbstractCell {
   private Formula formula;
-  private String editString;
 
   /**
    * Public constructor for when cell is null in worksheet.
@@ -45,7 +45,17 @@ public class FormulaCell extends AbstractCell {
   }
 
   @Override
-  public String getEditString() {
-    return this.editString;
+  public boolean equals(Object obj) {
+    if (!(obj instanceof FormulaCell)) {
+      return false;
+    }
+
+    FormulaCell that = (FormulaCell) obj;
+    return this.formula.equals(that.formula);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(formula);
   }
 }

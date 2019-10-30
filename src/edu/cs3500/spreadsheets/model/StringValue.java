@@ -20,4 +20,14 @@ public class StringValue extends AbstractValue<String> {
   public ValueType getValueType() {
     return ValueType.STRING;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof StringValue)) {
+      return false;
+    }
+
+    StringValue that = (StringValue) obj;
+    return this.value.equals(that.getValue());
+  }
 }

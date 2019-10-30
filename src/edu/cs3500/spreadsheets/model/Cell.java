@@ -28,12 +28,6 @@ public interface Cell {
   String getCellName();
 
   /**
-   * Get the shorthand String representation of the given Cell.
-   * @return the String representation of the given Cell as a String.
-   */
-  String getEditString();
-
-  /**
    * Evaluates the given Cell to a String representation value.
    * @param worksheet the worksheet within which the Cell and its references exist.
    * @return the String representation of the cell value

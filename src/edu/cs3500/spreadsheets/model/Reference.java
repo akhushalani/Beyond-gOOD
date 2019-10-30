@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Represents a type of formula that is a reference to another Cell in a worksheet.
@@ -34,5 +35,20 @@ public class Reference implements Formula {
   @Override
   public ValueType getValueType() {
     return ValueType.NONE;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Reference)) {
+      return false;
+    }
+
+    Reference that = (Reference) obj;
+    return this.refLocation.equals(that.refLocation);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(refLocation);
   }
 }
