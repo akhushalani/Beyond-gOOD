@@ -39,7 +39,7 @@ public class BeyondGoodWorksheetBuilder
     if (contents == null) {
       throw new IllegalArgumentException("Contents cannot be null.");
     } else if (contents.substring(0, 1).equals('=')) {
-      Sexp sexpContents = p.parse(contents);
+      Sexp sexpContents = p.parse(contents.substring(1));
       Coord coord = new Coord(col, row);
       CellSexpVisitor cellVisitor = new CellSexpVisitor(coord);
       this.worksheet.put(coord, sexpContents.accept(cellVisitor));
