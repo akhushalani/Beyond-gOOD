@@ -7,7 +7,9 @@ import java.util.Objects;
 /**
  * Cells which contain a formula to be evaluated.
  */
-public class FormulaCell extends AbstractCell {
+public class FormulaCell implements Cell {
+  private ArrayList<Coord> directRefs;
+  private Coord location;
   private Formula formula;
 
   /**
@@ -17,7 +19,8 @@ public class FormulaCell extends AbstractCell {
    * @param formula formula to be evaluated in cell
    */
   public FormulaCell(Coord location, Formula formula) {
-    super(location);
+    this.location = location;
+    this.directRefs = new ArrayList<>();
     this.formula = formula;
   }
 
@@ -30,7 +33,8 @@ public class FormulaCell extends AbstractCell {
    * @param formula formula to be evaluated in cell
    */
   public FormulaCell(Coord location, ArrayList<Coord> existingRefs, Formula formula) {
-    super(location, existingRefs);
+    this.location = location;
+    this.directRefs = existingRefs;
     this.formula = formula;
   }
 
@@ -42,6 +46,21 @@ public class FormulaCell extends AbstractCell {
   @Override
   public Formula getFormula() {
     return this.formula;
+  }
+
+  @Override
+  public ArrayList<Coord> references() {
+    return directRefs;
+  }
+
+  @Override
+  public String getCellName() {
+    return location.toString();
+  }
+
+  @Override
+  public boolean cyclicReference(Coord location) {
+    return directRefs.contains(location);
   }
 
   @Override
