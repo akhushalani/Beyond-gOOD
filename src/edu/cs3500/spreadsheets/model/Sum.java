@@ -22,7 +22,7 @@ public class Sum extends AbstractFunction<DoubleValue> {
   public DoubleValue evaluateFunction(ArrayList<Formula> args, HashMap<Coord, Cell> worksheet) {
     double sum = 0.0;
     for (Formula arg : args) {
-      if (arg.getValueType() == ValueType.NONE) {
+      if (arg.getValueType() == ValueType.DOUBLE) {
         sum += ((DoubleValue) arg.evaluate(worksheet)).getValue();
       }
     }
