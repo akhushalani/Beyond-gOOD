@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -20,6 +21,11 @@ public class DoubleValue extends AbstractValue<Double> {
   @Override
   public ValueType getValueType() {
     return ValueType.DOUBLE;
+  }
+
+  @Override
+  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+    return String.format("%f", this.value);
   }
 
   @Override

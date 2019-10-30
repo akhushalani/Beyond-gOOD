@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,15 @@ public class BooleanValue extends AbstractValue<Boolean> {
   @Override
   public ValueType getValueType() {
     return ValueType.BOOLEAN;
+  }
+
+  @Override
+  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+    if (this.value) {
+      return "true";
+    } else {
+      return "false";
+    }
   }
 
   @Override

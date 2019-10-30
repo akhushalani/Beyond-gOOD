@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.HashMap;
+
 /**
  * Formulas that evaluate to values that are Strings. These formulas extend the AbstractValue
  * abstract class and are a type of Formula.
@@ -19,6 +21,15 @@ public class StringValue extends AbstractValue<String> {
   @Override
   public ValueType getValueType() {
     return ValueType.STRING;
+  }
+
+  @Override
+  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+    String printString = this.getValue()
+            .replace("\\", "\\\\")
+            .replace("\"", "\\\"")
+            .replace("'", "\\'");
+    return "\"" + printString + "\"";
   }
 
   @Override

@@ -20,11 +20,6 @@ public abstract class AbstractValue<T> implements Formula {
   }
 
   @Override
-  public String getPrintString(HashMap<Coord, Cell> worksheet) {
-    return value + "";
-  }
-
-  @Override
   public Formula evaluate(HashMap<Coord, Cell> spreadsheet) {
     return this;
   }
