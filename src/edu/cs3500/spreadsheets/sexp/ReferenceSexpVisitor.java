@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Reference;
 
 public class ReferenceSexpVisitor implements SexpVisitor<ArrayList<Coord>> {
   private ArrayList<Coord> refList;
@@ -60,9 +59,11 @@ public class ReferenceSexpVisitor implements SexpVisitor<ArrayList<Coord>> {
       if (validReference(firstRef) && validReference(secondRef)) {
         Coord firstCoord = parseCoord(firstRef);
         Coord secondCoord = parseCoord(secondRef);
-        for (int i = firstCoord.col; i <= secondCoord.col; i++) {
-          for (int j = firstCoord.row; j <= secondCoord.row; i++) {
-            this.refList.add(new Coord(i, j));
+        if (secondCoord.col >= firstCoord.col && secondCoord.row >= firstCoord.row) {
+          for (int i = firstCoord.col; i <= secondCoord.col; i++) {
+            for (int j = firstCoord.row; j <= secondCoord.row; i++) {
+              this.refList.add(new Coord(i, j));
+            }
           }
         }
       }

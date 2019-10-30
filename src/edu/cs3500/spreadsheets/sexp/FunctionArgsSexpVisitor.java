@@ -119,10 +119,14 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
       if (validReference(firstRef) && validReference(secondRef)) {
         Coord firstCoord = parseCoord(firstRef);
         Coord secondCoord = parseCoord(secondRef);
-        for (int i = firstCoord.col; i <= secondCoord.col; i++) {
-          for (int j = firstCoord.row; j <= secondCoord.row; i++) {
-            this.args.add(new Reference(new Coord(i, j)));
+        if (secondCoord.col >= firstCoord.col && secondCoord.row >= firstCoord.row) {
+          for (int i = firstCoord.col; i <= secondCoord.col; i++) {
+            for (int j = firstCoord.row; j <= secondCoord.row; i++) {
+              this.args.add(new Reference(new Coord(i, j)));
+            }
           }
+        } else {
+          throw new IllegalArgumentException("Coordinates are in the wrong order.");
         }
       }
     }
