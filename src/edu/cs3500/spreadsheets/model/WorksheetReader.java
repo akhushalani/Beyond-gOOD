@@ -72,7 +72,7 @@ public final class WorksheetReader {
         col = Coord.colNameToIndex(m.group(1));
         row = Integer.parseInt(m.group(2));
       } else {
-        throw new IllegalStateException("Expected cell ref");
+        throw new IllegalStateException();
       }
       scan.skip("\\s*");
       while (scan.hasNext("#.*")) {

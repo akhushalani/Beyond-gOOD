@@ -36,8 +36,17 @@ public class BeyondGoodWorksheet implements Worksheet {
     if (!cyclicReference(coord, cell)) {
       worksheet.put(coord, cell);
     } else {
-      throw new IllegalArgumentException("Cell contains a cylic reference.");
+      throw new IllegalArgumentException("Cell contains a cyclic reference.");
     }
+  }
+
+  @Override
+  public HashMap getWorksheet() {
+    HashMap<Coord, Cell> wsToBeReturned = new HashMap<>();
+    for (Coord c : this.worksheet.keySet()) {
+      wsToBeReturned.put(c, this.worksheet.get(c));
+    }
+    return wsToBeReturned;
   }
 
   /**

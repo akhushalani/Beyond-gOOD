@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.HashMap;
+
 /**
  * An interface representing worksheets which consist of Cells at various Coords.
  */
@@ -20,4 +22,9 @@ public interface Worksheet {
    * @param cell a Cell that the user wants to be input into the worksheet.
    */
   void setCell(Coord coord, Cell cell);
+
+  /**
+   * Retrieves the worksheet from the Worksheet as a HashMap.
+   */
+  HashMap getWorksheet();
 }
