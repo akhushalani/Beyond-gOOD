@@ -43,7 +43,7 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
   @Override
   public ArrayList<Formula> visitSList(List<Sexp> l) {
     FunctionCheckSexpVisitor functionChecker = new FunctionCheckSexpVisitor();
-    if (l.get(0).accept(functionChecker)) {
+    if (l.get(0).accept(functionChecker) && l.size() > 1) {
       ArrayList<Formula> innerArgs = new ArrayList<>();
       FunctionArgsSexpVisitor argsVisitor = new FunctionArgsSexpVisitor();
       for (int i = 1; i < l.size(); i++) {
@@ -90,6 +90,11 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
           // will never run
           throw new IllegalArgumentException("Should not run.");
       }
+    } else if (l.size() == 1) {
+      FunctionNameVisitor nameVisitor = new FunctionNameVisitor();
+      String funcName = l.get(0).accept(nameVisitor);
+      throw new IllegalArgumentException("Function " + funcName
+              + "is being called with no arguments.");
     } else {
       throw new IllegalArgumentException("Too many arguments. Only enter one expression per cell.");
     }
