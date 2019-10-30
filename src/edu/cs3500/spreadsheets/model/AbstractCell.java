@@ -20,7 +20,7 @@ public abstract class AbstractCell implements Cell {
   }
 
   /**
-   * Public constructor for when cell is represented by BlankCell
+   * Public constructor for when cell is already represented by Cell
    * in worksheet, i.e. when cell contains existing direct references.
    *
    * @param existingRefs ArrayList of direct references

@@ -22,10 +22,10 @@ public class FormulaCell extends AbstractCell {
   }
 
   /**
-   * Public constructor for when cell is represented by BlankCell
+   * Public constructor for when cell is represented by Cell
    * in worksheet, i.e. when cell has existing direct references.
    *
-   * @param existingRefs ArrayList of direct references to existing BlankCell
+   * @param existingRefs ArrayList of direct references to existing Cell
    * @param location coordinates fro where cell is to be created in spreadsheet
    * @param formula formula to be evaluated in cell
    */
