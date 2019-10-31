@@ -122,4 +122,4 @@ public class BeyondGood {
 
     return firstNum > lastLetter;
   }
-  }
+}

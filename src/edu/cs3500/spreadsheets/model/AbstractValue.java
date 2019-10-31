@@ -1,7 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.Objects;
-
 /**
  * Formulas that evaluate to values directly.
  * @param <T> The datatype for the value that the formula evaluates to.

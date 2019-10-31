@@ -22,7 +22,8 @@ public class BeyondGoodWorksheet implements Worksheet {
   /**
    * Represents a constructor for BeyondGoodWorkSheet that takes in an already existent worksheet
    *    as a HashMap and returns a new WorkSheet using said input.
-   * @param     worksheet represents a previously existing worksheet as a HashMap of Coords to Cells.
+   * @param     worksheet represents a previously existing worksheet as a HashMap of Coords to
+   *                      Cells.
    */
   public BeyondGoodWorksheet(HashMap<Coord, Cell> worksheet) {
     this.worksheet = worksheet;
@@ -94,7 +95,7 @@ public class BeyondGoodWorksheet implements Worksheet {
    * @param     loc1 The coordinates of the first cell as a Coord.
    * @param     loc2 The coordinates of the second cell as a Coord.
    * @return    a boolean value whether the two Cells reference one another, either directly or
-   *    indirectly.
+   *            indirectly.
    */
   private boolean referenceBetween(Coord loc1, Coord loc2) {
     boolean cyclic = false;

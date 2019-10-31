@@ -31,7 +31,7 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
 
   public FunctionArgsSexpVisitor() {
     this.args = new ArrayList<>();
-  };
+  }
 
   @Override
   public ArrayList<Formula> visitBoolean(boolean b) {

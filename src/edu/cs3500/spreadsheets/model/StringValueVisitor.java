@@ -1,5 +1,8 @@
 package edu.cs3500.spreadsheets.model;
 
+/**
+ * A visitor that visits a formula and returns its value if it is a StringValue.
+ */
 public class StringValueVisitor implements FormulaVisitor<String> {
 
   @Override

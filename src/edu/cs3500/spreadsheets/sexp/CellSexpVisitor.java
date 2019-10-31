@@ -112,8 +112,8 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
       refList.add(parseCoord(s));
       return new FormulaCell(location, refList, new Reference(parseCoord(s)));
     } else {
-      throw new IllegalArgumentException("Invalid input. " +
-              "Input must be a boolean, number, String, or formula.");
+      throw new IllegalArgumentException("Invalid input. "
+              + "Input must be a boolean, number, String, or formula.");
     }
   }
 
