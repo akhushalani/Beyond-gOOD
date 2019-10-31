@@ -61,7 +61,7 @@ public class ReferenceSexpVisitor implements SexpVisitor<ArrayList<Coord>> {
   public ArrayList<Coord> visitSymbol(String s) {
     if (validReference(s)) {
       this.refList.add(parseCoord(s));
-    } else if(s.contains(":")) {
+    } else if (s.contains(":")) {
       int colonIndex = s.indexOf(":");
       String firstRef = s.substring(0, colonIndex);
       String secondRef = s.substring(colonIndex + 1);

@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.Objects;
+
 /**
  * Formulas that evaluate to values that are booleans. These formulas extend the AbstractValue
  * abstract class and are a type of Formula.
@@ -46,5 +48,10 @@ public class BooleanValue extends AbstractValue<Boolean> {
 
     BooleanValue that = (BooleanValue) obj;
     return this.value == that.getValue();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
   }
 }

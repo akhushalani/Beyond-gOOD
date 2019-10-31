@@ -22,6 +22,10 @@ import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Subtract;
 import edu.cs3500.spreadsheets.model.Sum;
 
+/**
+ * A visitor that represents an s-expression for an argument to a function
+ * and returns an ArrayList of Formula arguments.
+ */
 public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> {
   private ArrayList<Formula> args;
 

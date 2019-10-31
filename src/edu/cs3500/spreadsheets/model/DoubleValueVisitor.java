@@ -1,7 +1,9 @@
 package edu.cs3500.spreadsheets.model;
 
+/**
+ * A visitor that visits a formula and returns its value if it is a DoubleValue.
+ */
 public class DoubleValueVisitor implements FormulaVisitor<Double> {
-  public DoubleValueVisitor() {}
 
   @Override
   public Double visitBooleanValue(BooleanValue b) {

@@ -9,6 +9,9 @@ import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.FormulaCell;
 import edu.cs3500.spreadsheets.model.StringValue;
 
+/**
+ * A visitor that visits an s-expression and returns a Cell containing a value.
+ */
 public class ValueCellSexpVisitor implements SexpVisitor<Cell> {
   private Coord location;
 

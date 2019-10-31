@@ -11,7 +11,7 @@ public class Reference implements Formula {
   /**
    * The constructor for a Reference that takes in a refLocation as a Coord, with that
    *    Coord representing the Cell to which the Reference should Reference.
-   * @param refLocation
+   * @param refLocation the location that the Reference is referencing.
    */
   public Reference(Coord refLocation) {
     this.refLocation = refLocation;

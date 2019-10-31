@@ -2,6 +2,9 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the function Square Root, which returns a DoubleValue.
+ */
 public class SquareRoot extends AbstractFunction<DoubleValue> {
   public SquareRoot(ArrayList<Formula> args) {
     super(args);

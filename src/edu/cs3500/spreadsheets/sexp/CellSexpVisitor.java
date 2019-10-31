@@ -24,6 +24,9 @@ import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Subtract;
 import edu.cs3500.spreadsheets.model.Sum;
 
+/**
+ * A visitor that visits an s-expression and returns a Cell.
+ */
 public class CellSexpVisitor implements SexpVisitor<Cell> {
   private Coord location;
 

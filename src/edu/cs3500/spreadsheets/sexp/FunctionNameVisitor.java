@@ -2,9 +2,11 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.List;
 
+/**
+ * A visitor to be called on an s-expression that is the first in an SList
+ * and gets the String format of it.
+ */
 public class FunctionNameVisitor implements SexpVisitor<String> {
-  public FunctionNameVisitor() {};
-
   @Override
   public String visitSymbol(String s) {
     return s;

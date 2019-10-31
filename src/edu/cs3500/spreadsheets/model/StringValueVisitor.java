@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 public class StringValueVisitor implements FormulaVisitor<String> {
-  public StringValueVisitor() {}
 
   @Override
   public String visitBooleanValue(BooleanValue b) {

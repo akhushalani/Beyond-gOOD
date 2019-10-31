@@ -4,8 +4,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A visitor that visits an s-expression and checks if it is a valid
+ * function name as an SSymbol.
+ */
 public class FunctionCheckSexpVisitor implements SexpVisitor<Boolean> {
-  public static final List<String> functionList
+  public static final List<String> FUNCTION_LIST
           = Collections.unmodifiableList(Arrays.asList(
           "AND",
           "CONCAT",
@@ -19,11 +23,9 @@ public class FunctionCheckSexpVisitor implements SexpVisitor<Boolean> {
           "SUB",
           "SUM"));
 
-  public FunctionCheckSexpVisitor() {};
-
   @Override
   public Boolean visitSymbol(String s) {
-    return functionList.contains(s);
+    return FUNCTION_LIST.contains(s);
   }
 
   @Override

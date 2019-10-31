@@ -1,7 +1,9 @@
 package edu.cs3500.spreadsheets.model;
 
+/**
+ * A visitor that visits a formula and returns its value if it is a BooleanValue.
+ */
 public class BooleanValueVisitor implements FormulaVisitor<Boolean> {
-  public BooleanValueVisitor() {}
 
   @Override
   public Boolean visitStringValue(StringValue s) {

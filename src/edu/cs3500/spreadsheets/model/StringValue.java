@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.Objects;
+
 /**
  * Formulas that evaluate to values that are Strings. These formulas extend the AbstractValue
  * abstract class and are a type of Formula.
@@ -48,5 +50,10 @@ public class StringValue extends AbstractValue<String> {
 
     StringValue that = (StringValue) obj;
     return this.value.equals(that.getValue());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
   }
 }

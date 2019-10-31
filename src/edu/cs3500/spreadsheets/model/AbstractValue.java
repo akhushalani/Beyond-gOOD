@@ -17,9 +17,4 @@ public abstract class AbstractValue<T> implements Formula {
   public final T getValue() {
     return value;
   }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(value);
-  }
 }

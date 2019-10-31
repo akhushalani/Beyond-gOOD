@@ -34,7 +34,7 @@ public class BeyondGoodWorksheetBuilder
 
   @Override
   public WorksheetReader.WorksheetBuilder<BeyondGoodWorksheet>
-  createCell(int col, int row, String contents) {
+      createCell(int col, int row, String contents) {
     Parser p = new Parser();
     if (contents == null) {
       throw new IllegalArgumentException("Contents cannot be null.");

@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.Objects;
+
 /**
  * Formulas that evaluate to values that are doubles. These formulas extend the AbstractValue
  * abstract class and are a type of Formula.
@@ -48,5 +50,10 @@ public class DoubleValue extends AbstractValue<Double> {
 
     DoubleValue that = (DoubleValue) obj;
     return Math.abs(this.value - that.getValue()) <= 0.000001;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
   }
 }

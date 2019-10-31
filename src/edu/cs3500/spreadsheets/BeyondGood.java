@@ -34,8 +34,8 @@ public class BeyondGood {
           // When doing this how do we get individual cell formation errors?
           ws = WorksheetReader.read(new BeyondGoodWorksheetBuilder(), new FileReader(args[1]));
         } catch (FileNotFoundException e) {
-          outputString.append("Insufficient arguments, file specified does not " +
-                  "exist.\n");
+          outputString.append("Insufficient arguments, file specified does not "
+                  + "exist.\n");
         }
       }
       else {
@@ -49,8 +49,8 @@ public class BeyondGood {
             cellCoord = parseCoord(cellToEval);
           }
           else {
-            outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell " +
-                    "reference.\n");
+            outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell "
+                    + "reference.\n");
           }
           outputString.append(ws.getCellAt(cellCoord).evaluate(ws));
         }
@@ -91,35 +91,35 @@ public class BeyondGood {
     return new Coord(col, row);
   }
 
-    // Returns a boolean value that represents whether a given String contains valid Cell
-    // Reference(s).
-    private static boolean validReference(String s){
-      Pattern p = Pattern.compile("[^a-zA-Z0-9]");
-      boolean validChars = !p.matcher(s).find();
+  // Returns a boolean value that represents whether a given String contains valid Cell
+  // Reference(s).
+  private static boolean validReference(String s) {
+    Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+    boolean validChars = !p.matcher(s).find();
 
-      if (!validChars) {
-        return false;
-      }
-
-      int firstNum = 0;
-      int lastLetter = 1;
-
-      for (int i = 0; i < s.length(); i++) {
-        char c = s.charAt(i);
-        if (Character.isDigit(c)) {
-          firstNum = i;
-          break;
-        }
-      }
-
-      for (int j = s.length() - 1; j >= 0; j--) {
-        char d = s.charAt(j);
-        if (Character.isLetter(d)) {
-          lastLetter = j;
-          break;
-        }
-      }
-
-      return firstNum > lastLetter;
+    if (!validChars) {
+      return false;
     }
+
+    int firstNum = 0;
+    int lastLetter = 1;
+
+    for (int i = 0; i < s.length(); i++) {
+      char c = s.charAt(i);
+      if (Character.isDigit(c)) {
+        firstNum = i;
+        break;
+      }
+    }
+
+    for (int j = s.length() - 1; j >= 0; j--) {
+      char d = s.charAt(j);
+      if (Character.isLetter(d)) {
+        lastLetter = j;
+        break;
+      }
+    }
+
+    return firstNum > lastLetter;
+  }
   }
