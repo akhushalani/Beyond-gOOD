@@ -18,6 +18,12 @@ public class ValueCellSexpVisitor implements SexpVisitor<Cell> {
   private String rawContents;
   private Worksheet worksheet;
 
+  /**
+   * Public constructor for creating ValueCellSexpVisitor object.
+   * @param location location in which cell is being created
+   * @param rawContents the raw contents of the cell as they were enetered by the user
+   * @param worksheet the worksheet in which the cell is being created
+   */
   public ValueCellSexpVisitor(Coord location, String rawContents, Worksheet worksheet) {
     this.location = location;
     this.rawContents = rawContents;

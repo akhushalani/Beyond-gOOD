@@ -2,13 +2,20 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
 
-import edu.cs3500.spreadsheets.sexp.ReferenceSexpVisitor;
-
+/**
+ * A visitor object which visits a Formula and retrieves a List of all of the coords
+ * referenced within it.
+ */
 public class ReferenceFormulaVisitor implements FormulaVisitor<ArrayList<Coord>> {
   private ArrayList<Coord> refList;
   private Worksheet worksheet;
   private Coord cellLoc;
 
+  /**
+   * Constructor for creating ReferenceFormulaVisitor object.
+   * @param worksheet the worksheet holding the formula being referenced
+   * @param cellLoc the location of the cell holding the formula
+   */
   public ReferenceFormulaVisitor(Worksheet worksheet, Coord cellLoc) {
     this.refList = new ArrayList<>();
     this.worksheet = worksheet;

@@ -18,7 +18,8 @@ public class LessThan extends AbstractFunction<BooleanValue> {
   }
 
   @Override
-  public BooleanValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
+  public BooleanValue evaluateFunction(ArrayList<Formula> args,
+                                       Worksheet worksheet, Coord cellLoc) {
     if (args.size() != 2) {
       throw new IllegalArgumentException("Incorrect number of arguments.");
     } else if (args.get(0).evaluate(worksheet, cellLoc).getValueType() != ValueType.DOUBLE

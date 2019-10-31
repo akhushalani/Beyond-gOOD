@@ -6,10 +6,13 @@ import edu.cs3500.spreadsheets.model.Worksheet;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class for testing functionality of all implemented functions.
+ */
 public class FunctionTest {
   private Worksheet worksheet;
 
-  public void initWorksheet() {
+  private void initWorksheet() {
     worksheet = new BeyondGoodWorksheetBuilder()
             .createCell(1, 1, "true")
             .createCell(1, 2, "false")

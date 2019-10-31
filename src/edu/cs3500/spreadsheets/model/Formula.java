@@ -1,7 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.ArrayList;
-
 /**
  * An interface for formulas that can represent the contents of a Cell and be evaluated.
  */
