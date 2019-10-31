@@ -36,7 +36,11 @@ public class FormulaCell implements Cell {
   public FormulaCell(Coord location, ArrayList<Coord> existingRefs, Formula formula,
                      String rawContents) {
     this.location = location;
-    this.directRefs = existingRefs;
+    if (existingRefs.contains(this.location)) {
+      throw new IllegalArgumentException("Cell contains a cyclic reference.");
+    } else {
+      this.directRefs = existingRefs;
+    }
     this.formula = formula;
     this.rawContents = rawContents;
   }
