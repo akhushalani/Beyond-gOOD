@@ -17,4 +17,6 @@ public interface Function<T> extends Formula {
    * @return Generic T datatype that represents whatever the given Function returns.
    */
   T evaluateFunction(ArrayList<Formula> args, Worksheet worksheet);
+
+  ArrayList<Formula> getArguments();
 }

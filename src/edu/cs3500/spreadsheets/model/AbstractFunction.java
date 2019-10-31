@@ -38,4 +38,9 @@ public abstract class AbstractFunction<T extends Formula> implements Function<T>
   public ValueType getValueType() {
     return ValueType.NONE;
   }
+
+  @Override
+  public ArrayList<Formula> getArguments() {
+    return (ArrayList<Formula>) this.args.clone();
+  }
 }
