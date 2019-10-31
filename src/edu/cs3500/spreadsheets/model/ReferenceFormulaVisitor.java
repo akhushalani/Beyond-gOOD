@@ -7,10 +7,12 @@ import edu.cs3500.spreadsheets.sexp.ReferenceSexpVisitor;
 public class ReferenceFormulaVisitor implements FormulaVisitor<ArrayList<Coord>> {
   private ArrayList<Coord> refList;
   private Worksheet worksheet;
+  private Coord cellLoc;
 
-  public ReferenceFormulaVisitor(Worksheet worksheet) {
+  public ReferenceFormulaVisitor(Worksheet worksheet, Coord cellLoc) {
     this.refList = new ArrayList<>();
     this.worksheet = worksheet;
+    this.cellLoc = cellLoc;
   }
 
   @Override
@@ -20,7 +22,7 @@ public class ReferenceFormulaVisitor implements FormulaVisitor<ArrayList<Coord>>
 
   @Override
   public ArrayList<Coord> visitReference(Reference r) {
-    this.refList.add(parseCoord(r.getPrintString(worksheet)));
+    this.refList.add(parseCoord(r.getPrintString(worksheet, cellLoc)));
 
     return null;
   }
@@ -28,7 +30,7 @@ public class ReferenceFormulaVisitor implements FormulaVisitor<ArrayList<Coord>>
   @Override
   public ArrayList<Coord> visitFunction(Function f) {
     ArrayList<Coord> innerRefs = new ArrayList<>();
-    ReferenceFormulaVisitor innerRefVisitor = new ReferenceFormulaVisitor(worksheet);
+    ReferenceFormulaVisitor innerRefVisitor = new ReferenceFormulaVisitor(worksheet, cellLoc);
     for (Object arg : f.getArguments()) {
       Formula fArg = (Formula) arg;
       innerRefs.addAll(fArg.accept(innerRefVisitor));

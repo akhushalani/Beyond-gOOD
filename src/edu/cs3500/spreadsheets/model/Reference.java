@@ -18,12 +18,14 @@ public class Reference implements Formula {
   }
 
   @Override
-  public Formula evaluate(Worksheet worksheet) {
+  public Formula evaluate(Worksheet worksheet, Coord cellLoc) {
     if (worksheet.getWorksheet().get(refLocation).getFormula() == null) {
       return null;
+    } else if (this.refLocation.equals(cellLoc)) {
+      throw new IllegalArgumentException("Cell contains a cyclic reference.");
     } else if (!worksheet.hasCalculatedReference(refLocation)) {
       worksheet.addCalculatedReference(refLocation,
-              worksheet.getWorksheet().get(refLocation).getFormula().evaluate(worksheet));
+              worksheet.getWorksheet().get(refLocation).getFormula().evaluate(worksheet, cellLoc));
       return worksheet.getCalculatedReference(refLocation);
     } else {
       return worksheet.getCalculatedReference(refLocation);
@@ -31,7 +33,7 @@ public class Reference implements Formula {
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet) {
+  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
     return refLocation.toString();
   }
 

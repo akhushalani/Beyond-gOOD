@@ -109,10 +109,12 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitSymbol(String s) {
-    if (validReference(s)) {
+    if (validReference(s) && parseCoord(s).equals(this.location)) {
       ArrayList<Coord> refList = new ArrayList<>();
       refList.add(parseCoord(s));
       return new FormulaCell(location, refList, new Reference(parseCoord(s)), rawContents);
+    } else if (validReference(s)) {
+      throw new IllegalArgumentException("Cell contains a cyclic reference.");
     } else {
       throw new IllegalArgumentException("Invalid input. "
               + "Input must be a boolean, number, String, or formula.");

@@ -23,7 +23,7 @@ public class DoubleValue extends AbstractValue<Double> {
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet) {
+  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
     if (this.equals(new DoubleValue(0))) {
       return "0.000000";
     } else {
@@ -37,7 +37,7 @@ public class DoubleValue extends AbstractValue<Double> {
   }
 
   @Override
-  public Formula evaluate(Worksheet worksheet) {
+  public Formula evaluate(Worksheet worksheet, Coord cellLoc) {
     return new DoubleValue(this.value);
   }
 

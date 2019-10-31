@@ -18,12 +18,12 @@ public class Product extends AbstractFunction<DoubleValue> {
   }
 
   @Override
-  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
+  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
     double product = 1.0;
     DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
     for (Formula arg : args) {
-      if (arg.evaluate(worksheet).getValueType() == ValueType.DOUBLE) {
-        product *= arg.evaluate(worksheet).accept(doubleVisitor);
+      if (arg.evaluate(worksheet, cellLoc).getValueType() == ValueType.DOUBLE) {
+        product *= arg.evaluate(worksheet, cellLoc).accept(doubleVisitor);
       }
     }
 

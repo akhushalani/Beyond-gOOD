@@ -18,12 +18,12 @@ public class Concatenate extends AbstractFunction<StringValue> {
   }
 
   @Override
-  public StringValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
+  public StringValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
     StringBuilder concat = new StringBuilder();
     for (Formula arg : args) {
-      if (arg.evaluate(worksheet).getValueType() == ValueType.STRING) {
+      if (arg.evaluate(worksheet, cellLoc).getValueType() == ValueType.STRING) {
         StringValueVisitor stringVisitor = new StringValueVisitor();
-        concat.append(arg.evaluate(worksheet).accept(stringVisitor));
+        concat.append(arg.evaluate(worksheet, cellLoc).accept(stringVisitor));
       }
     }
     return new StringValue(concat.toString());

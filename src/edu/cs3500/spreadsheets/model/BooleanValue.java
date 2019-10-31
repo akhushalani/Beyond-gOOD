@@ -22,12 +22,12 @@ public class BooleanValue extends AbstractValue<Boolean> {
   }
 
   @Override
-  public Formula evaluate(Worksheet worksheet) {
+  public Formula evaluate(Worksheet worksheet, Coord cellLoc) {
     return new BooleanValue(this.value);
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet) {
+  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
     if (this.value) {
       return "true";
     } else {

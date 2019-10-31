@@ -18,12 +18,12 @@ public class Sum extends AbstractFunction<DoubleValue> {
   }
 
   @Override
-  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
+  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
     double sum = 0.0;
     for (Formula arg : args) {
-      if (arg.evaluate(worksheet).getValueType() == ValueType.DOUBLE) {
+      if (arg.evaluate(worksheet, cellLoc).getValueType() == ValueType.DOUBLE) {
         DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
-        sum += arg.evaluate(worksheet).accept(doubleVisitor);
+        sum += arg.evaluate(worksheet, cellLoc).accept(doubleVisitor);
       }
     }
 

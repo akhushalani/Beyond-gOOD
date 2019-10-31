@@ -33,7 +33,7 @@ public class FormulaCell implements Cell {
    */
   public FormulaCell(Coord location, Formula formula, String rawContents, Worksheet worksheet) {
     this.location = location;
-    ReferenceFormulaVisitor refVisitor = new ReferenceFormulaVisitor(worksheet);
+    ReferenceFormulaVisitor refVisitor = new ReferenceFormulaVisitor(worksheet, this.location);
     this.directRefs = formula.accept(refVisitor);
     this.formula = formula;
     this.rawContents = rawContents;
@@ -62,7 +62,7 @@ public class FormulaCell implements Cell {
   @Override
   public String evaluate(Worksheet worksheet) {
     worksheet.clearCalculatedReferences();
-    return this.formula.evaluate(worksheet).getPrintString(worksheet);
+    return this.formula.evaluate(worksheet, this.location).getPrintString(worksheet, this.location);
   }
 
   @Override

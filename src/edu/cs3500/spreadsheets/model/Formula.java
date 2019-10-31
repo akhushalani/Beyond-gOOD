@@ -12,14 +12,14 @@ public interface Formula {
    *
    * @return a Formula, either in its final form or in need of further evaluation, as a Formula.
    */
-  Formula evaluate(Worksheet worksheet);
+  Formula evaluate(Worksheet worksheet, Coord cellLoc);
 
   /**
    * Converts a formula to a simplified String representation of the Formula.
    * @param worksheet the worksheet within which the Formula in question exists.
    * @return a simplified String representation of the Formula.
    */
-  String getPrintString(Worksheet worksheet);
+  String getPrintString(Worksheet worksheet, Coord cellLoc);
 
   /**
    * Retrieves the ValueType of a Formula.

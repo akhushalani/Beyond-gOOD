@@ -20,13 +20,13 @@ public abstract class AbstractFunction<T extends Formula> implements Function<T>
   }
 
   @Override
-  public Formula evaluate(Worksheet worksheet) {
-    return evaluateFunction(args, worksheet);
+  public Formula evaluate(Worksheet worksheet, Coord cellLoc) {
+    return evaluateFunction(args, worksheet, cellLoc);
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet) {
-    return evaluateFunction(args, worksheet).getPrintString(worksheet);
+  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
+    return evaluateFunction(args, worksheet, cellLoc).getPrintString(worksheet, cellLoc);
   }
 
   @Override

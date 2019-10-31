@@ -11,15 +11,16 @@ public class SquareRoot extends AbstractFunction<DoubleValue> {
   }
 
   @Override
-  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
+  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
     if (args.size() != 1) {
       throw new IllegalArgumentException("Incorrect number of arguments.");
-    } else if (args.get(0).evaluate(worksheet).getValueType() != ValueType.DOUBLE) {
+    } else if (args.get(0).evaluate(worksheet, cellLoc).getValueType() != ValueType.DOUBLE) {
       throw new IllegalArgumentException("Invalid argument. Must use double argument.");
     } else {
       DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
-      if (args.get(0).evaluate(worksheet).accept(doubleVisitor) >= 0) {
-        return new DoubleValue(Math.sqrt(args.get(0).evaluate(worksheet).accept(doubleVisitor)));
+      if (args.get(0).evaluate(worksheet, cellLoc).accept(doubleVisitor) >= 0) {
+        return new DoubleValue(Math.sqrt(
+                args.get(0).evaluate(worksheet, cellLoc).accept(doubleVisitor)));
       } else {
         throw new IllegalArgumentException("Argument cannot be negative.");
       }

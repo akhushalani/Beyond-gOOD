@@ -18,14 +18,14 @@ public class Not extends AbstractFunction<BooleanValue> {
   }
 
   @Override
-  public BooleanValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
+  public BooleanValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
     if (args.size() != 1) {
       throw new IllegalArgumentException("Incorrect number of arguments.");
-    } else if (args.get(0).evaluate(worksheet).getValueType() != ValueType.BOOLEAN) {
+    } else if (args.get(0).evaluate(worksheet, cellLoc).getValueType() != ValueType.BOOLEAN) {
       throw new IllegalArgumentException("Invalid argument. Must use boolean argument.");
     } else {
       BooleanValueVisitor booleanVisitor = new BooleanValueVisitor();
-      return new BooleanValue(!args.get(0).evaluate(worksheet).accept(booleanVisitor));
+      return new BooleanValue(!args.get(0).evaluate(worksheet, cellLoc).accept(booleanVisitor));
     }
   }
 }

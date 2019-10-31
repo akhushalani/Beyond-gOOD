@@ -90,6 +90,9 @@ public class FunctionTest {
             .createCell(11, 3, "=(SUM 1 2 0)")
             .createCell(11, 4, "=(SUM A3 A4 A5)")
             .createCell(11, 5, "=(SUM 7 true)")
+            .createCell(11, 6, "=(SUM K6)")
+            .createCell(11, 7, "=(SUM K8)")
+            .createCell(11, 8, "=(SUM K7)")
             .createWorksheet();
   }
 
@@ -272,5 +275,17 @@ public class FunctionTest {
     assertEquals(worksheet.getCellAt(new Coord(11, 3)).evaluate(worksheet), "3.000000");
     assertEquals(worksheet.getCellAt(new Coord(11, 4)).evaluate(worksheet), "-1.000000");
     assertEquals(worksheet.getCellAt(new Coord(11, 5)).evaluate(worksheet), "7.000000");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSumInvalidArgs1() {
+    initWorksheet();
+    worksheet.getCellAt(new Coord(11, 6)).evaluate(worksheet);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSumInvalidArgs2() {
+    initWorksheet();
+    worksheet.getCellAt(new Coord(11, 8)).evaluate(worksheet);
   }
 }

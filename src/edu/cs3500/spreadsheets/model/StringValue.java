@@ -24,7 +24,7 @@ public class StringValue extends AbstractValue<String> {
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet) {
+  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
     String printString = this.getValue()
             .replace("\\", "\\\\")
             .replace("\"", "\\\"")
@@ -33,7 +33,7 @@ public class StringValue extends AbstractValue<String> {
   }
 
   @Override
-  public Formula evaluate(Worksheet worksheet) {
+  public Formula evaluate(Worksheet worksheet, Coord cellLoc) {
     return new StringValue(this.value);
   }
 
