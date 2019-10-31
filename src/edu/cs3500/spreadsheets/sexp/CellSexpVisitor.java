@@ -9,7 +9,6 @@ import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Concatenate;
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Divide;
 import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.FormulaCell;
@@ -23,6 +22,7 @@ import edu.cs3500.spreadsheets.model.SquareRoot;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Subtract;
 import edu.cs3500.spreadsheets.model.Sum;
+import edu.cs3500.spreadsheets.model.Worksheet;
 
 /**
  * A visitor that visits an s-expression and returns a Cell.
@@ -30,20 +30,22 @@ import edu.cs3500.spreadsheets.model.Sum;
 public class CellSexpVisitor implements SexpVisitor<Cell> {
   private Coord location;
   private String rawContents;
+  private Worksheet worksheet;
 
-  public CellSexpVisitor(Coord location, String rawContents) {
+  public CellSexpVisitor(Coord location, String rawContents, Worksheet worksheet) {
     this.location = location;
     this.rawContents = rawContents;
+    this.worksheet = worksheet;
   }
 
   @Override
   public Cell visitBoolean(boolean b) {
-    return new FormulaCell(location, new BooleanValue(b), rawContents);
+    return new FormulaCell(location, new BooleanValue(b), rawContents, worksheet);
   }
 
   @Override
   public Cell visitNumber(double d) {
-    return new FormulaCell(location, new DoubleValue(d), rawContents);
+    return new FormulaCell(location, new DoubleValue(d), rawContents, worksheet);
   }
 
   @Override
@@ -102,7 +104,7 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitString(String s) {
-    return new FormulaCell(location, new StringValue(s), rawContents);
+    return new FormulaCell(location, new StringValue(s), rawContents, worksheet);
   }
 
   @Override

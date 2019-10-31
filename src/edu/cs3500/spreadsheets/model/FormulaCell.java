@@ -26,6 +26,20 @@ public class FormulaCell implements Cell {
   }
 
   /**
+   * Public constructor for when cell is created from builder to check for cyclic references.
+   *
+   * @param location coordinates for where cell is to be created in spreadsheet
+   * @param formula formula to be evaluated in cell
+   */
+  public FormulaCell(Coord location, Formula formula, String rawContents, Worksheet worksheet) {
+    this.location = location;
+    ReferenceFormulaVisitor refVisitor = new ReferenceFormulaVisitor(worksheet);
+    this.directRefs = formula.accept(refVisitor);
+    this.formula = formula;
+    this.rawContents = rawContents;
+  }
+
+  /**
    * Public constructor for when cell is represented by Cell
    * in worksheet, i.e. when cell has existing direct references.
    *
