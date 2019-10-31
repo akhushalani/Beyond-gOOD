@@ -67,8 +67,9 @@ public class FunctionTest {
             .createCell(8, 4, "=(PRODUCT 2 0)")
             .createCell(8, 5, "=(PRODUCT A3 A5)")
             .createCell(8, 6, "=(PRODUCT A3 A4 A5)")
-            .createCell(8, 7, "=(PRODUCT A3 0 A5)")
-            .createCell(8, 8, "=(PRODUCT 1 true)")
+            .createCell(8, 7, "=(PRODUCT A3:A5)")
+            .createCell(8, 8, "=(PRODUCT A3 0 A5)")
+            .createCell(8, 9, "=(PRODUCT 1 true)")
             // SQRT tests
             .createCell(9, 1, "=(SQRT 1)")
             .createCell(9, 2, "=(SQRT 0)")
@@ -217,7 +218,8 @@ public class FunctionTest {
     assertEquals(worksheet.getCellAt(new Coord(8, 5)).evaluate(worksheet), "-2.000000");
     assertEquals(worksheet.getCellAt(new Coord(8, 6)).evaluate(worksheet), "0.000000");
     assertEquals(worksheet.getCellAt(new Coord(8, 7)).evaluate(worksheet), "0.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 8)).evaluate(worksheet), "1.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 8)).evaluate(worksheet), "0.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 9)).evaluate(worksheet), "1.000000");
   }
 
   @Test
