@@ -52,18 +52,16 @@ public class BeyondGood {
             outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell " +
                     "reference.\n");
           }
-          outputString.append(ws.getCellAt(cellCoord).evaluate(ws) + "\n");
+          outputString.append(ws.getCellAt(cellCoord).evaluate(ws));
         }
-      }
-      else {
-        outputString.append("Insufficient arguments, no cell name specified.\n");
-      }
-      if (args.length > 4) {
+      } else if (args.length > 4) {
         outputString.append("Too many arguments were specified.\n");
+      } else {
+        outputString.append("Insufficient arguments, no cell name specified.\n");
       }
     }
 
-    System.out.println(outputString);
+    System.out.print(outputString.toString());
   }
 
   // Takes a Cell Reference as a String and returns its Coord equivalent.
