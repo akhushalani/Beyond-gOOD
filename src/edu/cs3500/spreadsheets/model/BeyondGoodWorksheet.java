@@ -15,7 +15,7 @@ public class BeyondGoodWorksheet implements Worksheet {
    *     Coords to Cells.
    */
   public BeyondGoodWorksheet() {
-    worksheet = new HashMap<>();
+    this.worksheet = new HashMap<>();
     this.calculatedReferences = new HashMap<>();
   }
 
