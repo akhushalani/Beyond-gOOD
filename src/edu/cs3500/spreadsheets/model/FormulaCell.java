@@ -62,7 +62,16 @@ public class FormulaCell implements Cell {
   @Override
   public String evaluate(Worksheet worksheet) {
     worksheet.clearCalculatedReferences();
-    return this.formula.evaluate(worksheet, this.location).getPrintString(worksheet, this.location);
+    String output = "";
+    try {
+      output += this.formula.evaluate(worksheet, this.location)
+              .getPrintString(worksheet, this.location);
+    } catch (IllegalArgumentException ex) {
+      int colonIndex = ex.toString().indexOf(":");
+      String errorMsg = ex.toString().substring(colonIndex);
+      output += "Error in cell " + this.location.toString() + errorMsg;
+    }
+    return output;
   }
 
   @Override
