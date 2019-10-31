@@ -109,7 +109,7 @@ public class FormulaCellTest {
   private ArrayList<String> los;
 
 
-  public void initVars() {
+  private void initVars() {
     ws = new BeyondGoodWorksheet();
     loCoord1 = new ArrayList<>();
     loCoord2 = new ArrayList<>();
