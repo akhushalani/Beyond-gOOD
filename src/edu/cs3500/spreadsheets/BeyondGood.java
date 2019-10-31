@@ -41,19 +41,19 @@ public class BeyondGood {
       - evaluate all the cells, and
       - report any errors, or print the evaluated value of the requested cell.
     */
+    BeyondGoodWorksheet ws = null;
     if (args.length > 0 && args[0].equals("-in")) {
-      BeyondGoodWorksheet ws;
       if (args.length > 1) {
         try {
           // When doing this how do we get individual cell formation errors?
           ws = WorksheetReader.read(new BeyondGoodWorksheetBuilder(), new FileReader(args[1]));
         } catch (FileNotFoundException e) {
-          throw new IllegalArgumentException("Insufficient arguments, file specified does not " +
+          outputString.append("Insufficient arguments, file specified does not " +
                   "exist.");
         }
       }
       else {
-        throw new IllegalArgumentException("Insufficient arguments, no file name specified.");
+        outputString.append("Insufficient arguments, no file name specified.");
       }
       if (args.length > 2 && args[2].equals("-eval")) {
         if (args.length > 3) {
@@ -68,6 +68,12 @@ public class BeyondGood {
           }
           outputString.append(ws.getCellAt(cellCoord).evaluate(ws.getWorksheet()));
         }
+      }
+      else {
+        outputString.append("Insufficient arguments, no cell name specified.");
+      }
+      if (args.length > 4) {
+        outputString.append("Too many arguments were specified.");
       }
     }
   }
