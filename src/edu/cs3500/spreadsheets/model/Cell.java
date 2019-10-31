@@ -39,4 +39,10 @@ public interface Cell {
    * @return boolean value whether or not the Cell has a cyclic reference.
    */
   boolean cyclicReference(Coord location);
+
+  /**
+   * Returns the raw contents of the cell.
+   * @return the String contents of the cell
+   */
+  String getRawContents();
 }

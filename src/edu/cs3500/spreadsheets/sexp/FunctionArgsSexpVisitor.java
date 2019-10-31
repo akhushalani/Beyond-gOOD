@@ -8,7 +8,6 @@ import edu.cs3500.spreadsheets.model.And;
 import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Concatenate;
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Divide;
 import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.GreaterThan;
@@ -66,9 +65,6 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
           break;
         case "CONCAT":
           this.args.add(new Concatenate(innerArgs));
-          break;
-        case "DIV":
-          this.args.add(new Divide(innerArgs));
           break;
         case ">":
           this.args.add(new GreaterThan(innerArgs));

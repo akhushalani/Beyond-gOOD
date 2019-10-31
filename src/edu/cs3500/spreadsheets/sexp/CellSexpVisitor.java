@@ -9,7 +9,6 @@ import edu.cs3500.spreadsheets.model.BooleanValue;
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Concatenate;
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Divide;
 import edu.cs3500.spreadsheets.model.DoubleValue;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.FormulaCell;
@@ -29,19 +28,21 @@ import edu.cs3500.spreadsheets.model.Sum;
  */
 public class CellSexpVisitor implements SexpVisitor<Cell> {
   private Coord location;
+  private String rawContents;
 
-  public CellSexpVisitor(Coord location) {
+  public CellSexpVisitor(Coord location, String rawContents) {
     this.location = location;
+    this.rawContents = rawContents;
   }
 
   @Override
   public Cell visitBoolean(boolean b) {
-    return new FormulaCell(location, new BooleanValue(b));
+    return new FormulaCell(location, new BooleanValue(b), rawContents);
   }
 
   @Override
   public Cell visitNumber(double d) {
-    return new FormulaCell(location, new DoubleValue(d));
+    return new FormulaCell(location, new DoubleValue(d), rawContents);
   }
 
   @Override
@@ -65,27 +66,25 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
       FunctionNameVisitor nameVisitor = new FunctionNameVisitor();
       switch (l.get(0).accept(nameVisitor)) {
         case "AND":
-          return new FormulaCell(location, refList, new And(functionArgs));
+          return new FormulaCell(location, refList, new And(functionArgs), rawContents);
         case "CONCAT":
-          return new FormulaCell(location, refList, new Concatenate(functionArgs));
-        case "DIV":
-          return new FormulaCell(location, refList, new Divide(functionArgs));
+          return new FormulaCell(location, refList, new Concatenate(functionArgs), rawContents);
         case ">":
-          return new FormulaCell(location, refList, new GreaterThan(functionArgs));
+          return new FormulaCell(location, refList, new GreaterThan(functionArgs), rawContents);
         case "<":
-          return new FormulaCell(location, refList, new LessThan(functionArgs));
+          return new FormulaCell(location, refList, new LessThan(functionArgs), rawContents);
         case "NOT":
-          return new FormulaCell(location, refList, new Not(functionArgs));
+          return new FormulaCell(location, refList, new Not(functionArgs), rawContents);
         case "OR":
-          return new FormulaCell(location, refList, new Or(functionArgs));
+          return new FormulaCell(location, refList, new Or(functionArgs), rawContents);
         case "PRODUCT":
-          return new FormulaCell(location, refList, new Product(functionArgs));
+          return new FormulaCell(location, refList, new Product(functionArgs), rawContents);
         case "SQRT":
-          return new FormulaCell(location, refList, new SquareRoot(functionArgs));
+          return new FormulaCell(location, refList, new SquareRoot(functionArgs), rawContents);
         case "SUB":
-          return new FormulaCell(location, refList, new Subtract(functionArgs));
+          return new FormulaCell(location, refList, new Subtract(functionArgs), rawContents);
         case "SUM":
-          return new FormulaCell(location, refList, new Sum(functionArgs));
+          return new FormulaCell(location, refList, new Sum(functionArgs), rawContents);
         default:
           // will never run
           throw new IllegalArgumentException("Should not run.");
@@ -102,7 +101,7 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitString(String s) {
-    return new FormulaCell(location, new StringValue(s));
+    return new FormulaCell(location, new StringValue(s), rawContents);
   }
 
   @Override
@@ -110,7 +109,7 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
     if (validReference(s)) {
       ArrayList<Coord> refList = new ArrayList<>();
       refList.add(parseCoord(s));
-      return new FormulaCell(location, refList, new Reference(parseCoord(s)));
+      return new FormulaCell(location, refList, new Reference(parseCoord(s)), rawContents);
     } else {
       throw new IllegalArgumentException("Invalid input. "
               + "Input must be a boolean, number, String, or formula.");

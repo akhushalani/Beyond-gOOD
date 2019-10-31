@@ -13,7 +13,6 @@ public class FunctionCheckSexpVisitor implements SexpVisitor<Boolean> {
           = Collections.unmodifiableList(Arrays.asList(
           "AND",
           "CONCAT",
-          "DIV",
           ">",
           "<",
           "NOT",

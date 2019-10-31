@@ -14,9 +14,11 @@ import edu.cs3500.spreadsheets.model.StringValue;
  */
 public class ValueCellSexpVisitor implements SexpVisitor<Cell> {
   private Coord location;
+  private String rawContents;
 
-  public ValueCellSexpVisitor(Coord location) {
+  public ValueCellSexpVisitor(Coord location, String rawContents) {
     this.location = location;
+    this.rawContents = rawContents;
   }
 
   @Override
@@ -26,7 +28,7 @@ public class ValueCellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitString(String s) {
-    return new FormulaCell(location, new StringValue(s));
+    return new FormulaCell(location, new StringValue(s), rawContents);
   }
 
   @Override
@@ -36,11 +38,11 @@ public class ValueCellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitNumber(double d) {
-    return new FormulaCell(location, new DoubleValue(d));
+    return new FormulaCell(location, new DoubleValue(d), rawContents);
   }
 
   @Override
   public Cell visitBoolean(boolean b) {
-    return new FormulaCell(location, new BooleanValue(b));
+    return new FormulaCell(location, new BooleanValue(b), rawContents);
   }
 }

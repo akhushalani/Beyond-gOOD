@@ -10,6 +10,7 @@ public class FormulaCell implements Cell {
   private ArrayList<Coord> directRefs;
   private Coord location;
   private Formula formula;
+  private String rawContents;
 
   /**
    * Public constructor for when cell is null in worksheet.
@@ -17,10 +18,11 @@ public class FormulaCell implements Cell {
    * @param location coordinates for where cell is to be created in spreadsheet
    * @param formula formula to be evaluated in cell
    */
-  public FormulaCell(Coord location, Formula formula) {
+  public FormulaCell(Coord location, Formula formula, String rawContents) {
     this.location = location;
     this.directRefs = new ArrayList<>();
     this.formula = formula;
+    this.rawContents = rawContents;
   }
 
   /**
@@ -31,10 +33,12 @@ public class FormulaCell implements Cell {
    * @param location coordinates fro where cell is to be created in spreadsheet
    * @param formula formula to be evaluated in cell
    */
-  public FormulaCell(Coord location, ArrayList<Coord> existingRefs, Formula formula) {
+  public FormulaCell(Coord location, ArrayList<Coord> existingRefs, Formula formula,
+                     String rawContents) {
     this.location = location;
     this.directRefs = existingRefs;
     this.formula = formula;
+    this.rawContents = rawContents;
   }
 
   @Override
@@ -56,6 +60,11 @@ public class FormulaCell implements Cell {
   @Override
   public String getCellName() {
     return location.toString();
+  }
+
+  @Override
+  public String getRawContents() {
+    return this.rawContents;
   }
 
   @Override
