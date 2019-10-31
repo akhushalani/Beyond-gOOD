@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A broad interface for handling cells in a spreadsheet of any type.
@@ -32,7 +31,7 @@ public interface Cell {
    * @param worksheet the worksheet within which the Cell and its references exist.
    * @return the String representation of the cell value
    */
-  String evaluate(HashMap<Coord, Cell> worksheet);
+  String evaluate(Worksheet worksheet);
 
   /**
    * Evaluates whether or not the given cell has a cyclic reference.

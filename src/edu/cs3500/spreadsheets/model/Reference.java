@@ -1,6 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -19,22 +18,31 @@ public class Reference implements Formula {
   }
 
   @Override
-  public Formula evaluate(HashMap<Coord, Cell> spreadsheet) {
-    if (spreadsheet.get(refLocation).getFormula() == null) {
+  public Formula evaluate(Worksheet worksheet) {
+    if (worksheet.getWorksheet().get(refLocation).getFormula() == null) {
       return null;
+    } else if (!worksheet.hasCalculatedReference(refLocation)) {
+      worksheet.addCalculatedReference(refLocation,
+              worksheet.getWorksheet().get(refLocation).getFormula().evaluate(worksheet));
+      return worksheet.getCalculatedReference(refLocation);
     } else {
-      return spreadsheet.get(refLocation).getFormula().evaluate(spreadsheet);
+      return worksheet.getCalculatedReference(refLocation);
     }
   }
 
   @Override
-  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+  public String getPrintString(Worksheet worksheet) {
     return refLocation.toString();
   }
 
   @Override
   public ValueType getValueType() {
     return ValueType.NONE;
+  }
+
+  @Override
+  public <R> R accept(FormulaVisitor<R> visitor) {
+    return visitor.visitReference(this);
   }
 
   @Override

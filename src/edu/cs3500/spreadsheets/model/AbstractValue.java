@@ -1,6 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -17,11 +16,6 @@ public abstract class AbstractValue<T> implements Formula {
    */
   public final T getValue() {
     return value;
-  }
-
-  @Override
-  public Formula evaluate(HashMap<Coord, Cell> spreadsheet) {
-    return this;
   }
 
   @Override

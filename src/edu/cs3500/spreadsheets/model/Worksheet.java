@@ -26,5 +26,13 @@ public interface Worksheet {
   /**
    * Retrieves the worksheet from the Worksheet as a HashMap.
    */
-  HashMap getWorksheet();
+  HashMap<Coord, Cell> getWorksheet();
+
+  Formula getCalculatedReference(Coord coord);
+
+  boolean hasCalculatedReference(Coord coord);
+
+  void addCalculatedReference(Coord coord, Formula formula);
+
+  void clearCalculatedReferences();
 }

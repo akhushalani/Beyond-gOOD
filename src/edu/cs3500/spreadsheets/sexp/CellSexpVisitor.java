@@ -19,6 +19,7 @@ import edu.cs3500.spreadsheets.model.Not;
 import edu.cs3500.spreadsheets.model.Or;
 import edu.cs3500.spreadsheets.model.Product;
 import edu.cs3500.spreadsheets.model.Reference;
+import edu.cs3500.spreadsheets.model.SquareRoot;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Subtract;
 import edu.cs3500.spreadsheets.model.Sum;
@@ -48,7 +49,7 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
       ArrayList<Coord> refList = new ArrayList<>();
       FunctionArgsSexpVisitor argsVisitor = new FunctionArgsSexpVisitor();
       ReferenceSexpVisitor refVisitor = new ReferenceSexpVisitor();
-      for (int i = 0; i < l.size(); i++) {
+      for (int i = 1; i < l.size(); i++) {
         if (i != l.size() - 1) {
           l.get(i).accept(argsVisitor);
           l.get(i).accept(refVisitor);
@@ -76,6 +77,8 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
           return new FormulaCell(location, refList, new Or(functionArgs));
         case "PRODUCT":
           return new FormulaCell(location, refList, new Product(functionArgs));
+        case "SQRT":
+          return new FormulaCell(location, refList, new SquareRoot(functionArgs));
         case "SUB":
           return new FormulaCell(location, refList, new Subtract(functionArgs));
         case "SUM":
@@ -130,7 +133,7 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
       }
     }
 
-    for (int j = s.length() - 1; j > 0; j--) {
+    for (int j = s.length() - 1; j >= 0; j--) {
       char d = s.charAt(j);
       if (Character.isLetter(d)) {
         lastLetter = j;
@@ -153,7 +156,7 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
       }
     }
 
-    for (int j = s.length() - 1; j > 0; j--) {
+    for (int j = s.length() - 1; j >= 0; j--) {
       char d = s.charAt(j);
       if (Character.isLetter(d)) {
         lastLetter = j;

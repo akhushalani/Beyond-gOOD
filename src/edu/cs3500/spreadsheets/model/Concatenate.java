@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *  Represents the excel function Concatenate, which returns a StringValue.
@@ -19,11 +18,20 @@ public class Concatenate extends AbstractFunction<StringValue> {
   }
 
   @Override
-  public StringValue evaluateFunction(ArrayList<Formula> args, HashMap<Coord, Cell> worksheet) {
+  public StringValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
     StringBuilder concat = new StringBuilder();
     for (Formula arg : args) {
-      if (arg.getValueType() != ValueType.NONE) {
-        concat.append(arg.getPrintString(worksheet));
+      if (arg.evaluate(worksheet).getValueType() != ValueType.NONE) {
+        if (arg.evaluate(worksheet).getValueType() == ValueType.DOUBLE) {
+          DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
+          concat.append(arg.evaluate(worksheet).accept(doubleVisitor));
+        } else if (arg.evaluate(worksheet).getValueType() == ValueType.BOOLEAN) {
+          BooleanValueVisitor booleanVisitor = new BooleanValueVisitor();
+          concat.append(arg.evaluate(worksheet).accept(booleanVisitor));
+        } else {
+          StringValueVisitor stringVisitor = new StringValueVisitor();
+          concat.append(arg.evaluate(worksheet).accept(stringVisitor));
+        }
       }
     }
     return new StringValue(concat.toString());

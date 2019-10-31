@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents the excel function Sum, which returns a DoubleValue.
@@ -19,11 +18,12 @@ public class Sum extends AbstractFunction<DoubleValue> {
   }
 
   @Override
-  public DoubleValue evaluateFunction(ArrayList<Formula> args, HashMap<Coord, Cell> worksheet) {
+  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
     double sum = 0.0;
     for (Formula arg : args) {
-      if (arg.getValueType() == ValueType.DOUBLE) {
-        sum += ((DoubleValue) arg.evaluate(worksheet)).getValue();
+      if (arg.evaluate(worksheet).getValueType() == ValueType.DOUBLE) {
+        DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
+        sum += arg.evaluate(worksheet).accept(doubleVisitor);
       }
     }
 

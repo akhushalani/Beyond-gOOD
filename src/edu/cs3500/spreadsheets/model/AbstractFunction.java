@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents an abstract implementation of the Function interface containing the common elements
@@ -21,13 +20,18 @@ public abstract class AbstractFunction<T extends Formula> implements Function<T>
   }
 
   @Override
-  public Formula evaluate(HashMap<Coord, Cell> worksheet) {
+  public Formula evaluate(Worksheet worksheet) {
     return evaluateFunction(args, worksheet);
   }
 
   @Override
-  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+  public String getPrintString(Worksheet worksheet) {
     return evaluateFunction(args, worksheet).getPrintString(worksheet);
+  }
+
+  @Override
+  public <R> R accept(FormulaVisitor<R> visitor) {
+    return visitor.visitFunction(this);
   }
 
   @Override

@@ -1,8 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.HashMap;
-import java.util.Objects;
-
 /**
  * Formulas that evaluate to values that are doubles. These formulas extend the AbstractValue
  * abstract class and are a type of Formula.
@@ -24,7 +21,22 @@ public class DoubleValue extends AbstractValue<Double> {
   }
 
   @Override
-  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+  public String getPrintString(Worksheet worksheet) {
+    return String.format("%f", this.value);
+  }
+
+  @Override
+  public <R> R accept(FormulaVisitor<R> visitor) {
+    return visitor.visitDoubleValue(this);
+  }
+
+  @Override
+  public Formula evaluate(Worksheet worksheet) {
+    return new DoubleValue(this.value);
+  }
+
+  @Override
+  public String toString() {
     return String.format("%f", this.value);
   }
 

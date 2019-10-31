@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -39,7 +38,8 @@ public class FormulaCell implements Cell {
   }
 
   @Override
-  public String evaluate(HashMap<Coord, Cell> worksheet) {
+  public String evaluate(Worksheet worksheet) {
+    worksheet.clearCalculatedReferences();
     return this.formula.evaluate(worksheet).getPrintString(worksheet);
   }
 

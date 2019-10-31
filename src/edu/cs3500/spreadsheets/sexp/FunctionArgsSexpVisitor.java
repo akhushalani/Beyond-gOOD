@@ -17,6 +17,7 @@ import edu.cs3500.spreadsheets.model.Not;
 import edu.cs3500.spreadsheets.model.Or;
 import edu.cs3500.spreadsheets.model.Product;
 import edu.cs3500.spreadsheets.model.Reference;
+import edu.cs3500.spreadsheets.model.SquareRoot;
 import edu.cs3500.spreadsheets.model.StringValue;
 import edu.cs3500.spreadsheets.model.Subtract;
 import edu.cs3500.spreadsheets.model.Sum;
@@ -80,6 +81,9 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
         case "PRODUCT":
           this.args.add(new Product(innerArgs));
           break;
+        case "SQRT":
+          this.args.add(new SquareRoot(innerArgs));
+          break;
         case "SUB":
           this.args.add(new Subtract(innerArgs));
           break;
@@ -126,7 +130,7 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
         Coord secondCoord = parseCoord(secondRef);
         if (secondCoord.col >= firstCoord.col && secondCoord.row >= firstCoord.row) {
           for (int i = firstCoord.col; i <= secondCoord.col; i++) {
-            for (int j = firstCoord.row; j <= secondCoord.row; i++) {
+            for (int j = firstCoord.row; j <= secondCoord.row; j++) {
               this.args.add(new Reference(new Coord(i, j)));
             }
           }
@@ -158,7 +162,7 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
       }
     }
 
-    for (int j = s.length() - 1; j > 0; j--) {
+    for (int j = s.length() - 1; j >= 0; j--) {
       char d = s.charAt(j);
       if (Character.isLetter(d)) {
         lastLetter = j;
@@ -181,7 +185,7 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
       }
     }
 
-    for (int j = s.length() - 1; j > 0; j--) {
+    for (int j = s.length() - 1; j >= 0; j--) {
       char d = s.charAt(j);
       if (Character.isLetter(d)) {
         lastLetter = j;

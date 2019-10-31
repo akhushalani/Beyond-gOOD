@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents the excel function Not, which returns a BooleanValue.
@@ -19,13 +18,14 @@ public class Not extends AbstractFunction<BooleanValue> {
   }
 
   @Override
-  public BooleanValue evaluateFunction(ArrayList<Formula> args, HashMap<Coord, Cell> worksheet) {
+  public BooleanValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
     if (args.size() != 1) {
       throw new IllegalArgumentException("Incorrect number of arguments.");
-    } else if (args.get(0).getValueType() != ValueType.BOOLEAN) {
+    } else if (args.get(0).evaluate(worksheet).getValueType() != ValueType.BOOLEAN) {
       throw new IllegalArgumentException("Invalid argument. Must use boolean argument.");
     } else {
-      return new BooleanValue(!((BooleanValue) args.get(0).evaluate(worksheet)).getValue());
+      BooleanValueVisitor booleanVisitor = new BooleanValueVisitor();
+      return new BooleanValue(!args.get(0).evaluate(worksheet).accept(booleanVisitor));
     }
   }
 }

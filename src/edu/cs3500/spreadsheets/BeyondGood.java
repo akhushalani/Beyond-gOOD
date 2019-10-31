@@ -2,26 +2,12 @@ package edu.cs3500.spreadsheets;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheet;
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Worksheet;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
-import edu.cs3500.spreadsheets.sexp.CellSexpVisitor;
-import edu.cs3500.spreadsheets.sexp.Parser;
-import edu.cs3500.spreadsheets.sexp.Sexp;
-import edu.cs3500.spreadsheets.sexp.SexpVisitor;
 
 /**
  * The main class for our program.
@@ -58,7 +44,7 @@ public class BeyondGood {
       if (args.length > 2 && args[2].equals("-eval")) {
         if (args.length > 3) {
           Coord cellCoord = null;
-          String cellToEval = args[4];
+          String cellToEval = args[3];
           if (validReference(cellToEval)) {
             cellCoord = parseCoord(cellToEval);
           }
@@ -66,7 +52,7 @@ public class BeyondGood {
             outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell " +
                     "reference.");
           }
-          outputString.append(ws.getCellAt(cellCoord).evaluate(ws.getWorksheet()));
+          outputString.append(ws.getCellAt(cellCoord).evaluate(ws));
         }
       }
       else {
@@ -76,6 +62,8 @@ public class BeyondGood {
         outputString.append("Too many arguments were specified.");
       }
     }
+
+    System.out.println(outputString);
   }
 
   // Takes a Cell Reference as a String and returns its Coord equivalent.
@@ -91,7 +79,7 @@ public class BeyondGood {
       }
     }
 
-    for (int j = s.length() - 1; j > 0; j--) {
+    for (int j = s.length() - 1; j >= 0; j--) {
       char d = s.charAt(j);
       if (Character.isLetter(d)) {
         lastLetter = j;
@@ -126,7 +114,7 @@ public class BeyondGood {
         }
       }
 
-      for (int j = s.length() - 1; j > 0; j--) {
+      for (int j = s.length() - 1; j >= 0; j--) {
         char d = s.charAt(j);
         if (Character.isLetter(d)) {
           lastLetter = j;

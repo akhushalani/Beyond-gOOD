@@ -7,12 +7,12 @@ public class FunctionNameVisitor implements SexpVisitor<String> {
 
   @Override
   public String visitSymbol(String s) {
-    return null;
+    return s;
   }
 
   @Override
   public String visitString(String s) {
-    return s;
+    return null;
   }
 
   @Override

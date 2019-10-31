@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents the excel function Product, which returns a DoubleValue.
@@ -19,11 +18,12 @@ public class Product extends AbstractFunction<DoubleValue> {
   }
 
   @Override
-  public DoubleValue evaluateFunction(ArrayList<Formula> args, HashMap<Coord, Cell> worksheet) {
-    double product = 0.0;
+  public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
+    double product = 1.0;
+    DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
     for (Formula arg : args) {
-      if (arg.getValueType() == ValueType.NONE) {
-        product *= ((DoubleValue) arg.evaluate(worksheet)).getValue();
+      if (arg.evaluate(worksheet).getValueType() == ValueType.DOUBLE) {
+        product *= arg.evaluate(worksheet).accept(doubleVisitor);
       }
     }
 

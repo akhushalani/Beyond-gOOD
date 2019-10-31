@@ -1,8 +1,5 @@
 package edu.cs3500.spreadsheets.model;
 
-import java.util.HashMap;
-import java.util.Objects;
-
 /**
  * Formulas that evaluate to values that are booleans. These formulas extend the AbstractValue
  * abstract class and are a type of Formula.
@@ -23,12 +20,22 @@ public class BooleanValue extends AbstractValue<Boolean> {
   }
 
   @Override
-  public String getPrintString(HashMap<Coord, Cell> worksheet) {
+  public Formula evaluate(Worksheet worksheet) {
+    return new BooleanValue(this.value);
+  }
+
+  @Override
+  public String getPrintString(Worksheet worksheet) {
     if (this.value) {
       return "true";
     } else {
       return "false";
     }
+  }
+
+  @Override
+  public <R> R accept(FormulaVisitor<R> visitor) {
+    return visitor.visitBooleanValue(this);
   }
 
   @Override

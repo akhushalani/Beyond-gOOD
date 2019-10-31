@@ -1,7 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents a Function type Formula that represents when the value of a cell in the worksheet
@@ -17,5 +16,5 @@ public interface Function<T> extends Formula {
    * @param worksheet the worksheet within which the Function and its arguments exist.
    * @return Generic T datatype that represents whatever the given Function returns.
    */
-  T evaluateFunction(ArrayList<Formula> args, HashMap<Coord, Cell> worksheet);
+  T evaluateFunction(ArrayList<Formula> args, Worksheet worksheet);
 }

@@ -15,6 +15,7 @@ public class FunctionCheckSexpVisitor implements SexpVisitor<Boolean> {
           "NOT",
           "OR",
           "PRODUCT",
+          "SQRT",
           "SUB",
           "SUM"));
 

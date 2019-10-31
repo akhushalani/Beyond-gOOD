@@ -8,6 +8,7 @@ import java.util.HashMap;
  */
 public class BeyondGoodWorksheet implements Worksheet {
   private HashMap<Coord, Cell> worksheet;
+  private HashMap<Coord, Formula> calculatedReferences;
 
   /**
    * Represents the default Constructor for a BeyondGoodWorkSheet, which establishes a HashMap of
@@ -24,6 +25,7 @@ public class BeyondGoodWorksheet implements Worksheet {
    */
   public BeyondGoodWorksheet(HashMap<Coord, Cell> worksheet) {
     this.worksheet = worksheet;
+    this.calculatedReferences = new HashMap<>();
   }
 
   @Override
@@ -36,17 +38,38 @@ public class BeyondGoodWorksheet implements Worksheet {
     if (!cyclicReference(coord, cell)) {
       worksheet.put(coord, cell);
     } else {
-      throw new IllegalArgumentException("Cell contains a cyclic reference.");
+      throw new IllegalArgumentException("Error in cell " + coord.toString()
+              + ": Cell contains a cyclic reference.");
     }
   }
 
   @Override
-  public HashMap getWorksheet() {
+  public HashMap<Coord, Cell> getWorksheet() {
     HashMap<Coord, Cell> wsToBeReturned = new HashMap<>();
     for (Coord c : this.worksheet.keySet()) {
       wsToBeReturned.put(c, this.worksheet.get(c));
     }
     return wsToBeReturned;
+  }
+
+  @Override
+  public Formula getCalculatedReference(Coord coord) {
+    return calculatedReferences.get(coord);
+  }
+
+  @Override
+  public boolean hasCalculatedReference(Coord coord) {
+    return calculatedReferences.containsKey(coord);
+  }
+
+  @Override
+  public void addCalculatedReference(Coord coord, Formula formula) {
+    this.calculatedReferences.put(coord, formula);
+  }
+
+  @Override
+  public void clearCalculatedReferences() {
+    this.calculatedReferences.clear();
   }
 
   /**
