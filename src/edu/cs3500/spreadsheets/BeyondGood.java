@@ -35,11 +35,11 @@ public class BeyondGood {
           ws = WorksheetReader.read(new BeyondGoodWorksheetBuilder(), new FileReader(args[1]));
         } catch (FileNotFoundException e) {
           outputString.append("Insufficient arguments, file specified does not " +
-                  "exist.");
+                  "exist.\n");
         }
       }
       else {
-        outputString.append("Insufficient arguments, no file name specified.");
+        outputString.append("Insufficient arguments, no file name specified.\n");
       }
       if (args.length > 2 && args[2].equals("-eval")) {
         if (args.length > 3) {
@@ -50,16 +50,16 @@ public class BeyondGood {
           }
           else {
             outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell " +
-                    "reference.");
+                    "reference.\n");
           }
-          outputString.append(ws.getCellAt(cellCoord).evaluate(ws));
+          outputString.append(ws.getCellAt(cellCoord).evaluate(ws) + "\n");
         }
       }
       else {
-        outputString.append("Insufficient arguments, no cell name specified.");
+        outputString.append("Insufficient arguments, no cell name specified.\n");
       }
       if (args.length > 4) {
-        outputString.append("Too many arguments were specified.");
+        outputString.append("Too many arguments were specified.\n");
       }
     }
 
