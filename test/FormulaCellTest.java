@@ -18,11 +18,8 @@ import edu.cs3500.spreadsheets.model.Sum;
 import edu.cs3500.spreadsheets.model.Worksheet;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
-public class BeyondGoodWorksheetTest {
+public class FormulaCellTest {
   private Worksheet ws;
   private Coord coord1;
   private Coord coord2;
@@ -40,6 +37,9 @@ public class BeyondGoodWorksheetTest {
   private Coord coord14;
   private Coord coord15;
   private Coord coord16;
+  private Coord coord17;
+  private Coord coord18;
+  private Coord coord19;
   private Formula form1;
   private Formula form2;
   private Formula form3;
@@ -56,9 +56,15 @@ public class BeyondGoodWorksheetTest {
   private ArrayList<Formula> lessThanArgs;
   private ArrayList<Formula> prodArgs;
   private ArrayList<Formula> sumArgs;
-  private List<Formula> lof;
-  private List<Coord> loCoord;
-  private List<Cell> loCell;
+  private List<Formula> lof1;
+  private List<Formula> lof2;
+  private List<Formula> lof3;
+  private List<Coord> loCoord1;
+  private List<Coord> loCoord2;
+  private List<Coord> loCoord3;
+  private List<Cell> loCell1;
+  private List<Cell> loCell2;
+  private List<Cell> loCell3;
   private Cell cell1;
   private Cell cell2;
   private Cell cell3;
@@ -78,6 +84,15 @@ public class BeyondGoodWorksheetTest {
   private Cell cell15;
   private Formula form16;
   private Cell cell16;
+  private ArrayList<Cell> masterCellList;
+  private ArrayList<Formula> masterFormulaList;
+  private ArrayList<Coord> masterCoordList;
+  private Formula form17;
+  private Cell cell17;
+  private Formula form18;
+  private Cell cell18;
+  private Formula form19;
+  private Cell cell19;
   private String s1;
   private String s2;
   private String s3;
@@ -94,11 +109,18 @@ public class BeyondGoodWorksheetTest {
   private ArrayList<String> los;
 
 
-  private void initVars() {
+  public void initVars() {
     ws = new BeyondGoodWorksheet();
-    loCoord = new ArrayList<>();
-    loCell = new ArrayList<>();
-    lof = new ArrayList<>();
+    loCoord1 = new ArrayList<>();
+    loCoord2 = new ArrayList<>();
+    loCoord3 = new ArrayList<>();
+    loCell1 = new ArrayList<>();
+    loCell2 = new ArrayList<>();
+    loCell3 = new ArrayList<>();
+    lof1 = new ArrayList<>();
+    lof2 = new ArrayList<>();
+    lof3 = new ArrayList<>();
+
     coord1 = new Coord(1, 1);
     coord2 = new Coord(2, 1);
     coord3 = new Coord(1, 2);
@@ -112,19 +134,35 @@ public class BeyondGoodWorksheetTest {
     coord11 = new Coord(5, 5);
     coord12 = new Coord(9, 9);
     coord13 = new Coord(19, 19);
-    loCoord.add(coord1);
-    loCoord.add(coord2);
-    loCoord.add(coord3);
-    loCoord.add(coord4);
-    loCoord.add(coord5);
-    loCoord.add(coord6);
-    loCoord.add(coord7);
-    loCoord.add(coord8);
-    loCoord.add(coord9);
-    loCoord.add(coord10);
-    loCoord.add(coord11);
-    loCoord.add(coord12);
-    loCoord.add(coord13);
+    loCoord1.add(coord1);
+    loCoord1.add(coord2);
+    loCoord1.add(coord3);
+    loCoord1.add(coord4);
+    loCoord1.add(coord5);
+    loCoord2.add(coord6);
+    loCoord2.add(coord7);
+    loCoord3.add(coord8);
+    loCoord3.add(coord9);
+    loCoord3.add(coord10);
+
+    masterCoordList = new ArrayList<>();
+    masterCellList = new ArrayList<>();
+    masterFormulaList = new ArrayList<>();
+
+    masterCoordList.add(coord1);
+    masterCoordList.add(coord2);
+    masterCoordList.add(coord3);
+    masterCoordList.add(coord4);
+    masterCoordList.add(coord5);
+    masterCoordList.add(coord6);
+    masterCoordList.add(coord7);
+    masterCoordList.add(coord8);
+    masterCoordList.add(coord9);
+    masterCoordList.add(coord10);
+    masterCoordList.add(coord11);
+    masterCoordList.add(coord12);
+    masterCoordList.add(coord13);
+
     form1 = new DoubleValue(1.0);
     form2 = new DoubleValue(20.0);
     form3 = new DoubleValue(-1.0);
@@ -147,21 +185,33 @@ public class BeyondGoodWorksheetTest {
     lessThanArgs.add(form5);
     lessThanArgs.add(form1);
     form13 = new LessThan(lessThanArgs);
-    lof = new ArrayList<>();
-    lof.add(form1);
-    lof.add(form2);
-    lof.add(form3);
-    lof.add(form4);
-    lof.add(form5);
-    lof.add(form6);
-    lof.add(form7);
-    lof.add(form8);
-    lof.add(form9);
-    lof.add(form10);
-    lof.add(form11);
-    lof.add(form12);
-    lof.add(form13);
-    String mtString = "";
+
+    lof1.add(form1);
+    lof1.add(form2);
+    lof1.add(form3);
+    lof1.add(form4);
+    lof1.add(form5);
+
+    lof2.add(form6);
+    lof2.add(form7);
+
+    lof3.add(form8);
+    lof3.add(form9);
+    lof3.add(form10);
+
+    masterFormulaList.add(form1);
+    masterFormulaList.add(form2);
+    masterFormulaList.add(form3);
+    masterFormulaList.add(form4);
+    masterFormulaList.add(form5);
+    masterFormulaList.add(form6);
+    masterFormulaList.add(form7);
+    masterFormulaList.add(form8);
+    masterFormulaList.add(form9);
+    masterFormulaList.add(form10);
+    masterFormulaList.add(form11);
+    masterFormulaList.add(form12);
+    masterFormulaList.add(form13);
 
     los = new ArrayList<>();
     s1 = "yuh";
@@ -205,19 +255,34 @@ public class BeyondGoodWorksheetTest {
     cell11 = new FormulaCell(coord11, form11, s11);
     cell12 = new FormulaCell(coord12, form12, s12);
     cell13 = new FormulaCell(coord13, form13, s13);
-    loCell.add(cell1);
-    loCell.add(cell2);
-    loCell.add(cell3);
-    loCell.add(cell4);
-    loCell.add(cell5);
-    loCell.add(cell6);
-    loCell.add(cell7);
-    loCell.add(cell8);
-    loCell.add(cell9);
-    loCell.add(cell10);
-    loCell.add(cell11);
-    loCell.add(cell12);
-    loCell.add(cell13);
+
+    loCell1.add(cell1);
+    loCell1.add(cell2);
+    loCell1.add(cell3);
+    loCell1.add(cell4);
+    loCell1.add(cell5);
+
+    loCell2.add(cell6);
+    loCell2.add(cell7);
+
+    loCell3.add(cell8);
+    loCell3.add(cell9);
+    loCell3.add(cell10);
+
+    masterCellList.add(cell1);
+    masterCellList.add(cell2);
+    masterCellList.add(cell3);
+    masterCellList.add(cell4);
+    masterCellList.add(cell5);
+    masterCellList.add(cell6);
+    masterCellList.add(cell7);
+    masterCellList.add(cell8);
+    masterCellList.add(cell9);
+    masterCellList.add(cell10);
+    masterCellList.add(cell11);
+    masterCellList.add(cell12);
+    masterCellList.add(cell13);
+    String mtString = "";
     coord14 = new Coord(3, 3);
     form14 = new Reference(coord14);
     cell14 = new FormulaCell(coord14, form14, mtString);
@@ -227,77 +292,70 @@ public class BeyondGoodWorksheetTest {
     cell15 = new FormulaCell(coord16, form15, mtString);
     form16 = new Reference(coord16);
     cell16 = new FormulaCell(coord15, form16, mtString);
+
+    coord17 = new Coord(700, 700);
+    coord18 = new Coord(700, 701);
+    coord19 = new Coord(700, 702);
+    form17 = new Reference(coord17);
+    form18 = new Reference(coord18);
+    form19 = new DoubleValue(7);
+    cell17 = new FormulaCell(coord17, form17, mtString);
+    cell18 = new FormulaCell(coord18, form18, mtString);
+    cell19 = new FormulaCell(coord19, form19, mtString);
   }
 
   @Test
-  public void testBlankCell() {
+  public void evaluate() {
     this.initVars();
-    assertNull(ws.getCellAt(new Coord(924, 999)));
+    for (int i = 0; i < loCell1.size(); i++) {
+      ws.setCell(loCoord1.get(i), loCell1.get(i));
+      //assertEquals(loCell1.get(i).evaluate(ws));
+      assertEquals(loCell1.get(i).getFormula().getPrintString(ws, loCoord1.get(i)),
+              loCell1.get(i).evaluate(ws));
+    }
+    for (int i = 0; i < loCell2.size(); i++) {
+      ws.setCell(loCoord2.get(i), loCell2.get(i));
+      assertEquals(loCell2.get(i).getFormula().getPrintString(ws, loCoord2.get(i)),
+              loCell2.get(i).evaluate(ws));
+    }
+    for (int i = 0; i < loCell3.size(); i++) {
+      ws.setCell(loCoord3.get(i), loCell3.get(i));
+      assertEquals(loCell3.get(i).getFormula().getPrintString(ws, loCoord3.get(i)),
+              loCell3.get(i).evaluate(ws));
+    }
+    ws.setCell(coord11, cell11);
+    assertEquals(cell11.getFormula().getPrintString(ws, coord11), cell11.evaluate(ws));
+
+    ws.setCell(coord12, cell12);
+    assertEquals(cell12.getFormula().getPrintString(ws, coord11), cell12.evaluate(ws));
+
+    ws.setCell(coord11, cell13);
+    assertEquals(cell13.getFormula().getPrintString(ws, coord11), cell13.evaluate(ws));
+
+
   }
 
   @Test
-  public void getCellAt() {
+  public void getFormula() {
     this.initVars();
-    assertNull( ws.getCellAt(coord1));
-    for (int i = 0; i < loCell.size(); i++) {
-      ws.setCell(loCoord.get(i), loCell.get(i));
-      assertEquals(loCell.get(i), ws.getCellAt(loCoord.get(i)));
-      assertEquals(lof.get(i), loCell.get(i).getFormula());
+    for (int i = 0; i < masterCellList.size(); i++) {
+      assertEquals(masterFormulaList.get(i), masterCellList.get(i).getFormula());
     }
   }
 
   @Test
-  public void setCell() {
+  public void getCellName() {
     this.initVars();
-    for (int i = 0; i < loCell.size(); i++) {
-      ws.setCell(loCoord.get(i), loCell.get(i));
-      assertEquals(loCell.get(i), ws.getCellAt(loCoord.get(i)));
-      assertEquals(lof.get(i), loCell.get(i).getFormula());
+    for (int i = 0; i < masterCellList.size(); i++) {
+      assertEquals(masterCoordList.get(i).toString(), masterCellList.get(i).getCellName());
     }
   }
 
   @Test
-  public void getWorksheet() {
+  public void getRawContents() {
     this.initVars();
-    assertTrue(ws.getWorksheet().isEmpty());
-    for (int i = 0; i < loCell.size(); i++) {
-      ws.setCell(loCoord.get(i), loCell.get(i));
-    }
-    for (int i = 0; i < loCell.size(); i++) {
-      assertEquals(ws.getCellAt(loCoord.get(i)), ws.getWorksheet().get(loCoord.get(i)));
-    }
-  }
-
-  @Test
-  public void getCalculatedReference() {
-    this.initVars();
-    this.ws.addCalculatedReference(coord1, form1);
-    assertEquals(form1, this.ws.getCalculatedReference(coord1));
-  }
-
-  @Test
-  public void hasCalculatedReference() {
-    this.initVars();
-    this.ws.addCalculatedReference(coord1, form1);
-    assertTrue(this.ws.hasCalculatedReference(coord1));
-  }
-
-  @Test
-  public void addCalculatedReference() {
-    this.initVars();
-    this.ws.addCalculatedReference(coord1, form1);
-    assertTrue(this.ws.hasCalculatedReference(coord1));
-  }
-
-  @Test
-  public void clearCalculatedReferences() {
-    this.initVars();
-    for (int i = 0; i < loCell.size(); i++) {
-      this.ws.addCalculatedReference(loCoord.get(i), lof.get(i));
-    }
-    this.ws.clearCalculatedReferences();
-    for (int i = 0; i < loCell.size(); i++) {
-      assertFalse(this.ws.hasCalculatedReference(loCoord.get(i)));
+    for (int i = 0; i < masterCellList.size(); i++) {
+      assertEquals(los.get(i), masterCellList.get(i).getRawContents());
     }
   }
 }
