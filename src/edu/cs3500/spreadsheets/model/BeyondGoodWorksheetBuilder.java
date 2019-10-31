@@ -41,12 +41,12 @@ public class BeyondGoodWorksheetBuilder
     } else if (contents.substring(0, 1).equals("=")) {
       Sexp sexpContents = p.parse(contents.substring(1));
       Coord coord = new Coord(col, row);
-      CellSexpVisitor cellVisitor = new CellSexpVisitor(coord);
+      CellSexpVisitor cellVisitor = new CellSexpVisitor(coord, contents);
       this.worksheet.put(coord, sexpContents.accept(cellVisitor));
     } else {
       Sexp sexpContents = p.parse(contents);
       Coord coord = new Coord(col, row);
-      ValueCellSexpVisitor valueCellVisitor = new ValueCellSexpVisitor(coord);
+      ValueCellSexpVisitor valueCellVisitor = new ValueCellSexpVisitor(coord, contents);
       this.worksheet.put(coord, sexpContents.accept(valueCellVisitor));
     }
 

@@ -24,7 +24,11 @@ public class DoubleValue extends AbstractValue<Double> {
 
   @Override
   public String getPrintString(Worksheet worksheet) {
-    return String.format("%f", this.value);
+    if (this.equals(new DoubleValue(0))) {
+      return "0.000000";
+    } else {
+      return String.format("%f", this.value);
+    }
   }
 
   @Override

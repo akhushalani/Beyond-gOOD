@@ -21,17 +21,9 @@ public class Concatenate extends AbstractFunction<StringValue> {
   public StringValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet) {
     StringBuilder concat = new StringBuilder();
     for (Formula arg : args) {
-      if (arg.evaluate(worksheet).getValueType() != ValueType.NONE) {
-        if (arg.evaluate(worksheet).getValueType() == ValueType.DOUBLE) {
-          DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
-          concat.append(arg.evaluate(worksheet).accept(doubleVisitor));
-        } else if (arg.evaluate(worksheet).getValueType() == ValueType.BOOLEAN) {
-          BooleanValueVisitor booleanVisitor = new BooleanValueVisitor();
-          concat.append(arg.evaluate(worksheet).accept(booleanVisitor));
-        } else {
-          StringValueVisitor stringVisitor = new StringValueVisitor();
-          concat.append(arg.evaluate(worksheet).accept(stringVisitor));
-        }
+      if (arg.evaluate(worksheet).getValueType() == ValueType.STRING) {
+        StringValueVisitor stringVisitor = new StringValueVisitor();
+        concat.append(arg.evaluate(worksheet).accept(stringVisitor));
       }
     }
     return new StringValue(concat.toString());
