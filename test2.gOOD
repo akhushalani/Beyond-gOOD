@@ -1,0 +1,93 @@
+A1 true
+A2 false
+A3 -2
+A4 0
+A5 1
+A6 "Hello, "
+A7 "World. "
+
+# AND tests
+B1 =(AND true false)
+B2 =(AND true true)
+B3 =(AND false false)
+B4 =(AND A1 A2)
+B5 =(AND true A1)
+B6 =(AND false -2)
+
+# CONCAT tests
+C1 =(CONCAT "Hello, " "World. ")
+C2 =(CONCAT A6 A7)
+C3 =(CONCAT "Hello, " "World. " A6 A7)
+C4 =(CONCAT "Hello, " 7)
+
+# > tests
+D1 =(> 1 0)
+D2 =(> 0 -2)
+D3 =(> -2 1)
+D4 =(> A5 A3)
+D5 =(> A3 A5)
+D6 =(> 1 true)
+D7 =(> 2 0 -1)
+
+# < tests
+E1 =(< 1 0)
+E2 =(< 0 -2)
+E3 =(< -2 1)
+E4 =(< A5 A3)
+E5 =(< A3 A5)
+E6 =(< 1 true)
+E7 =(< 2 0 -1)
+
+# NOT tests
+F1 =(NOT true)
+F2 =(NOT false)
+F3 =(NOT A1)
+F4 =(NOT A2)
+F5 =(NOT 3)
+F6 =(NOT true false)
+
+# OR tests
+G1 =(OR true false)
+G2 =(OR true true)
+G3 =(OR false false)
+G4 =(OR A1 A2)
+G5 =(OR true true true)
+G6 =(OR true 7)
+
+# PRODUCT tests
+H1 =(PRODUCT 1 2)
+H2 =(PRODUCT 1 2 3)
+H3 =(PRODUCT -1 2)
+H4 =(PRODUCT 2 0)
+H5 =(PRODUCT A3 A5)
+H6 =(PRODUCT A3 A4 A5)
+H7 =(PRODUCT A3:A5)
+H8 =(PRODUCT A3 0 A5)
+H9 =(PRODUCT 1 true)
+
+# SQRT tests
+I1 =(SQRT 1)
+I2 =(SQRT 0)
+I3 =(SQRT A4)
+I4 =(SQRT 1 0)
+I5 =(SQRT -4)
+I6 =(SQRT true)
+
+# SUB tests
+J1 =(SUB 4 2)
+J2 =(SUB 4 -2)
+J3 =(SUB 4 0)
+J4 =(SUB -2 4)
+J5 =(SUB A5 A4)
+J6 =(SUB 4 2 1)
+
+# SUM tests
+K1 =(SUM 1)
+K2 =(SUM 1 2 3)
+K3 =(SUM 1 2 0)
+K4 =(SUM A3 A4 A5)
+K5 =(SUM 7 true)
+K6 =(SUM K6)
+K7 =(SUM K8)
+K8 =(SUM K7)
+K9 =(SUM A5 A5 A5)

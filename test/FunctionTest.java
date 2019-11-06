@@ -96,6 +96,7 @@ public class FunctionTest {
             .createCell(11, 6, "=(SUM K6)")
             .createCell(11, 7, "=(SUM K8)")
             .createCell(11, 8, "=(SUM K7)")
+            .createCell(11, 9, "=(SUM A5 A5 A5)")
             .createWorksheet();
   }
 
@@ -278,6 +279,7 @@ public class FunctionTest {
     assertEquals(worksheet.getCellAt(new Coord(11, 3)).evaluate(worksheet), "3.000000");
     assertEquals(worksheet.getCellAt(new Coord(11, 4)).evaluate(worksheet), "-1.000000");
     assertEquals(worksheet.getCellAt(new Coord(11, 5)).evaluate(worksheet), "7.000000");
+    assertEquals(worksheet.getCellAt(new Coord(11, 9)).evaluate(worksheet), "3.000000");
   }
 
   @Test(expected = IllegalArgumentException.class)
