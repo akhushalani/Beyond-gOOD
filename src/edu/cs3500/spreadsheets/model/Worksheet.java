@@ -28,11 +28,29 @@ public interface Worksheet {
    */
   HashMap<Coord, Cell> getWorksheet();
 
+  /**
+   * Gets an already calculated reference in the model.
+   * @param coord location of the reference to get
+   * @return the formula of the cell at that location
+   */
   Formula getCalculatedReference(Coord coord);
 
+  /**
+   * Determines whether the model has already calculated a given reference.
+   * @param coord location at which to check
+   * @return whether or not model has calculated the reference
+   */
   boolean hasCalculatedReference(Coord coord);
 
+  /**
+   * Adds a calculated reference to the list of calculated references in the model.
+   * @param coord location at which reference was calculated
+   * @param formula calculated reference
+   */
   void addCalculatedReference(Coord coord, Formula formula);
 
+  /**
+   * Clears the list of calculated references.
+   */
   void clearCalculatedReferences();
 }
