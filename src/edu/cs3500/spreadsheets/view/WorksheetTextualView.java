@@ -22,10 +22,15 @@ public class WorksheetTextualView implements WorksheetView {
   }
 
   @Override
-  public void renderView() throws IOException {
+  public void renderView() {
     for (Map.Entry<Coord, Cell> entry : model.getWorksheet().entrySet()) {
-      ap.append(entry.getKey().toString() + " "
-              + model.getCellAt(entry.getKey()).evaluate(model) +"\n");
+      try {
+        ap.append(entry.getKey().toString() + " "
+                + model.getCellAt(entry.getKey()).evaluate(model) + "\n");
+      } catch (IOException ex) {
+        // Shouldn't ever happen, all Strings being appended will be valid
+        throw new IllegalArgumentException("Invalid IO passed to Appendable");
+      }
     }
   }
 

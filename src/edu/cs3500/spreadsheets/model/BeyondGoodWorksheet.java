@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents an implementation of the Worksheet interface meant for use in our BeyondGOOD
@@ -103,5 +104,29 @@ public class BeyondGoodWorksheet implements Worksheet {
       cyclic = cyclic || referenceBetween(loc1, ref);
     }
     return cyclic;
+  }
+
+  @Override
+  public int getHeight() {
+    int height = 0;
+    for (Map.Entry<Coord, Cell> entry : worksheet.entrySet()) {
+      if (entry.getKey().row > height) {
+        height = entry.getKey().row;
+      }
+    }
+
+    return height;
+  }
+
+  @Override
+  public int getWidth() {
+    int width = 0;
+    for (Map.Entry<Coord, Cell> entry : worksheet.entrySet()) {
+      if (entry.getKey().col > width) {
+        width = entry.getKey().col;
+      }
+    }
+
+    return width;
   }
 }

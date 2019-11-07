@@ -53,4 +53,16 @@ public interface Worksheet {
    * Clears the list of calculated references.
    */
   void clearCalculatedReferences();
+
+  /**
+   * Gets the height of the worksheet.
+   * @return the y-coordinate of the furthest down cell.
+   */
+  int getHeight();
+
+  /**
+   * Gets the width of the worksheet.
+   * @return the x-coordinate of the furthest right cell.
+   */
+  int getWidth();
 }

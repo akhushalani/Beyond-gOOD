@@ -2,12 +2,16 @@ package edu.cs3500.spreadsheets;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.regex.Pattern;
 
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheet;
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
+import edu.cs3500.spreadsheets.view.WorksheetTextualView;
+import edu.cs3500.spreadsheets.view.WorksheetVisualView;
 
 /**
  * The main class for our program.
@@ -27,37 +31,65 @@ public class BeyondGood {
       - evaluate all the cells, and
       - report any errors, or print the evaluated value of the requested cell.
     */
-    BeyondGoodWorksheet ws = null;
-    if (args.length > 0 && args[0].equals("-in")) {
-      if (args.length > 1) {
+    BeyondGoodWorksheet worksheet = null;
+    if (args.length > 4) {
+      outputString.append("Too many arguments were specified.\n");
+    } else if (args.length > 0) {
+      if (args.length == 1) {
+        if (args[0] == "-gui") {
+          WorksheetVisualView view = new WorksheetVisualView(new BeyondGoodWorksheet());
+          view.renderView();
+        } else {
+          outputString.append("Invalid argument.\n");
+        }
+      } else if (args.length > 2 && args[0].equals("-in")) {
         try {
           // When doing this how do we get individual cell formation errors?
-          ws = WorksheetReader.read(new BeyondGoodWorksheetBuilder(), new FileReader(args[1]));
+          worksheet = WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
+                  new FileReader(args[1]));
         } catch (FileNotFoundException e) {
           outputString.append("Insufficient arguments, file specified does not "
                   + "exist.\n");
         }
-      }
-      else {
-        outputString.append("Insufficient arguments, no file name specified.\n");
-      }
-      if (args.length > 2 && args[2].equals("-eval")) {
-        if (args.length > 3) {
-          Coord cellCoord = null;
-          String cellToEval = args[3];
-          if (validReference(cellToEval)) {
-            cellCoord = parseCoord(cellToEval);
+
+        if (args[2].equals("-eval")) {
+          if (args.length > 3) {
+            Coord cellCoord = null;
+            String cellToEval = args[3];
+            if (validReference(cellToEval)) {
+              cellCoord = parseCoord(cellToEval);
+            }
+            else {
+              outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell "
+                      + "reference.\n");
+            }
+            outputString.append(worksheet.getCellAt(cellCoord).evaluate(worksheet));
           }
-          else {
-            outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell "
-                    + "reference.\n");
+        } else if (args[2].equals("-save")) {
+          if (args.length > 3) {
+            try {
+              PrintWriter pw = new PrintWriter(args[3]);
+              WorksheetTextualView view = new WorksheetTextualView(worksheet, pw);
+              view.renderView();
+              pw = (PrintWriter) view.getAppendable();
+              pw.close();
+            } catch (FileNotFoundException ex) {
+              // will never run, creating a new file with String name
+              throw new IllegalArgumentException("Invalid file name");
+            }
+          } else {
+            outputString.append("Insufficient arguments, no output file name specified.\n");
           }
-          outputString.append(ws.getCellAt(cellCoord).evaluate(ws));
+        } else if (args[2].equals("-gui")) {
+          if (args.length == 3) {
+            WorksheetVisualView view = new WorksheetVisualView(worksheet);
+            view.renderView();
+          } else {
+            outputString.append("Too many arguments were specified.\n");
+          }
         }
-      } else if (args.length > 4) {
-        outputString.append("Too many arguments were specified.\n");
       } else {
-        outputString.append("Insufficient arguments, no cell name specified.\n");
+        outputString.append("Insufficient arguments, no file name specified.\n");
       }
     }
 
