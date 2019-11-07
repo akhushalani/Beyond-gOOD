@@ -1,21 +1,17 @@
 package edu.cs3500.spreadsheets.view;
 
-import java.awt.*;
+import java.awt.Component;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 public class RowHeaderTable extends JTable {
   private boolean fullyLeft;
 
-  public RowHeaderTable(Object[][] rowData, Object[] colData) {
-    super(rowData, colData);
-    fullyLeft = true;
-  }
-
   public RowHeaderTable(TableModel tableModel) {
     super(tableModel);
+    fullyLeft = true;
   }
 
   public void setFullyLeft(boolean fullyLeft) {

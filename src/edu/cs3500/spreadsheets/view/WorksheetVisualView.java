@@ -1,6 +1,5 @@
 package edu.cs3500.spreadsheets.view;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
@@ -9,7 +8,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -20,8 +18,6 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-import edu.cs3500.spreadsheets.model.Cell;
-import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Worksheet;
 
 public class WorksheetVisualView implements WorksheetView {
