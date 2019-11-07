@@ -11,7 +11,6 @@ import javax.swing.table.TableCellRenderer;
 
 public class RowHeaderTableCellRenderer implements TableCellRenderer {
   private final TableCellRenderer renderer;
-  private final CellBorder border = new CellBorder(2, 2, 2, 2);
 
   public RowHeaderTableCellRenderer(TableCellRenderer renderer) {
     this.renderer = renderer;
@@ -22,10 +21,6 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
                                                  boolean hasFocus, int row, int column) {
     JComponent component = (JComponent) renderer.getTableCellRendererComponent(table, value,
             isSelected, hasFocus, row, column);
-    if (row == 0) {
-      border.isHeaderCell = true;
-    }
-    component.setBorder(border);
     return component;
   }
 }
