@@ -19,7 +19,6 @@ public class ScrollableRowHeaderTable implements ChangeListener, PropertyChangeL
     this.scrollPane = scrollPane;
 
     table = (RowHeaderTable) scrollPane.getViewport().getView();
-    table.setAutoCreateColumnsFromModel(false);
     table.addPropertyChangeListener(this);
 
     RowHeaderTableModel headerModel = new RowHeaderTableModel(table.getModel());
@@ -27,8 +26,6 @@ public class ScrollableRowHeaderTable implements ChangeListener, PropertyChangeL
     rowHeader.setModel(headerModel);
     rowHeader.setSelectionModel(table.getSelectionModel());
     rowHeader.setFocusable(false);
-
-    table.setAutoCreateColumnsFromModel(true);
 
     rowHeader.setPreferredScrollableViewportSize(rowHeader.getPreferredSize());
     this.scrollPane.setRowHeaderView(rowHeader);

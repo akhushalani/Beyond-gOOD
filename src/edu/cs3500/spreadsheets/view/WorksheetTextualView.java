@@ -7,10 +7,19 @@ import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Worksheet;
 
+/**
+ * A textual view of a worksheet model.
+ */
 public class WorksheetTextualView implements WorksheetView {
   private Worksheet model;
   private Appendable ap;
 
+  /**
+   * Public constructor for the WorksheetTextualView class.
+   *
+   * @param model the model the view is representing
+   * @param ap the appendable to which the view will append its output
+   */
   public WorksheetTextualView(Worksheet model, Appendable ap) {
     this.model = model;
     this.ap = ap;

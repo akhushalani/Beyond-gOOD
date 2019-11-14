@@ -7,9 +7,17 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ * A class for rendering cells in a RowHeaderTable.
+ */
 public class RowHeaderTableCellRenderer implements TableCellRenderer {
   private final TableCellRenderer renderer;
 
+  /**
+   * Public constructor for the RowHeaderTableCellRendererClass.
+   *
+   * @param renderer default TableCellRenderer in the class
+   */
   public RowHeaderTableCellRenderer(TableCellRenderer renderer) {
     this.renderer = renderer;
   }

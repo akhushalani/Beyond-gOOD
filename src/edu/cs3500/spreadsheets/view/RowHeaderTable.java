@@ -6,9 +6,18 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+/**
+ * A table that has a row header.
+ */
 public class RowHeaderTable extends JTable {
   private boolean headerTable;
 
+  /**
+   * Public constructor for the RowHeaderTableClass.
+   *
+   * @param tableModel the default model of the table
+   * @param headerTable is the table the row header table
+   */
   public RowHeaderTable(TableModel tableModel, boolean headerTable) {
     super(tableModel);
     this.headerTable = headerTable;

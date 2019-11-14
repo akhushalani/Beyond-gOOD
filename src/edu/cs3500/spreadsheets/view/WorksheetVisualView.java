@@ -16,9 +16,17 @@ import javax.swing.table.TableCellRenderer;
 
 import edu.cs3500.spreadsheets.model.Worksheet;
 
+/**
+ * A visual view of a worksheet model.
+ */
 public class WorksheetVisualView implements WorksheetView {
   private Worksheet model;
 
+  /**
+   * Public constructor for the WorksheetVisualView class.
+   *
+   * @param model the model being represented by the view
+   */
   public WorksheetVisualView(Worksheet model) {
     this.model = model;
   }

@@ -9,9 +9,17 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ * A class for rendering the header cells in a JTable.
+ */
 public class HeaderRenderer implements TableCellRenderer {
   private final TableCellRenderer renderer;
 
+  /**
+   * Public constructor for HeaderRenderer.
+   *
+   * @param renderer the defalt renderer in the table
+   */
   public HeaderRenderer(TableCellRenderer renderer) {
     this.renderer = renderer;
   }
