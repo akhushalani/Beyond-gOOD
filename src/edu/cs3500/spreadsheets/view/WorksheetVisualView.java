@@ -2,12 +2,8 @@ package edu.cs3500.spreadsheets.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -38,40 +34,24 @@ public class WorksheetVisualView implements WorksheetView {
 
     InfiniteScrollingTableModel tableModel = new InfiniteScrollingTableModel(model);
 
-    RowHeaderTable table = new RowHeaderTable(tableModel);
+    RowHeaderTable table = new RowHeaderTable(tableModel, false);
     JScrollPane scrollPane = new JScrollPane(table,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-    tableModel.adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
-            table.getRowHeight(), 1000, 1000);
-
-    scrollPane.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-      @Override
-      public void adjustmentValueChanged(AdjustmentEvent e) {
-        if (e.getValueIsAdjusting() &&
-                e.getValue() == scrollPane.getHorizontalScrollBar().getMaximum()
-                - scrollPane.getHorizontalScrollBar().getVisibleAmount()) {
-          tableModel.fireScrollRight();
-        } else if (e.getValueIsAdjusting() &&
-                e.getValue() == scrollPane.getHorizontalScrollBar().getMinimum()) {
-          tableModel.fireScrollLeft();
-        }
-
-        table.setFullyLeft(tableModel.fullyLeft());
+    scrollPane.getHorizontalScrollBar().addAdjustmentListener(e -> {
+      if (e.getValueIsAdjusting() &&
+              e.getValue() == scrollPane.getHorizontalScrollBar().getMaximum()
+              - scrollPane.getHorizontalScrollBar().getVisibleAmount()) {
+        tableModel.fireScrollRight();
       }
     });
 
-    scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-      @Override
-      public void adjustmentValueChanged(AdjustmentEvent e) {
-        if (e.getValue() == scrollPane.getVerticalScrollBar().getMaximum()
-                - scrollPane.getVerticalScrollBar().getVisibleAmount()) {
-          tableModel.fireScrollDown();
-        } else if (e.getValue() == scrollPane.getVerticalScrollBar().getMinimum()) {
-          tableModel.fireScrollUp();
-        }
+    scrollPane.getVerticalScrollBar().addAdjustmentListener(e -> {
+      if (e.getValue() == scrollPane.getVerticalScrollBar().getMaximum()
+              - scrollPane.getVerticalScrollBar().getVisibleAmount()) {
+        tableModel.fireScrollDown();
       }
     });
 
@@ -83,19 +63,12 @@ public class WorksheetVisualView implements WorksheetView {
       }
     });
 
-    frame.addMouseWheelListener(new MouseWheelListener() {
-      @Override
-      public void mouseWheelMoved(MouseWheelEvent e) {
-        int notches = e.getWheelRotation();
-        if (notches < 0 && !e.isShiftDown()) {
-          tableModel.fireScrollUp();
-        } else if (notches > 0 && !e.isShiftDown()) {
-          tableModel.fireScrollDown();
-        } else if (notches < 0) {
-          tableModel.fireScrollLeft();
-        } else if (notches > 0) {
-          tableModel.fireScrollRight();
-        }
+    frame.addMouseWheelListener(e -> {
+      int notches = e.getWheelRotation();
+      if (notches > 0 && !e.isShiftDown()) {
+        tableModel.fireScrollDown();
+      } else if (notches > 0) {
+        tableModel.fireScrollRight();
       }
     });
 
@@ -108,6 +81,8 @@ public class WorksheetVisualView implements WorksheetView {
     table.getTableHeader().setBorder(BorderFactory.createEmptyBorder());
 
     table.setGridColor(Color.lightGray);
+    table.setSelectionBackground(new Color(179, 204,
+            245));
 
     DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
     headerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -115,6 +90,17 @@ public class WorksheetVisualView implements WorksheetView {
 
     TableCellRenderer cellRenderer = table.getDefaultRenderer(Object.class);
     table.setDefaultRenderer(Object.class, new RowHeaderTableCellRenderer(cellRenderer));
+
+    ScrollableRowHeaderTable scrollableTable = new ScrollableRowHeaderTable(scrollPane);
+
+    scrollableTable.getRowHeader().getTableHeader()
+            .setDefaultRenderer(new HeaderRenderer(headerRenderer));
+    scrollableTable.getRowHeader().setGridColor(Color.lightGray);
+    scrollableTable.getRowHeader().setIntercellSpacing(new Dimension(-1, -1));
+
+    ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
+            .adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
+            table.getRowHeight(), 1000, 1000);
 
     frame.add(scrollPane);
     frame.setSize(1300, 600);

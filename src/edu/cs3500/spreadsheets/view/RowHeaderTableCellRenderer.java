@@ -2,6 +2,7 @@ package edu.cs3500.spreadsheets.view;
 
 import java.awt.Component;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -18,6 +19,7 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
                                                  boolean hasFocus, int row, int column) {
     JComponent component = (JComponent) renderer.getTableCellRendererComponent(table, value,
             isSelected, hasFocus, row, column);
+    component.setBorder(BorderFactory.createEmptyBorder(0,4,0,4));
     return component;
   }
 }

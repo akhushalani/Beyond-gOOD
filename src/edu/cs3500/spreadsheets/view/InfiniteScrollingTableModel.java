@@ -10,8 +10,6 @@ import edu.cs3500.spreadsheets.model.Worksheet;
 
 public class InfiniteScrollingTableModel extends DefaultTableModel {
   private Worksheet worksheet;
-  private int leftCol;
-  private int topRow;
   private int rowCount;
   private int colCount;
 
@@ -19,8 +17,6 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     this.worksheet = worksheet;
     colCount = this.worksheet.getWidth() + 1;
     rowCount = this.worksheet.getHeight();
-    leftCol = 0;
-    topRow = 0;
   }
 
   @Override
@@ -62,16 +58,7 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
 
   @Override
   public String getColumnName(int columnIndex) {
-    int col = leftCol + columnIndex;
-    if (col == 0) {
-      return "";
-    } else {
-      return Coord.colIndexToName(col);
-    }
-  }
-
-  public boolean fullyLeft() {
-    return leftCol == 0;
+    return Coord.colIndexToName(columnIndex + 1);
   }
 
   @Override
@@ -81,14 +68,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    int row = topRow + rowIndex;
-    int col = leftCol + columnIndex;
     HashMap<Coord, Cell> data = worksheet.getWorksheet();
 
-    if (col == 0) {
-      return String.valueOf(row + 1);
-    } else if (data.containsKey(new Coord(col, row + 1))) {
-      return worksheet.getCellAt(new Coord(col, row + 1)).evaluate(worksheet);
+    if (data.containsKey(new Coord(columnIndex + 1, rowIndex + 1))) {
+      return worksheet.getCellAt(new Coord(columnIndex + 1, rowIndex + 1)).evaluate(worksheet);
     } else {
       return "";
     }
@@ -97,38 +80,12 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
   public void fireScrollRight() {
     int newColumnCount = getColumnCount() + 1;
     setColumnCount(newColumnCount);
-    fireTableRowsInserted(newColumnCount - 1, newColumnCount);
     fireTableStructureChanged();
-  }
-
-  public void fireScrollLeft() {
-    if (leftCol != 0) {
-      int newColCount = getColumnCount() - 1;
-      if (newColCount > worksheet.getWidth() + 1) {
-        setColumnCount(newColCount);
-      } else {
-        setColumnCount(worksheet.getWidth() + 1);
-      }
-      fireTableStructureChanged();
-    }
   }
 
   public void fireScrollDown() {
     int newRowCount = getRowCount() + 1;
     setRowCount(newRowCount);
     fireTableStructureChanged();
-  }
-
-  public void fireScrollUp() {
-    if (topRow != 0) {
-      topRow = topRow - 1;
-      int newRowCount = getRowCount() - 1;
-      if (newRowCount > worksheet.getHeight()) {
-        setRowCount(newRowCount);
-      } else {
-        setRowCount(worksheet.getHeight());
-      }
-      fireTableStructureChanged();
-    }
   }
 }

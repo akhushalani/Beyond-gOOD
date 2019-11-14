@@ -69,7 +69,8 @@ public class FormulaCell implements Cell {
     } catch (IllegalArgumentException ex) {
       int colonIndex = ex.toString().indexOf(":");
       String errorMsg = ex.toString().substring(colonIndex);
-      output += "Error in cell " + this.location.toString() + errorMsg;
+      //output += "Error in cell " + this.location.toString() + errorMsg;
+      output += "ERROR" + errorMsg;
     }
     return output;
   }
