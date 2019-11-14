@@ -1,0 +1,89 @@
+A2 false
+# ERROR: Invalid arguments. Must use double arguments.
+E6 =(< 1 true)
+B2 true
+# ERROR: Incorrect number of arguments.
+F6 =(NOT true false)
+C2 "Hello, World. "
+# ERROR: Invalid arguments. Must use boolean arguments.
+G6 =(OR true 7)
+D2 true
+H6 0.000000
+E2 false
+# ERROR: Invalid argument. Must use double argument.
+I6 =(SQRT true)
+F2 true
+# ERROR: Incorrect number of arguments.
+J6 =(SUB 4 2 1)
+G2 true
+# ERROR: Cell contains a cyclic reference.
+K6 =(SUM K6)
+H2 6.000000
+I2 0.000000
+J2 6.000000
+K2 6.000000
+A7 "World. "
+# ERROR: Incorrect number of arguments.
+D7 =(> 2 0 -1)
+A3 -2.000000
+# ERROR: Incorrect number of arguments.
+E7 =(< 2 0 -1)
+B3 false
+C3 "Hello, World. Hello, World. "
+D3 false
+H7 0.000000
+E3 true
+F3 false
+G3 false
+# ERROR: Cell contains a cyclic reference.
+K7 =(SUM K8)
+H3 -2.000000
+I3 0.000000
+J3 4.000000
+K3 3.000000
+A4 0.000000
+B4 false
+C4 "Hello, "
+D4 true
+H8 0.000000
+E4 false
+F4 true
+G4 true
+# ERROR: Cell contains a cyclic reference.
+K8 =(SUM K7)
+H4 0.000000
+# ERROR: Incorrect number of arguments.
+I4 =(SQRT 1 0)
+J4 -6.000000
+K4 -1.000000
+A5 1.000000
+B5 true
+D5 false
+H9 1.000000
+A1 true
+E5 true
+B1 false
+# ERROR: Invalid argument. Must use boolean argument.
+F5 =(NOT 3)
+C1 "Hello, World. "
+# ERROR: Incorrect number of arguments.
+G5 =(OR true true true)
+K9 3.000000
+D1 true
+H5 -2.000000
+E1 false
+# ERROR: Argument cannot be negative.
+I5 =(SQRT -4)
+F1 false
+J5 1.000000
+G1 true
+K5 7.000000
+H1 2.000000
+I1 1.000000
+J1 2.000000
+K1 1.000000
+A6 "Hello, "
+# ERROR: Invalid arguments. Must use boolean arguments.
+B6 =(AND false -2)
+# ERROR: Invalid arguments. Must use double arguments.
+D6 =(> 1 true)

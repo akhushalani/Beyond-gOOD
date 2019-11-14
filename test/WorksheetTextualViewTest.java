@@ -15,7 +15,7 @@ public class WorksheetTextualViewTest {
   @Test
   public void testFile1() throws FileNotFoundException {
     BeyondGoodWorksheet test1 = WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
-            new FileReader("test/test1.gOOD"));
+            new FileReader("resources/test1.gOOD"));
 
     StringBuilder viewOutput = new StringBuilder();
     WorksheetTextualView textualView = new WorksheetTextualView(test1, viewOutput);
@@ -28,7 +28,7 @@ public class WorksheetTextualViewTest {
   @Test
   public void testFile2() throws FileNotFoundException {
     BeyondGoodWorksheet test2 = WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
-            new FileReader("test/test2.gOOD"));
+            new FileReader("resources/test2.gOOD"));
 
     StringBuilder viewOutput = new StringBuilder();
     WorksheetTextualView textualView = new WorksheetTextualView(test2, viewOutput);
@@ -41,7 +41,7 @@ public class WorksheetTextualViewTest {
   @Test
   public void testFileNBA() throws FileNotFoundException {
     BeyondGoodWorksheet testNBA = WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
-            new FileReader("test/testNBAData.gOOD"));
+            new FileReader("resources/testNBAData.gOOD"));
 
     StringBuilder viewOutput = new StringBuilder();
     WorksheetTextualView textualView = new WorksheetTextualView(testNBA, viewOutput);
