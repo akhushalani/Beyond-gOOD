@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +17,7 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
   private Worksheet worksheet;
   private int rowCount;
   private int colCount;
+  private ArrayList<Coord> selected;
 
   /**
    * Public constructor for the InfiniteScrollingTableModel class.
@@ -26,6 +28,7 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     this.worksheet = worksheet;
     colCount = this.worksheet.getWidth() + 1;
     rowCount = this.worksheet.getHeight();
+    selected = new ArrayList<>();
   }
 
   @Override
@@ -83,12 +86,40 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     return false;
   }
 
+  public void addSelected(Coord coord) {
+    clearSelected();
+
+    if (!selected.contains(coord)) {
+      selected.add(coord);
+      fireTableCellUpdated(coord.row - 1, coord.col - 1);
+    }
+  }
+
+  public ArrayList<Coord> getSelected() {
+    return selected;
+  }
+
+  public void clearSelected() {
+    ArrayList<Coord> selectedCopy = (ArrayList<Coord>) selected.clone();
+    for (int i = 0; i < selectedCopy.size(); i++) {
+      Coord c = selectedCopy.get(i);
+      selected.remove(c);
+      fireTableCellUpdated(c.row - 1, c.col - 1);
+    }
+    selected.clear();
+  }
+
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     HashMap<Coord, Cell> data = worksheet.getWorksheet();
 
-    if (data.containsKey(new Coord(columnIndex + 1, rowIndex + 1))) {
-      return worksheet.getCellAt(new Coord(columnIndex + 1, rowIndex + 1)).evaluate(worksheet);
+    Coord coord = new Coord(columnIndex + 1, rowIndex + 1);
+    if (data.containsKey(coord)) {
+      if (selected.contains(coord) && selected.size() == 1) {
+        return worksheet.getCellAt(coord).getRawContents();
+      } else {
+        return worksheet.getCellAt(coord).evaluate(worksheet);
+      }
     } else {
       return "";
     }

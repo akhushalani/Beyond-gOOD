@@ -10,10 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
+import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Worksheet;
 
 /**
@@ -63,14 +67,6 @@ public class WorksheetVisualView implements WorksheetView {
       }
     });
 
-    frame.addComponentListener(new ComponentAdapter() {
-      @Override
-      public void componentResized(ComponentEvent e) {
-        tableModel.adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
-                table.getRowHeight(), frame.getWidth(), frame.getHeight());
-      }
-    });
-
     frame.addMouseWheelListener(e -> {
       int notches = e.getWheelRotation();
       if (notches > 0 && !e.isShiftDown()) {
@@ -109,6 +105,38 @@ public class WorksheetVisualView implements WorksheetView {
     ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
             .adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
             table.getRowHeight(), 1000, 1000);
+
+    frame.addComponentListener(new ComponentAdapter() {
+      @Override
+      public void componentResized(ComponentEvent e) {
+        tableModel.adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
+                table.getRowHeight(), frame.getWidth(), frame.getHeight());
+        for (Coord c : ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
+                .getSelected()) {
+          scrollableTable.getTable().changeSelection(c.row - 1, c.col - 1, true, false);
+        }
+      }
+    });
+
+    ListSelectionListener selectionListener = new ListSelectionListener() {
+      @Override
+      public void valueChanged(ListSelectionEvent e) {
+        int[] selectedRow = table.getSelectedRows();
+        int[] selectedColumns = table.getSelectedColumns();
+
+        if (selectedRow.length == 1 && selectedColumns.length == 1) {
+          Coord c = new Coord(selectedColumns[0] + 1, selectedRow[0] + 1);
+          ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel()).addSelected(c);
+        } else {
+          ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel()).clearSelected();
+        }
+      }
+    };
+
+    scrollableTable.getTable().getColumnModel().getSelectionModel()
+            .addListSelectionListener(selectionListener);
+    ListSelectionModel cellSelectionModel = scrollableTable.getTable().getSelectionModel();
+    cellSelectionModel.addListSelectionListener(selectionListener);
 
     frame.add(scrollPane);
     frame.setSize(1300, 600);
