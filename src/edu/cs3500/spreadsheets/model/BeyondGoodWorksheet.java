@@ -2,6 +2,8 @@ package edu.cs3500.spreadsheets.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Represents an implementation of the Worksheet interface meant for use in our BeyondGOOD
@@ -128,5 +130,30 @@ public class BeyondGoodWorksheet implements Worksheet {
     }
 
     return width;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof BeyondGoodWorksheet)) {
+      return false;
+    }
+
+    BeyondGoodWorksheet that = (BeyondGoodWorksheet) obj;
+    Set<Coord> worksheetKeys = worksheet.keySet();
+    if (worksheetKeys.size() != that.worksheet.size()) {
+      return false;
+    }
+
+    boolean same = true;
+    for (Coord key : worksheetKeys) {
+      same = same && worksheet.get(key).equals(that.worksheet.get(key));
+    }
+
+    return same;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(worksheet);
   }
 }
