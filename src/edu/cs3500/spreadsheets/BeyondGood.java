@@ -35,7 +35,7 @@ public class BeyondGood {
       outputString.append("Too many arguments were specified.\n");
     } else if (args.length > 0) {
       if (args.length == 1) {
-        if (args[0] == "-gui") {
+        if (args[0].equals("-gui")) {
           WorksheetVisualView view = new WorksheetVisualView(new BeyondGoodWorksheet());
           view.renderView();
         } else {

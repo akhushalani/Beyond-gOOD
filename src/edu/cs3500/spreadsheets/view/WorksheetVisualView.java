@@ -53,8 +53,8 @@ public class WorksheetVisualView implements WorksheetView {
     table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
     scrollPane.getHorizontalScrollBar().addAdjustmentListener(e -> {
-      if (e.getValueIsAdjusting() &&
-              e.getValue() == scrollPane.getHorizontalScrollBar().getMaximum()
+      if (e.getValueIsAdjusting()
+              && e.getValue() == scrollPane.getHorizontalScrollBar().getMaximum()
               - scrollPane.getHorizontalScrollBar().getVisibleAmount()) {
         tableModel.fireScrollRight();
       }

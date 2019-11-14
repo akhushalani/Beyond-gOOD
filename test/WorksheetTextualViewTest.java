@@ -11,6 +11,9 @@ import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Testing the WorksheetTextualView class.
+ */
 public class WorksheetTextualViewTest {
   @Test
   public void testFile1() throws FileNotFoundException {

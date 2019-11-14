@@ -118,8 +118,8 @@ public class FunctionArgsSexpVisitor implements SexpVisitor<ArrayList<Formula>> 
       if (validReference(s)) {
         this.args.add(new Reference(parseCoord(s)));
       } else {
-        throw new IllegalArgumentException("Invalid input. " +
-                "Input must be a boolean, number, String, or formula.");
+        throw new IllegalArgumentException("Invalid input. "
+                + "Input must be a boolean, number, String, or formula.");
       }
     } else {
       int colonIndex = s.indexOf(":");

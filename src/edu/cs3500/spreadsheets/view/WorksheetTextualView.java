@@ -34,8 +34,9 @@ public class WorksheetTextualView implements WorksheetView {
   public void renderView() {
     for (Map.Entry<Coord, Cell> entry : model.getWorksheet().entrySet()) {
       try {
-        if (model.getCellAt(entry.getKey()).evaluate(model).length() > 7 &&
-                model.getCellAt(entry.getKey()).evaluate(model).substring(0, 7).equals("ERROR: ")) {
+        if (model.getCellAt(entry.getKey()).evaluate(model).length() > 7
+                && model.getCellAt(entry.getKey()).evaluate(model).substring(0, 7)
+                .equals("ERROR: ")) {
           ap.append("# " + model.getCellAt(entry.getKey()).evaluate(model) + "\n");
           ap.append(entry.getKey().toString() + " "
                   + model.getCellAt(entry.getKey()).getRawContents() + "\n");
