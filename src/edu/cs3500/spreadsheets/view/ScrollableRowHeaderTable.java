@@ -10,11 +10,19 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * A class that represents a scrollable table with a fixed row header column.
+ */
 public class ScrollableRowHeaderTable implements ChangeListener, PropertyChangeListener {
   private RowHeaderTable table;
   private RowHeaderTable rowHeader;
   private JScrollPane scrollPane;
 
+  /**
+   * Public constructor for the ScrollableRowHeaderTable class.
+   *
+   * @param scrollPane the JScrollPane containing the table
+   */
   public ScrollableRowHeaderTable(JScrollPane scrollPane) {
     this.scrollPane = scrollPane;
 
@@ -34,10 +42,20 @@ public class ScrollableRowHeaderTable implements ChangeListener, PropertyChangeL
     this.scrollPane.getRowHeader().addChangeListener(this);
   }
 
+  /**
+   * Gets the row header table in the scrollable table.
+   *
+   * @return the row header JTable
+   */
   public JTable getRowHeader() {
     return rowHeader;
   }
 
+  /**
+   * Gets the main data table in the scrollable table.
+   *
+   * @return the data JTable
+   */
   public JTable getTable() {
     return table;
   }
