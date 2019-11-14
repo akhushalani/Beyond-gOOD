@@ -105,7 +105,6 @@ public class WorksheetVisualView implements WorksheetView {
     ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
             .adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
             table.getRowHeight(), 1000, 1000);
-
     frame.addComponentListener(new ComponentAdapter() {
       @Override
       public void componentResized(ComponentEvent e) {

@@ -18,7 +18,7 @@ public class HeaderRenderer implements TableCellRenderer {
   /**
    * Public constructor for HeaderRenderer.
    *
-   * @param renderer the defalt renderer in the table
+   * @param renderer the default renderer in the table
    */
   public HeaderRenderer(TableCellRenderer renderer) {
     this.renderer = renderer;
