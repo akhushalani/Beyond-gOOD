@@ -36,11 +36,6 @@ public class WorksheetVisualView implements WorksheetView {
   }
 
   @Override
-  public void updateModel(Worksheet model) {
-    this.model = model;
-  }
-
-  @Override
   public void renderView() {
     JFrame frame = new JFrame();
 

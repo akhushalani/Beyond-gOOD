@@ -26,11 +26,6 @@ public class WorksheetTextualView implements WorksheetView {
   }
 
   @Override
-  public void updateModel(Worksheet model) {
-    this.model = model;
-  }
-
-  @Override
   public void renderView() {
     for (Map.Entry<Coord, Cell> entry : model.getWorksheet().entrySet()) {
       try {
