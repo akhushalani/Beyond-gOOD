@@ -86,6 +86,11 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     return false;
   }
 
+  /**
+   * Adds a coordinate to the list of those selected in the table.
+   *
+   * @param coord the coordinate that is selected
+   */
   public void addSelected(Coord coord) {
     clearSelected();
 
@@ -95,10 +100,18 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
+  /**
+   * Gets the list of coordinates selected in the table.
+   *
+   * @return the list of coordinates
+   */
   public ArrayList<Coord> getSelected() {
     return selected;
   }
 
+  /**
+   * Clears the list of selected coordinates in the table.
+   */
   public void clearSelected() {
     ArrayList<Coord> selectedCopy = (ArrayList<Coord>) selected.clone();
     for (int i = 0; i < selectedCopy.size(); i++) {
