@@ -8,7 +8,9 @@ import java.util.regex.Pattern;
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheet;
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
+import edu.cs3500.spreadsheets.view.WorksheetEditorVisualView;
 import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 import edu.cs3500.spreadsheets.view.WorksheetVisualView;
 
@@ -36,7 +38,12 @@ public class BeyondGood {
     } else if (args.length > 0) {
       if (args.length == 1) {
         if (args[0].equals("-gui")) {
-          WorksheetVisualView view = new WorksheetVisualView(new BeyondGoodWorksheet());
+          WorksheetVisualView view = new WorksheetVisualView(
+                  new WorksheetAdapter(new BeyondGoodWorksheet()));
+          view.renderView();
+        } else if (args[0].equals("-edit")) {
+          WorksheetEditorVisualView view = new WorksheetEditorVisualView(
+                  new WorksheetAdapter(new BeyondGoodWorksheet()));
           view.renderView();
         } else {
           outputString.append("Invalid argument.\n");
@@ -68,7 +75,8 @@ public class BeyondGood {
           if (args.length > 3) {
             try {
               PrintWriter pw = new PrintWriter(args[3]);
-              WorksheetTextualView view = new WorksheetTextualView(worksheet, pw);
+              WorksheetTextualView view = new WorksheetTextualView(
+                      new WorksheetAdapter(worksheet), pw);
               view.renderView();
               pw = (PrintWriter) view.getAppendable();
               pw.close();
@@ -81,7 +89,14 @@ public class BeyondGood {
           }
         } else if (args[2].equals("-gui")) {
           if (args.length == 3) {
-            WorksheetVisualView view = new WorksheetVisualView(worksheet);
+            WorksheetVisualView view = new WorksheetVisualView(new WorksheetAdapter(worksheet));
+            view.renderView();
+          } else {
+            outputString.append("Too many arguments were specified.\n");
+          }
+        } else if (args[2].equals("-edit")) {
+          if (args.length == 3) {
+            WorksheetEditorVisualView view = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet));
             view.renderView();
           } else {
             outputString.append("Too many arguments were specified.\n");

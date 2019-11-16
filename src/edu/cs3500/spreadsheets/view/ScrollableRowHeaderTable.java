@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -28,12 +29,16 @@ public class ScrollableRowHeaderTable implements ChangeListener, PropertyChangeL
 
     table = (RowHeaderTable) scrollPane.getViewport().getView();
     table.addPropertyChangeListener(this);
+    table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
     RowHeaderTableModel headerModel = new RowHeaderTableModel(table.getModel());
-    rowHeader = new RowHeaderTable(headerModel, true);
+    rowHeader = new RowHeaderTable(headerModel, true, false);
     rowHeader.setModel(headerModel);
     rowHeader.setSelectionModel(table.getSelectionModel());
     rowHeader.setFocusable(false);
+    //rowHeader.setDefaultRenderer(Object.class, );
+    rowHeader.getColumnModel().getColumn(0)
+            .setPreferredWidth(rowHeader.getColumnModel().getColumn(0).getWidth() / 2);
 
     rowHeader.setPreferredScrollableViewportSize(rowHeader.getPreferredSize());
     this.scrollPane.setRowHeaderView(rowHeader);

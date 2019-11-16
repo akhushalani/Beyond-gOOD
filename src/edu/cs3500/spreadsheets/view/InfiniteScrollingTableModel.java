@@ -3,32 +3,35 @@ package edu.cs3500.spreadsheets.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Worksheet;
+import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
 /**
  * A model for a JTable that implements infinite scrolling in both the horizontal
  * and vertical directions for a worksheet.
  */
 public class InfiniteScrollingTableModel extends DefaultTableModel {
-  private Worksheet worksheet;
+  private WorksheetAdapter worksheet;
   private int rowCount;
   private int colCount;
   private ArrayList<Coord> selected;
+  private Coord firstSelection;
 
   /**
    * Public constructor for the InfiniteScrollingTableModel class.
    *
    * @param worksheet the worksheet being displayed in the table
    */
-  public InfiniteScrollingTableModel(Worksheet worksheet) {
+  public InfiniteScrollingTableModel(WorksheetAdapter worksheet) {
     this.worksheet = worksheet;
     colCount = this.worksheet.getWidth() + 1;
     rowCount = this.worksheet.getHeight();
     selected = new ArrayList<>();
+    firstSelection = null;
   }
 
   @Override
@@ -92,8 +95,6 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
    * @param coord the coordinate that is selected
    */
   public void addSelected(Coord coord) {
-    clearSelected();
-
     if (!selected.contains(coord)) {
       selected.add(coord);
       fireTableCellUpdated(coord.row - 1, coord.col - 1);
@@ -122,6 +123,80 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     selected.clear();
   }
 
+  public int minSelectionCol() {
+    if (selected.size() == 0) {
+      return -1;
+    } else {
+      int min = selected.get(0).col;
+      if (selected.size() > 1) {
+        for (int i = 0; i < selected.size(); i++) {
+          min = Math.min(min, selected.get(i).col);
+        }
+      }
+
+      return min - 1;
+    }
+  }
+
+  public int maxSelectionCol() {
+    if (selected.size() == 0) {
+      return -1;
+    } else {
+      int max = selected.get(0).col;
+      if (selected.size() > 1) {
+        for (int i = 0; i < selected.size(); i++) {
+          max = Math.max(max, selected.get(i).col);
+        }
+      }
+
+      return max - 1;
+    }
+  }
+
+  public int minSelectionRow() {
+    if (selected.size() == 0) {
+      return -1;
+    } else {
+      int min = selected.get(0).row;
+      if (selected.size() > 1) {
+        for (int i = 0; i < selected.size(); i++) {
+          min = Math.min(min, selected.get(i).row);
+        }
+      }
+
+      return min - 1;
+    }
+  }
+
+  public int maxSelectionRow() {
+    if (selected.size() == 0) {
+      return -1;
+    } else {
+      int max = selected.get(0).row;
+      if (selected.size() > 1) {
+        for (int i = 0; i < selected.size(); i++) {
+          max = Math.max(max, selected.get(i).row);
+        }
+      }
+
+      return max - 1;
+    }
+  }
+
+  public void setFirstSelection(Coord firstSelection) {
+    this.firstSelection = firstSelection;
+  }
+
+  public Coord getFirstSelection() {
+    return firstSelection;
+  }
+
+  public void select(JTable table) {
+    table.getSelectionModel().setSelectionInterval(minSelectionRow(), maxSelectionRow());
+    table.getColumnModel().getSelectionModel()
+            .setSelectionInterval(minSelectionCol(), maxSelectionCol());
+  }
+
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     HashMap<Coord, Cell> data = worksheet.getWorksheet();
@@ -131,7 +206,7 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
       if (selected.contains(coord) && selected.size() == 1) {
         return worksheet.getCellAt(coord).getRawContents();
       } else {
-        return worksheet.getCellAt(coord).evaluate(worksheet);
+        return worksheet.getCellAt(coord).evaluate(worksheet.getModel());
       }
     } else {
       return "";
@@ -147,6 +222,12 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     fireTableStructureChanged();
   }
 
+  public void fireScrollLeft() {
+    int newColumnCount = getColumnCount() - 1;
+    setColumnCount(Math.max(getColumnCount(), newColumnCount));
+    fireTableStructureChanged();
+  }
+
   /**
    * To be called when the vertical scrollbar in the view scrolls all the way down.
    */
@@ -154,5 +235,16 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     int newRowCount = getRowCount() + 1;
     setRowCount(newRowCount);
     fireTableStructureChanged();
+  }
+
+  public void fireScrollUp() {
+    int newRowCount = getRowCount() - 1;
+    setRowCount(Math.max(getRowCount(), newRowCount));
+    fireTableStructureChanged();
+  }
+
+  @Override
+  public void setValueAt(Object aValue, int row, int column) {
+    super.setValueAt(aValue, row, column);
   }
 }
