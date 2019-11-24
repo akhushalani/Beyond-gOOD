@@ -24,12 +24,16 @@ public class StringValue extends AbstractValue<String> {
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
-    String printString = this.getValue()
-            .replace("\\", "\\\\")
-            .replace("\"", "\\\"")
-            .replace("'", "\\'");
-    return "\"" + printString + "\"";
+  public String getPrintString(Worksheet worksheet, Coord cellLoc, boolean clean) {
+    if (clean) {
+      return this.getValue();
+    } else {
+      String printString = this.getValue()
+              .replace("\\", "\\\\")
+              .replace("\"", "\\\"")
+              .replace("'", "\\'");
+      return "\"" + printString + "\"";
+    }
   }
 
   @Override

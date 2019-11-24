@@ -25,8 +25,8 @@ public abstract class AbstractFunction<T extends Formula> implements Function<T>
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
-    return evaluateFunction(args, worksheet, cellLoc).getPrintString(worksheet, cellLoc);
+  public String getPrintString(Worksheet worksheet, Coord cellLoc, boolean clean) {
+    return evaluateFunction(args, worksheet, cellLoc).getPrintString(worksheet, cellLoc, clean);
   }
 
   @Override

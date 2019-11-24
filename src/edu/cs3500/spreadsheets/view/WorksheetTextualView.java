@@ -29,15 +29,15 @@ public class WorksheetTextualView implements WorksheetView {
   public void renderView() {
     for (Map.Entry<Coord, Cell> entry : model.getWorksheet().entrySet()) {
       try {
-        if (model.getCellAt(entry.getKey()).evaluate(model.getModel()).length() > 7
-                && model.getCellAt(entry.getKey()).evaluate(model.getModel()).substring(0, 7)
+        if (model.getCellAt(entry.getKey()).evaluate(model.getModel(), false).length() > 7
+                && model.getCellAt(entry.getKey()).evaluate(model.getModel(), false).substring(0, 7)
                 .equals("ERROR: ")) {
-          ap.append("# " + model.getCellAt(entry.getKey()).evaluate(model.getModel()) + "\n");
+          ap.append("# " + model.getCellAt(entry.getKey()).evaluate(model.getModel(), false) + "\n");
           ap.append(entry.getKey().toString() + " "
                   + model.getCellAt(entry.getKey()).getRawContents() + "\n");
         } else {
           ap.append(entry.getKey().toString() + " "
-                  + model.getCellAt(entry.getKey()).evaluate(model.getModel()) + "\n");
+                  + model.getCellAt(entry.getKey()).evaluate(model.getModel(), false) + "\n");
         }
       } catch (IOException ex) {
         // Shouldn't ever happen, all Strings being appended will be valid

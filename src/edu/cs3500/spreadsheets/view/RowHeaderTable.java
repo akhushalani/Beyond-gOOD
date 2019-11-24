@@ -14,6 +14,7 @@ import javax.swing.table.TableModel;
 public class RowHeaderTable extends JTable {
   private boolean headerTable;
   private boolean editable;
+  private TableModel tableModel;
 
   /**
    * Public constructor for the RowHeaderTableClass.
@@ -57,6 +58,17 @@ public class RowHeaderTable extends JTable {
 
   @Override
   public boolean isCellEditable(int rowIndex, int vColIndex) {
-    return editable;
+    if (tableModel == null) {
+      return editable;
+    } else {
+      InfiniteScrollingTableModel model = (InfiniteScrollingTableModel) tableModel;
+      if (model.minSelectionCol() == -1 || model.minSelectionRow() == -1) {
+        return editable;
+      } else {
+        return editable
+                && rowIndex == model.getFirstSelection().row - 1
+                && vColIndex == model.getFirstSelection().col - 1;
+      }
+    }
   }
 }

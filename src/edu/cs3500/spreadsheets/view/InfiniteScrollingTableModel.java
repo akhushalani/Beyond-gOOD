@@ -1,7 +1,9 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +22,7 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
   private int colCount;
   private ArrayList<Coord> selected;
   private Coord firstSelection;
+  private HashMap<Coord, CellAttributes> attributes;
 
   /**
    * Public constructor for the InfiniteScrollingTableModel class.
@@ -32,6 +35,18 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     rowCount = this.worksheet.getHeight();
     selected = new ArrayList<>();
     firstSelection = null;
+    attributes = new HashMap<>();
+
+    for (Map.Entry<Coord, Cell> entry : worksheet.getWorksheet().entrySet()) {
+      attributes.put(entry.getKey(), new CellAttributes());
+      try {
+        Double value = Double.parseDouble(worksheet.getCellAt(entry.getKey())
+                .evaluate(worksheet.getModel(), false));
+        attributes.get(entry.getKey()).setAlignment(CellAttributes.RIGHT);
+      } catch (NumberFormatException | NullPointerException ignored) {
+
+      }
+    }
   }
 
   @Override
@@ -101,13 +116,81 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
-  /**
-   * Gets the list of coordinates selected in the table.
-   *
-   * @return the list of coordinates
-   */
-  public ArrayList<Coord> getSelected() {
-    return selected;
+  public void toggleAttribute(CellAttribute attribute) {
+    switch (attribute) {
+      case BOLD:
+        if (attributes.get(firstSelection) == null) {
+          attributes.put(firstSelection, new CellAttributes());
+        }
+        attributes.get(firstSelection).toggleBold();
+        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
+        break;
+      case ITALIC:
+        if (attributes.get(firstSelection) == null) {
+          attributes.put(firstSelection, new CellAttributes());
+        }
+        attributes.get(firstSelection).toggleItalic();
+        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
+        break;
+      case UNDERLINE:
+        if (attributes.get(firstSelection) == null) {
+          attributes.put(firstSelection, new CellAttributes());
+        }
+        attributes.get(firstSelection).toggleUnderline();
+        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
+        break;
+      case LEFT:
+        if (attributes.get(firstSelection) == null) {
+          attributes.put(firstSelection, new CellAttributes());
+        }
+        attributes.get(firstSelection).setAlignment(CellAttributes.LEFT);
+        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
+        break;
+      case CENTER:
+        if (attributes.get(firstSelection) == null) {
+          attributes.put(firstSelection, new CellAttributes());
+        }
+        attributes.get(firstSelection).setAlignment(CellAttributes.CENTER);
+        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
+        break;
+      case RIGHT:
+        if (attributes.get(firstSelection) == null) {
+          attributes.put(firstSelection, new CellAttributes());
+        }
+        attributes.get(firstSelection).setAlignment(CellAttributes.RIGHT);
+        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
+        break;
+    }
+
+    for (Coord selection : selected) {
+      if (attributes.get(selection) == null) {
+        attributes.put(selection, new CellAttributes());
+      }
+      attributes.get(selection)
+              .useAttributes(attributes.get(firstSelection), attribute);
+      fireTableCellUpdated(selection.row - 1, selection.col - 1);
+    }
+  }
+
+  public void setColor(CellAttribute attribute, Color color) {
+    switch (attribute) {
+      case BG_COLOR:
+        for (Coord selection : selected) {
+          attributes.get(selection).setBackgroundColor(color);
+          fireTableCellUpdated(selection.row - 1, selection.col - 1);
+        }
+        break;
+      case TEXT_COLOR:
+        for (Coord selection : selected) {
+          attributes.get(selection).setTextColor(color);
+          fireTableCellUpdated(selection.row - 1, selection.col - 1);
+        }
+        break;
+    }
+  }
+
+  public HashMap<Coord, CellAttributes> getAttributes() {
+    return attributes;
   }
 
   /**
@@ -203,11 +286,7 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
 
     Coord coord = new Coord(columnIndex + 1, rowIndex + 1);
     if (data.containsKey(coord)) {
-      if (selected.contains(coord) && selected.size() == 1) {
-        return worksheet.getCellAt(coord).getRawContents();
-      } else {
-        return worksheet.getCellAt(coord).evaluate(worksheet.getModel());
-      }
+      return worksheet.getCellAt(coord).evaluate(worksheet.getModel(), true);
     } else {
       return "";
     }
@@ -222,12 +301,6 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     fireTableStructureChanged();
   }
 
-  public void fireScrollLeft() {
-    int newColumnCount = getColumnCount() - 1;
-    setColumnCount(Math.max(getColumnCount(), newColumnCount));
-    fireTableStructureChanged();
-  }
-
   /**
    * To be called when the vertical scrollbar in the view scrolls all the way down.
    */
@@ -237,14 +310,8 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     fireTableStructureChanged();
   }
 
-  public void fireScrollUp() {
-    int newRowCount = getRowCount() - 1;
-    setRowCount(Math.max(getRowCount(), newRowCount));
-    fireTableStructureChanged();
-  }
-
   @Override
   public void setValueAt(Object aValue, int row, int column) {
-    super.setValueAt(aValue, row, column);
+    //super.setValueAt(aValue, row, column);
   }
 }

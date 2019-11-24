@@ -33,7 +33,7 @@ public class Reference implements Formula {
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
+  public String getPrintString(Worksheet worksheet, Coord cellLoc, boolean clean) {
     return refLocation.toString();
   }
 

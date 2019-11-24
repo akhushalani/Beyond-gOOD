@@ -29,9 +29,10 @@ public interface Cell {
   /**
    * Evaluates the given Cell to a String representation value.
    * @param worksheet the worksheet within which the Cell and its references exist.
+   * @param clean whether or not the evaluated string should be presented for display in cell.
    * @return the String representation of the cell value
    */
-  String evaluate(Worksheet worksheet);
+  String evaluate(Worksheet worksheet, boolean clean);
 
   /**
    * Evaluates whether or not the given cell has a cyclic reference.

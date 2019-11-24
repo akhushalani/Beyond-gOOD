@@ -15,9 +15,11 @@ public interface Formula {
   /**
    * Converts a formula to a simplified String representation of the Formula.
    * @param worksheet the worksheet within which the Formula in question exists.
+   * @param cellLoc the location of the cell being evaluated
+   * @param clean whether the print string to be returned should be in a clean format
    * @return a simplified String representation of the Formula.
    */
-  String getPrintString(Worksheet worksheet, Coord cellLoc);
+  String getPrintString(Worksheet worksheet, Coord cellLoc, boolean clean);
 
   /**
    * Retrieves the ValueType of a Formula.

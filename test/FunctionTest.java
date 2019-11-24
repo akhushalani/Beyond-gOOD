@@ -103,194 +103,194 @@ public class FunctionTest {
   @Test
   public void testAnd() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(2, 1)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(2, 2)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(2, 3)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(2, 4)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(2, 5)).evaluate(worksheet), "true");
+    assertEquals(worksheet.getCellAt(new Coord(2, 1)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(2, 2)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(2, 3)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(2, 4)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(2, 5)).evaluate(worksheet, false), "true");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAndInvalidArgs() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(2, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(2, 6)).evaluate(worksheet, false);
   }
 
   @Test
   public void testConcat() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(3, 1)).evaluate(worksheet),
+    assertEquals(worksheet.getCellAt(new Coord(3, 1)).evaluate(worksheet, false),
             "\"Hello, World. \"");
-    assertEquals(worksheet.getCellAt(new Coord(3, 2)).evaluate(worksheet),
+    assertEquals(worksheet.getCellAt(new Coord(3, 2)).evaluate(worksheet, false),
             "\"Hello, World. \"");
-    assertEquals(worksheet.getCellAt(new Coord(3, 3)).evaluate(worksheet),
+    assertEquals(worksheet.getCellAt(new Coord(3, 3)).evaluate(worksheet, false),
             "\"Hello, World. Hello, World. \"");
-    assertEquals(worksheet.getCellAt(new Coord(3, 4)).evaluate(worksheet),
+    assertEquals(worksheet.getCellAt(new Coord(3, 4)).evaluate(worksheet, false),
             "\"Hello, \"");
   }
 
   @Test
   public void testGreaterThan() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(4, 1)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(4, 2)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(4, 3)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(4, 4)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(4, 5)).evaluate(worksheet), "false");
+    assertEquals(worksheet.getCellAt(new Coord(4, 1)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(4, 2)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(4, 3)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(4, 4)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(4, 5)).evaluate(worksheet, false), "false");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testGreaterThanInvalidArgs1() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(4, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(4, 6)).evaluate(worksheet, false);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testGreaterThanInvalidArgs2() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(4, 7)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(4, 7)).evaluate(worksheet, false);
   }
 
   @Test
   public void testLessThan() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(5, 1)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(5, 2)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(5, 3)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(5, 4)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(5, 5)).evaluate(worksheet), "true");
+    assertEquals(worksheet.getCellAt(new Coord(5, 1)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(5, 2)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(5, 3)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(5, 4)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(5, 5)).evaluate(worksheet, false), "true");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testLessThanInvalidArgs1() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(5, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(5, 6)).evaluate(worksheet, false);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testLessThanInvalidArgs2() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(5, 7)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(5, 7)).evaluate(worksheet, false);
   }
 
   @Test
   public void testNot() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(6, 1)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(6, 2)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(6, 3)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(6, 4)).evaluate(worksheet), "true");
+    assertEquals(worksheet.getCellAt(new Coord(6, 1)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(6, 2)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(6, 3)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(6, 4)).evaluate(worksheet, false), "true");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testNotInvalidArgs1() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(6, 5)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(6, 5)).evaluate(worksheet, false);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testNotInvalidArgs2() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(6, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(6, 6)).evaluate(worksheet, false);
   }
 
   @Test
   public void testOr() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(7, 1)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(7, 2)).evaluate(worksheet), "true");
-    assertEquals(worksheet.getCellAt(new Coord(7, 3)).evaluate(worksheet), "false");
-    assertEquals(worksheet.getCellAt(new Coord(7, 4)).evaluate(worksheet), "true");
+    assertEquals(worksheet.getCellAt(new Coord(7, 1)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(7, 2)).evaluate(worksheet, false), "true");
+    assertEquals(worksheet.getCellAt(new Coord(7, 3)).evaluate(worksheet, false), "false");
+    assertEquals(worksheet.getCellAt(new Coord(7, 4)).evaluate(worksheet, false), "true");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testOrInvalidArgs1() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(7, 5)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(7, 5)).evaluate(worksheet, false);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testOrInvalidArgs2() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(7, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(7, 6)).evaluate(worksheet, false);
   }
 
   @Test
   public void testProduct() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(8, 1)).evaluate(worksheet), "2.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 2)).evaluate(worksheet), "6.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 3)).evaluate(worksheet), "-2.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 4)).evaluate(worksheet), "0.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 5)).evaluate(worksheet), "-2.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 6)).evaluate(worksheet), "0.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 7)).evaluate(worksheet), "0.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 8)).evaluate(worksheet), "0.000000");
-    assertEquals(worksheet.getCellAt(new Coord(8, 9)).evaluate(worksheet), "1.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 1)).evaluate(worksheet, false), "2.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 2)).evaluate(worksheet, false), "6.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 3)).evaluate(worksheet, false), "-2.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 4)).evaluate(worksheet, false), "0.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 5)).evaluate(worksheet, false), "-2.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 6)).evaluate(worksheet, false), "0.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 7)).evaluate(worksheet, false), "0.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 8)).evaluate(worksheet, false), "0.000000");
+    assertEquals(worksheet.getCellAt(new Coord(8, 9)).evaluate(worksheet, false), "1.000000");
   }
 
   @Test
   public void testSqrt() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(9, 1)).evaluate(worksheet), "1.000000");
-    assertEquals(worksheet.getCellAt(new Coord(9, 2)).evaluate(worksheet), "0.000000");
-    assertEquals(worksheet.getCellAt(new Coord(9, 3)).evaluate(worksheet), "0.000000");
+    assertEquals(worksheet.getCellAt(new Coord(9, 1)).evaluate(worksheet, false), "1.000000");
+    assertEquals(worksheet.getCellAt(new Coord(9, 2)).evaluate(worksheet, false), "0.000000");
+    assertEquals(worksheet.getCellAt(new Coord(9, 3)).evaluate(worksheet, false), "0.000000");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSqrtInvalidArgs1() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(9, 4)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(9, 4)).evaluate(worksheet, false);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSqrtInvalidArgs2() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(9, 5)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(9, 5)).evaluate(worksheet, false);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSqrtInvalidArgs3() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(9, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(9, 6)).evaluate(worksheet, false);
   }
 
   @Test
   public void testSub() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(10, 1)).evaluate(worksheet), "2.000000");
-    assertEquals(worksheet.getCellAt(new Coord(10, 2)).evaluate(worksheet), "6.000000");
-    assertEquals(worksheet.getCellAt(new Coord(10, 3)).evaluate(worksheet), "4.000000");
-    assertEquals(worksheet.getCellAt(new Coord(10, 4)).evaluate(worksheet), "-6.000000");
-    assertEquals(worksheet.getCellAt(new Coord(10, 5)).evaluate(worksheet), "1.000000");
+    assertEquals(worksheet.getCellAt(new Coord(10, 1)).evaluate(worksheet, false), "2.000000");
+    assertEquals(worksheet.getCellAt(new Coord(10, 2)).evaluate(worksheet, false), "6.000000");
+    assertEquals(worksheet.getCellAt(new Coord(10, 3)).evaluate(worksheet, false), "4.000000");
+    assertEquals(worksheet.getCellAt(new Coord(10, 4)).evaluate(worksheet, false), "-6.000000");
+    assertEquals(worksheet.getCellAt(new Coord(10, 5)).evaluate(worksheet, false), "1.000000");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSubInvalidArgs1() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(10, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(10, 6)).evaluate(worksheet, false);
   }
 
   @Test
   public void testSum() {
     initWorksheet();
-    assertEquals(worksheet.getCellAt(new Coord(11, 1)).evaluate(worksheet), "1.000000");
-    assertEquals(worksheet.getCellAt(new Coord(11, 2)).evaluate(worksheet), "6.000000");
-    assertEquals(worksheet.getCellAt(new Coord(11, 3)).evaluate(worksheet), "3.000000");
-    assertEquals(worksheet.getCellAt(new Coord(11, 4)).evaluate(worksheet), "-1.000000");
-    assertEquals(worksheet.getCellAt(new Coord(11, 5)).evaluate(worksheet), "7.000000");
-    assertEquals(worksheet.getCellAt(new Coord(11, 9)).evaluate(worksheet), "3.000000");
+    assertEquals(worksheet.getCellAt(new Coord(11, 1)).evaluate(worksheet, false), "1.000000");
+    assertEquals(worksheet.getCellAt(new Coord(11, 2)).evaluate(worksheet, false), "6.000000");
+    assertEquals(worksheet.getCellAt(new Coord(11, 3)).evaluate(worksheet, false), "3.000000");
+    assertEquals(worksheet.getCellAt(new Coord(11, 4)).evaluate(worksheet, false), "-1.000000");
+    assertEquals(worksheet.getCellAt(new Coord(11, 5)).evaluate(worksheet, false), "7.000000");
+    assertEquals(worksheet.getCellAt(new Coord(11, 9)).evaluate(worksheet, false), "3.000000");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSumInvalidArgs1() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(11, 6)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(11, 6)).evaluate(worksheet, false);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSumInvalidArgs2() {
     initWorksheet();
-    worksheet.getCellAt(new Coord(11, 8)).evaluate(worksheet);
+    worksheet.getCellAt(new Coord(11, 8)).evaluate(worksheet, false);
   }
 }

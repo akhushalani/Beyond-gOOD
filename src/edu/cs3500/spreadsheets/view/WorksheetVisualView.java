@@ -8,7 +8,7 @@ import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 /**
  * A visual view of a worksheet model.
  */
-public class WorksheetVisualView implements WorksheetView {
+public class WorksheetVisualView extends JFrame implements WorksheetView {
   private WorksheetAdapter model;
 
   /**
@@ -22,16 +22,14 @@ public class WorksheetVisualView implements WorksheetView {
 
   @Override
   public void renderView() {
-    JFrame frame = new JFrame();
+    WorksheetPanel worksheetPanel = new WorksheetPanel(model, this, false);
 
-    WorksheetPanel worksheetPanel = new WorksheetPanel(model, frame, false);
+    add(worksheetPanel.getScrollPane());
+    pack();
+    setSize(1300, 600);
 
-    frame.add(worksheetPanel.getScrollPane());
-    frame.pack();
-    frame.setSize(1300, 600);
-
-    frame.setVisible(true);
-    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    setVisible(true);
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
   }
 
   @Override

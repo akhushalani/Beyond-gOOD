@@ -316,27 +316,27 @@ public class FormulaCellTest {
     for (int i = 0; i < loCell1.size(); i++) {
       ws.setCell(loCoord1.get(i), loCell1.get(i));
       //assertEquals(loCell1.get(i).evaluate(ws));
-      assertEquals(loCell1.get(i).getFormula().getPrintString(ws, loCoord1.get(i)),
-              loCell1.get(i).evaluate(ws));
+      assertEquals(loCell1.get(i).getFormula().getPrintString(ws, loCoord1.get(i), false),
+              loCell1.get(i).evaluate(ws, false));
     }
     for (int i = 0; i < loCell2.size(); i++) {
       ws.setCell(loCoord2.get(i), loCell2.get(i));
-      assertEquals(loCell2.get(i).getFormula().getPrintString(ws, loCoord2.get(i)),
-              loCell2.get(i).evaluate(ws));
+      assertEquals(loCell2.get(i).getFormula().getPrintString(ws, loCoord2.get(i), false),
+              loCell2.get(i).evaluate(ws, false));
     }
     for (int i = 0; i < loCell3.size(); i++) {
       ws.setCell(loCoord3.get(i), loCell3.get(i));
-      assertEquals(loCell3.get(i).getFormula().getPrintString(ws, loCoord3.get(i)),
-              loCell3.get(i).evaluate(ws));
+      assertEquals(loCell3.get(i).getFormula().getPrintString(ws, loCoord3.get(i), false),
+              loCell3.get(i).evaluate(ws, false));
     }
     ws.setCell(coord11, cell11);
-    assertEquals(cell11.getFormula().getPrintString(ws, coord11), cell11.evaluate(ws));
+    assertEquals(cell11.getFormula().getPrintString(ws, coord11, false), cell11.evaluate(ws, false));
 
     ws.setCell(coord12, cell12);
-    assertEquals(cell12.getFormula().getPrintString(ws, coord11), cell12.evaluate(ws));
+    assertEquals(cell12.getFormula().getPrintString(ws, coord11, false), cell12.evaluate(ws, false));
 
     ws.setCell(coord11, cell13);
-    assertEquals(cell13.getFormula().getPrintString(ws, coord11), cell13.evaluate(ws));
+    assertEquals(cell13.getFormula().getPrintString(ws, coord11, false), cell13.evaluate(ws, false));
 
 
   }

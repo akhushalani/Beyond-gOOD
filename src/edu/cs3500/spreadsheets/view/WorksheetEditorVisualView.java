@@ -2,11 +2,8 @@ package edu.cs3500.spreadsheets.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
@@ -30,25 +27,10 @@ public class WorksheetEditorVisualView implements WorksheetView {
     WorksheetPanel worksheetPanel = new WorksheetPanel(model, frame, true);
 
     Color bg = new Color(50, 50, 50);
-    JToolBar editBar = new JToolBar();
-    editBar.setBackground(bg);
-    editBar.setFloatable(false);
+    WorksheetEditBar editBar = new WorksheetEditBar(bg);
 
-    JTextField coordDisplay = new JTextField();
-    coordDisplay.setBackground(new Color(71, 71, 71));
-    coordDisplay.setForeground(Color.WHITE);
-    coordDisplay.setMaximumSize(new Dimension(50, coordDisplay.getPreferredSize().height));
-    coordDisplay.setColumns(7);
-    coordDisplay.setEditable(false);
-    editBar.add(coordDisplay);
-
-    JTextField editField = new JTextField();
-    editField.setBackground(new Color(71, 71, 71));
-    editField.setForeground(Color.WHITE);
-    editBar.add(editField);
-
-    worksheetPanel.addCoordDisplay(coordDisplay);
-    worksheetPanel.addEditField(editField);
+    worksheetPanel.addCoordDisplay(editBar.getCoordDisplay());
+    worksheetPanel.addEditField(editBar.getEditField());
 
     frame.add(editBar, BorderLayout.PAGE_START);
     frame.add(worksheetPanel.getScrollPane());

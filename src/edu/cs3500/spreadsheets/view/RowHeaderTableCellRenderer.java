@@ -9,6 +9,8 @@ import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
 import javax.swing.table.TableCellRenderer;
 
+import edu.cs3500.spreadsheets.model.Coord;
+
 /**
  * A class for rendering cells in a RowHeaderTable.
  */
@@ -29,9 +31,11 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
                                                  boolean hasFocus, int row, int column) {
     JComponent component = (JComponent) renderer.getTableCellRendererComponent(table, value,
             isSelected, hasFocus, row, column);
+
+    InfiniteScrollingTableModel tableModel = (InfiniteScrollingTableModel) table.getModel();
+
     if (isSelected || hasFocus) {
       CompoundBorder b = BorderFactory.createCompoundBorder();
-      InfiniteScrollingTableModel tableModel = (InfiniteScrollingTableModel) table.getModel();
       int top = 4;
       int left = 4;
       int bottom = 4;
@@ -88,16 +92,31 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
 
       if (tableModel.maxSelectionCol() != tableModel.minSelectionCol()) {
         if (column != tableModel.maxSelectionCol()) {
-          b = BorderFactory.createCompoundBorder(b,
-                  BorderFactory.createMatteBorder(0, 0, 0, 2, Color.LIGHT_GRAY));
-          right -= 1;
+          if (row == tableModel.getFirstSelection().row - 1
+                  && column == tableModel.maxSelectionCol() - 1
+                  && tableModel.getFirstSelection().col - 1 != tableModel.minSelectionCol()) {
+            b = BorderFactory.createCompoundBorder(b,
+                    BorderFactory.createMatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY));
+          } else {
+            b = BorderFactory.createCompoundBorder(b,
+                    BorderFactory.createMatteBorder(0, 0, 0, 2, Color.LIGHT_GRAY));
+          }
+          right -= 2;
         }
       }
 
       if (tableModel.maxSelectionRow() != tableModel.minSelectionRow()) {
         if (row != tableModel.maxSelectionRow()) {
-          b = BorderFactory.createCompoundBorder(b,
-                  BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY));
+          if (column == tableModel.getFirstSelection().col - 1
+                  && row == tableModel.maxSelectionRow() - 1
+                  && tableModel.getFirstSelection().row - 1 != tableModel.minSelectionRow()) {
+            b = BorderFactory.createCompoundBorder(b,
+                    BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+
+          } else {
+            b = BorderFactory.createCompoundBorder(b,
+                    BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY));
+          }
           bottom -= 1;
         }
       }
@@ -114,6 +133,13 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
     } else {
       component.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
     }
+
+    Coord location = new Coord(column + 1, row + 1);
+    if (tableModel.getAttributes().containsKey(location)
+            && tableModel.getAttributes().get(location) != null) {
+      return tableModel.getAttributes().get(location).apply(component);
+    }
+
     return component;
   }
 }

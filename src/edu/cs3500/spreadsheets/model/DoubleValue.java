@@ -23,11 +23,19 @@ public class DoubleValue extends AbstractValue<Double> {
   }
 
   @Override
-  public String getPrintString(Worksheet worksheet, Coord cellLoc) {
-    if (this.equals(new DoubleValue(0))) {
-      return "0.000000";
+  public String getPrintString(Worksheet worksheet, Coord cellLoc, boolean clean) {
+    if (clean) {
+      if (value == Math.floor(value) && !Double.isInfinite(value)) {
+        return "" + ((int) Math.floor(value));
+      } else {
+        return "" + value;
+      }
     } else {
-      return String.format("%f", this.value);
+      if (this.equals(new DoubleValue(0))) {
+        return "0.000000";
+      } else {
+        return String.format("%f",value);
+      }
     }
   }
 

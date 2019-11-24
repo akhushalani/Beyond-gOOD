@@ -69,7 +69,7 @@ public class BeyondGood {
               outputString.append("Error in cell " + cellToEval + ": Cell is not a valid cell "
                       + "reference.\n");
             }
-            outputString.append(worksheet.getCellAt(cellCoord).evaluate(worksheet));
+            outputString.append(worksheet.getCellAt(cellCoord).evaluate(worksheet, false));
           }
         } else if (args[2].equals("-save")) {
           if (args.length > 3) {
@@ -96,7 +96,8 @@ public class BeyondGood {
           }
         } else if (args[2].equals("-edit")) {
           if (args.length == 3) {
-            WorksheetEditorVisualView view = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet));
+            WorksheetEditorVisualView view
+                    = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet));
             view.renderView();
           } else {
             outputString.append("Too many arguments were specified.\n");

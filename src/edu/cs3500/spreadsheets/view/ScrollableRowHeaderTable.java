@@ -30,15 +30,16 @@ public class ScrollableRowHeaderTable implements ChangeListener, PropertyChangeL
     table = (RowHeaderTable) scrollPane.getViewport().getView();
     table.addPropertyChangeListener(this);
     table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    table.getTableHeader().setReorderingAllowed(false);
 
     RowHeaderTableModel headerModel = new RowHeaderTableModel(table.getModel());
     rowHeader = new RowHeaderTable(headerModel, true, false);
     rowHeader.setModel(headerModel);
     rowHeader.setSelectionModel(table.getSelectionModel());
     rowHeader.setFocusable(false);
-    //rowHeader.setDefaultRenderer(Object.class, );
     rowHeader.getColumnModel().getColumn(0)
             .setPreferredWidth(rowHeader.getColumnModel().getColumn(0).getWidth() / 2);
+    rowHeader.getTableHeader().setReorderingAllowed(false);
 
     rowHeader.setPreferredScrollableViewportSize(rowHeader.getPreferredSize());
     this.scrollPane.setRowHeaderView(rowHeader);

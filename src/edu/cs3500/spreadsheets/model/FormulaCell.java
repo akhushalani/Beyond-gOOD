@@ -60,12 +60,12 @@ public class FormulaCell implements Cell {
   }
 
   @Override
-  public String evaluate(Worksheet worksheet) {
+  public String evaluate(Worksheet worksheet, boolean clean) {
     worksheet.clearCalculatedReferences();
     String output = "";
     try {
       output += this.formula.evaluate(worksheet, this.location)
-              .getPrintString(worksheet, this.location);
+              .getPrintString(worksheet, this.location, clean);
     } catch (IllegalArgumentException ex) {
       int colonIndex = ex.toString().indexOf(":");
       String errorMsg = ex.toString().substring(colonIndex);

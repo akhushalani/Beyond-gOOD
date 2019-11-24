@@ -146,8 +146,8 @@ public class BeyondGoodWorksheet implements Worksheet {
 
     boolean same = true;
     for (Coord key : worksheetKeys) {
-      same = same && getCellAt(key).evaluate(this)
-              .equals(that.getCellAt(key).evaluate(that));
+      same = same && getCellAt(key).evaluate(this, false)
+              .equals(that.getCellAt(key).evaluate(that, false));
     }
 
     return same;

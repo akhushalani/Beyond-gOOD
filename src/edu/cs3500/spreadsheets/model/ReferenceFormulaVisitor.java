@@ -29,7 +29,7 @@ public class ReferenceFormulaVisitor implements FormulaVisitor<ArrayList<Coord>>
 
   @Override
   public ArrayList<Coord> visitReference(Reference r) {
-    this.refList.add(parseCoord(r.getPrintString(worksheet, cellLoc)));
+    this.refList.add(parseCoord(r.getPrintString(worksheet, cellLoc, false)));
 
     return null;
   }

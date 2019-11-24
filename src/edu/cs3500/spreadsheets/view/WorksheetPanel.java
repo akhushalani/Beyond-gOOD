@@ -24,12 +24,13 @@ public class WorksheetPanel extends JPanel {
   private JScrollPane scrollPane;
   private JTextField editField;
   private JTextField coordDisplay;
+  private InfiniteScrollingTableModel tableModel;
 
   public WorksheetPanel(WorksheetAdapter model, JFrame frame, boolean editable) {
     this.editField = null;
     this.coordDisplay = null;
 
-    InfiniteScrollingTableModel tableModel = new InfiniteScrollingTableModel(model);
+    tableModel = new InfiniteScrollingTableModel(model);
 
     RowHeaderTable table = new RowHeaderTable(tableModel, false, editable);
     scrollPane = new JScrollPane(table,
@@ -156,8 +157,9 @@ public class WorksheetPanel extends JPanel {
     });
 
     scrollPane.getVerticalScrollBar().addAdjustmentListener(e -> {
-      int vertExtent = scrollPane.getHorizontalScrollBar().getModel().getExtent();
-      if (e.getValue() == scrollPane.getVerticalScrollBar().getMaximum() - vertExtent) {
+      int vertExtent = scrollPane.getVerticalScrollBar().getModel().getExtent();
+      if (e.getValueIsAdjusting()
+              && e.getValue() == scrollPane.getVerticalScrollBar().getMaximum() - vertExtent) {
         tableModel.fireScrollDown();
         ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
                 .select(scrollableTable.getTable());
@@ -172,6 +174,8 @@ public class WorksheetPanel extends JPanel {
         tableModel.fireScrollRight();
       }
     });
+
+    scrollableTable.getTable().setDefaultEditor(Object.class, WorksheetCellEditor.make(model));
 
     scrollableTable.getTable().getColumnModel().getSelectionModel()
             .addListSelectionListener(selectionListener);
@@ -188,5 +192,9 @@ public class WorksheetPanel extends JPanel {
 
   public void addCoordDisplay(JTextField coordDisplay) {
     this.coordDisplay = coordDisplay;
+  }
+
+  public InfiniteScrollingTableModel getTableModel() {
+    return tableModel;
   }
 }
