@@ -92,6 +92,7 @@ public class WorksheetEditorVisualView extends JFrame implements WorksheetView {
   @Override
   public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
     editBar.getConfirmButton().addActionListener(clicks);
+    editBar.getRejectButton().addActionListener(clicks);
     editBar.getEditField().addActionListener(clicks);
     editBar.getEditField().getDocument().addDocumentListener(cellEdits);
     menuBar.getSave().addActionListener(clicks);

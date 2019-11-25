@@ -66,6 +66,12 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
         }
         break;
       case "Reject Button":
+        if (view.cellsSelected()) {
+          Coord sel = view.getFirstSelected();
+          if (model.getWorksheet().containsKey(sel)) {
+            view.setEditText(model.getCellAt(sel).getRawContents());
+          }
+        }
         break;
       case "Save":
         JFileChooser save = new JFileChooser();

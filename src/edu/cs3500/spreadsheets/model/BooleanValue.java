@@ -30,9 +30,9 @@ public class BooleanValue extends AbstractValue<Boolean> {
   public String getPrintString(Worksheet worksheet, Coord cellLoc, boolean clean) {
     if (clean) {
       if (this.value) {
-        return "#TRUE";
+        return "#true";
       } else {
-        return "#FALSE";
+        return "#false";
       }
     } else {
       if(this.value) {
