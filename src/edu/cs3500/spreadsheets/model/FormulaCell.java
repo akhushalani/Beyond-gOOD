@@ -11,6 +11,7 @@ public class FormulaCell implements Cell {
   private Coord location;
   private Formula formula;
   private String rawContents;
+  private boolean cyclic;
 
   /**
    * Public constructor for when cell is null in worksheet.
@@ -23,6 +24,7 @@ public class FormulaCell implements Cell {
     this.directRefs = new ArrayList<>();
     this.formula = formula;
     this.rawContents = rawContents;
+    this.cyclic = false;
   }
 
   /**
@@ -37,6 +39,7 @@ public class FormulaCell implements Cell {
     this.directRefs = formula.accept(refVisitor);
     this.formula = formula;
     this.rawContents = rawContents;
+    this.cyclic = false;
   }
 
   /**
@@ -51,8 +54,10 @@ public class FormulaCell implements Cell {
                      String rawContents) {
     this.location = location;
     if (existingRefs.contains(this.location)) {
-      throw new IllegalArgumentException("Cell contains a cyclic reference.");
+      this.cyclic = true;
+      this.directRefs = new ArrayList<>();
     } else {
+      this.cyclic = false;
       this.directRefs = existingRefs;
     }
     this.formula = formula;
@@ -63,14 +68,18 @@ public class FormulaCell implements Cell {
   public String evaluate(Worksheet worksheet, boolean clean) {
     worksheet.clearCalculatedReferences();
     String output = "";
-    try {
-      output += this.formula.evaluate(worksheet, this.location)
-              .getPrintString(worksheet, this.location, clean);
-    } catch (IllegalArgumentException ex) {
-      int colonIndex = ex.toString().indexOf(":");
-      String errorMsg = ex.toString().substring(colonIndex);
-      //output += "Error in cell " + this.location.toString() + errorMsg;
-      output += "ERROR" + errorMsg;
+    if (cyclic) {
+      output += "ERROR: Cell contains a cyclic reference.";
+    } else {
+      try {
+        output += this.formula.evaluate(worksheet, this.location)
+                .getPrintString(worksheet, this.location, clean);
+      } catch (IllegalArgumentException ex) {
+        int colonIndex = ex.toString().indexOf(":");
+        String errorMsg = ex.toString().substring(colonIndex);
+        //output += "Error in cell " + this.location.toString() + errorMsg;
+        output += "ERROR" + errorMsg;
+      }
     }
     return output;
   }
@@ -98,6 +107,11 @@ public class FormulaCell implements Cell {
   @Override
   public boolean cyclicReference(Coord location) {
     return directRefs.contains(location);
+  }
+
+  @Override
+  public boolean directCyclicReference() {
+    return cyclic;
   }
 
   @Override

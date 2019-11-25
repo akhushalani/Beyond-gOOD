@@ -58,6 +58,8 @@ public class RowHeaderTable extends JTable {
 
   @Override
   public boolean isCellEditable(int rowIndex, int vColIndex) {
+    return false;
+    /*
     if (tableModel == null) {
       return editable;
     } else {
@@ -70,5 +72,6 @@ public class RowHeaderTable extends JTable {
                 && vColIndex == model.getFirstSelection().col - 1;
       }
     }
+     */
   }
 }

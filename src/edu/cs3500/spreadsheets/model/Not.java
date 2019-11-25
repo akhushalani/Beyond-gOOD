@@ -22,6 +22,8 @@ public class Not extends AbstractFunction<BooleanValue> {
                                        Worksheet worksheet, Coord cellLoc) {
     if (args.size() != 1) {
       throw new IllegalArgumentException("Incorrect number of arguments.");
+    } else if (anyNullArgs(worksheet, cellLoc)) {
+      throw new IllegalArgumentException("Cell contains a blank reference.");
     } else if (args.get(0).evaluate(worksheet, cellLoc).getValueType() != ValueType.BOOLEAN) {
       throw new IllegalArgumentException("Invalid argument. Must use boolean argument.");
     } else {

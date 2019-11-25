@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -65,4 +66,12 @@ public interface Worksheet {
    * @return the x-coordinate of the furthest right cell.
    */
   int getWidth();
+
+  ArrayList<Coord> referTo(Coord coord);
+
+  boolean containsCyclicReference(Coord coord);
+
+  void addCyclicReference(Coord coord);
+
+  void removeCyclicReference(Coord coord);
 }

@@ -21,7 +21,8 @@ public class Concatenate extends AbstractFunction<StringValue> {
   public StringValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
     StringBuilder concat = new StringBuilder();
     for (Formula arg : args) {
-      if (arg.evaluate(worksheet, cellLoc).getValueType() == ValueType.STRING) {
+      if (arg.evaluate(worksheet, cellLoc) != null
+              && arg.evaluate(worksheet, cellLoc).getValueType() == ValueType.STRING) {
         StringValueVisitor stringVisitor = new StringValueVisitor();
         concat.append(arg.evaluate(worksheet, cellLoc).accept(stringVisitor));
       }

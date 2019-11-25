@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.Set;
 public class BeyondGoodWorksheet implements Worksheet {
   private HashMap<Coord, Cell> worksheet;
   private HashMap<Coord, Formula> calculatedReferences;
+  private ArrayList<Coord> cyclicCoords;
 
   /**
    * Represents the default Constructor for a BeyondGoodWorkSheet, which establishes a HashMap of
@@ -20,6 +22,7 @@ public class BeyondGoodWorksheet implements Worksheet {
   public BeyondGoodWorksheet() {
     this.worksheet = new HashMap<>();
     this.calculatedReferences = new HashMap<>();
+    this.cyclicCoords = new ArrayList<>();
   }
 
   /**
@@ -31,6 +34,7 @@ public class BeyondGoodWorksheet implements Worksheet {
   public BeyondGoodWorksheet(HashMap<Coord, Cell> worksheet) {
     this.worksheet = worksheet;
     this.calculatedReferences = new HashMap<>();
+    this.cyclicCoords = new ArrayList<>();
   }
 
   @Override
@@ -40,7 +44,10 @@ public class BeyondGoodWorksheet implements Worksheet {
 
   @Override
   public void setCell(Coord coord, Cell cell) {
-    if (!cyclicReference(coord, cell)) {
+    removeCyclicReference(coord);
+    if (cell == null) {
+      worksheet.remove(coord);
+    } else if (!cyclicReference(coord, cell)) {
       worksheet.put(coord, cell);
     } else {
       throw new IllegalArgumentException("Error in cell " + coord.toString()
@@ -75,6 +82,22 @@ public class BeyondGoodWorksheet implements Worksheet {
   @Override
   public void clearCalculatedReferences() {
     this.calculatedReferences.clear();
+  }
+
+  @Override
+  public boolean containsCyclicReference(Coord coord) {
+    return cyclicCoords.contains(coord);
+  }
+
+  @Override
+  public void addCyclicReference(Coord coord) {
+    this.cyclicCoords.add(coord);
+  }
+
+  public void removeCyclicReference(Coord coord) {
+    if (this.cyclicCoords.contains(coord)) {
+      this.cyclicCoords.remove(coord);
+    }
   }
 
   /**
@@ -156,5 +179,32 @@ public class BeyondGoodWorksheet implements Worksheet {
   @Override
   public int hashCode() {
     return Objects.hash(worksheet);
+  }
+
+  @Override
+  public ArrayList<Coord> referTo(Coord coord) {
+    ArrayList<Coord> refs = new ArrayList<>(directlyReferTo(coord, new ArrayList<>()));
+    int refsSize;
+    do {
+      refsSize = refs.size();
+      for (Coord ref : refs) {
+        refs.addAll(directlyReferTo(ref, refs));
+      }
+    } while (refsSize != refs.size());
+
+    return refs;
+  }
+
+  // Gets all the cells that directly reference a given cell that aren't in existing refs already.
+  private ArrayList<Coord> directlyReferTo(Coord coord, ArrayList<Coord> existingRefs) {
+    ArrayList<Coord> refs = new ArrayList<>();
+    for (Map.Entry<Coord, Cell> cellEntry : worksheet.entrySet()) {
+      if (cellEntry.getValue().references().contains(coord)
+              && !existingRefs.contains(cellEntry.getKey())) {
+        refs.add(cellEntry.getKey());
+      }
+    }
+
+    return refs;
   }
 }

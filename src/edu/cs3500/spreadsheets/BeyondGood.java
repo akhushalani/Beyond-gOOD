@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.regex.Pattern;
 
+import edu.cs3500.spreadsheets.controller.WorksheetController;
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheet;
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -36,23 +37,28 @@ public class BeyondGood {
     if (args.length > 4) {
       outputString.append("Too many arguments were specified.\n");
     } else if (args.length > 0) {
+      String filename = "";
       if (args.length == 1) {
         if (args[0].equals("-gui")) {
           WorksheetVisualView view = new WorksheetVisualView(
-                  new WorksheetAdapter(new BeyondGoodWorksheet()));
+                  new WorksheetAdapter(new BeyondGoodWorksheet()), "BeyondGood");
           view.renderView();
         } else if (args[0].equals("-edit")) {
           WorksheetEditorVisualView view = new WorksheetEditorVisualView(
-                  new WorksheetAdapter(new BeyondGoodWorksheet()));
+                  new WorksheetAdapter(new BeyondGoodWorksheet()), "BeyondGood");
           view.renderView();
         } else {
           outputString.append("Invalid argument.\n");
         }
       } else if (args.length > 2 && args[0].equals("-in")) {
         try {
-          // When doing this how do we get individual cell formation errors?
           worksheet = WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
                   new FileReader(args[1]));
+          if (!args[1].contains("/")) {
+            filename = args[1];
+          } else {
+            filename = args[1].substring(args[1].lastIndexOf("/") + 1);
+          }
         } catch (FileNotFoundException e) {
           outputString.append("Insufficient arguments, file specified does not "
                   + "exist.\n");
@@ -89,7 +95,8 @@ public class BeyondGood {
           }
         } else if (args[2].equals("-gui")) {
           if (args.length == 3) {
-            WorksheetVisualView view = new WorksheetVisualView(new WorksheetAdapter(worksheet));
+            WorksheetVisualView view
+                    = new WorksheetVisualView(new WorksheetAdapter(worksheet), filename);
             view.renderView();
           } else {
             outputString.append("Too many arguments were specified.\n");
@@ -97,8 +104,9 @@ public class BeyondGood {
         } else if (args[2].equals("-edit")) {
           if (args.length == 3) {
             WorksheetEditorVisualView view
-                    = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet));
+                    = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet), filename);
             view.renderView();
+            WorksheetController controller = new WorksheetController(worksheet, view);
           } else {
             outputString.append("Too many arguments were specified.\n");
           }

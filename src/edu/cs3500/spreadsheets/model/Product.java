@@ -19,10 +19,15 @@ public class Product extends AbstractFunction<DoubleValue> {
 
   @Override
   public DoubleValue evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc) {
+    if (allNullArgs(worksheet, cellLoc)) {
+      throw new IllegalArgumentException("All arguments to formula are blank.");
+    }
+
     double product = 1.0;
     DoubleValueVisitor doubleVisitor = new DoubleValueVisitor();
     for (Formula arg : args) {
-      if (arg.evaluate(worksheet, cellLoc).getValueType() == ValueType.DOUBLE) {
+      if (arg.evaluate(worksheet, cellLoc) != null
+              && arg.evaluate(worksheet, cellLoc).getValueType() == ValueType.DOUBLE) {
         product *= arg.evaluate(worksheet, cellLoc).accept(doubleVisitor);
       }
     }

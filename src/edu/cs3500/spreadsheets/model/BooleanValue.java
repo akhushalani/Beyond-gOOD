@@ -28,10 +28,18 @@ public class BooleanValue extends AbstractValue<Boolean> {
 
   @Override
   public String getPrintString(Worksheet worksheet, Coord cellLoc, boolean clean) {
-    if (this.value) {
-      return "#true";
+    if (clean) {
+      if (this.value) {
+        return "#TRUE";
+      } else {
+        return "#FALSE";
+      }
     } else {
-      return "#false";
+      if(this.value) {
+        return "true";
+      } else {
+        return "false";
+      }
     }
   }
 

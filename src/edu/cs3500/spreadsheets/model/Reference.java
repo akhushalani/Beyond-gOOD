@@ -19,10 +19,16 @@ public class Reference implements Formula {
 
   @Override
   public Formula evaluate(Worksheet worksheet, Coord cellLoc) {
-    if (worksheet.getWorksheet().get(refLocation).getFormula() == null) {
+    if (!worksheet.getWorksheet().containsKey(refLocation)
+            || worksheet.getWorksheet().get(refLocation).getFormula() == null) {
       return null;
     } else if (this.refLocation.equals(cellLoc)) {
       throw new IllegalArgumentException("Cell contains a cyclic reference.");
+    } else if (worksheet.containsCyclicReference(refLocation)) {
+      throw new IllegalArgumentException("Cell contains an indirect cyclic reference.");
+    } else if (worksheet.getCellAt(refLocation).directCyclicReference()) {
+      worksheet.addCyclicReference(refLocation);
+      throw new IllegalArgumentException("Cell contains an indirect cyclic reference.");
     } else if (!worksheet.hasCalculatedReference(refLocation)) {
       worksheet.addCalculatedReference(refLocation,
               worksheet.getWorksheet().get(refLocation).getFormula().evaluate(worksheet, cellLoc));

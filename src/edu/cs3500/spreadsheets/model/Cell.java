@@ -41,6 +41,8 @@ public interface Cell {
    */
   boolean cyclicReference(Coord location);
 
+  boolean directCyclicReference();
+
   /**
    * Returns the raw contents of the cell.
    * @return the String contents of the cell

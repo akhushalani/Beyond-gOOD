@@ -314,4 +314,17 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
   public void setValueAt(Object aValue, int row, int column) {
     //super.setValueAt(aValue, row, column);
   }
+
+  public void cellUpdated(Coord c) {
+    if (!attributes.containsKey(c)) {
+      attributes.put(c, new CellAttributes());
+    }
+    try {
+      Double value = Double.parseDouble(worksheet.getCellAt(c)
+              .evaluate(worksheet.getModel(), false));
+      attributes.get(c).setAlignment(CellAttributes.RIGHT);
+    } catch (NumberFormatException | NullPointerException ignored) {
+
+    }
+  }
 }

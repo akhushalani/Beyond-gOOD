@@ -43,4 +43,25 @@ public abstract class AbstractFunction<T extends Formula> implements Function<T>
   public ArrayList<Formula> getArguments() {
     return (ArrayList<Formula>) this.args.clone();
   }
+
+  protected boolean anyNullArgs(Worksheet worksheet, Coord cellLoc) {
+    for (Formula f : args) {
+      if (f.evaluate(worksheet, cellLoc) == null) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  protected boolean allNullArgs(Worksheet worksheet, Coord cellLoc) {
+    boolean allNull = true;
+    for (Formula f : args) {
+      if (f.evaluate(worksheet, cellLoc) != null) {
+        allNull = false;
+      }
+    }
+
+    return allNull;
+  }
 }

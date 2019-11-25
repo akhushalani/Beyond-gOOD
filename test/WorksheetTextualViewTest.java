@@ -27,7 +27,6 @@ public class WorksheetTextualViewTest {
     textualView.renderView();
     assertEquals(test1, WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
             new StringReader(textualView.getAppendable().toString())));
-
   }
 
   @Test
@@ -41,7 +40,6 @@ public class WorksheetTextualViewTest {
     textualView.renderView();
     assertEquals(test2, WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
             new StringReader(textualView.getAppendable().toString())));
-
   }
 
   @Test
@@ -55,6 +53,5 @@ public class WorksheetTextualViewTest {
     textualView.renderView();
     assertEquals(testNBA, WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
             new StringReader(textualView.getAppendable().toString())));
-
   }
 }

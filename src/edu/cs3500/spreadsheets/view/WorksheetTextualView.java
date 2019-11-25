@@ -1,7 +1,11 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.Map;
+
+import javax.swing.event.DocumentListener;
 
 import edu.cs3500.spreadsheets.model.Cell;
 import edu.cs3500.spreadsheets.model.Coord;
@@ -49,5 +53,50 @@ public class WorksheetTextualView implements WorksheetView {
   @Override
   public Appendable getAppendable() {
     return this.ap;
+  }
+
+  @Override
+  public boolean cellsSelected() {
+    return false;
+  }
+
+  @Override
+  public Coord getFirstSelected() {
+    return null;
+  }
+
+  @Override
+  public Coord getMinSelection() {
+    return null;
+  }
+
+  @Override
+  public Coord getMaxSelection() {
+    return null;
+  }
+
+  @Override
+  public String getEditText() {
+    return null;
+  }
+
+  @Override
+  public void setEditText(String editText) {
+
+  }
+
+  @Override
+  public void notifyCellChanged(Coord coord) {
+
+  }
+
+  @Override
+  public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
+
+  }
+
+  @Override
+  public void setWindowTitle(String title) {
+
   }
 }
