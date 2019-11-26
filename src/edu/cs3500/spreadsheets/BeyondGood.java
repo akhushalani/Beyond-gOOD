@@ -11,7 +11,7 @@ import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
-import edu.cs3500.spreadsheets.view.AdvancedWorksheetEditorVisualView;
+import edu.cs3500.spreadsheets.view.WorksheetEditorVisualView;
 import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 import edu.cs3500.spreadsheets.view.WorksheetVisualView;
 
@@ -45,8 +45,8 @@ public class BeyondGood {
           view.renderView();
         } else if (args[0].equals("-edit")) {
           worksheet = new BeyondGoodWorksheet();
-          AdvancedWorksheetEditorVisualView view = new AdvancedWorksheetEditorVisualView(
-                  new WorksheetAdapter(worksheet), "BeyondGood");
+          WorksheetEditorVisualView view
+                  = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet), "BeyondGood");
           view.renderView();
           WorksheetController controller = new WorksheetController(worksheet, view);
         } else {
@@ -105,8 +105,8 @@ public class BeyondGood {
           }
         } else if (args[2].equals("-edit")) {
           if (args.length == 3) {
-            AdvancedWorksheetEditorVisualView view
-                    = new AdvancedWorksheetEditorVisualView(new WorksheetAdapter(worksheet), filename);
+            WorksheetEditorVisualView view
+                    = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet), filename);
             view.renderView();
             WorksheetController controller = new WorksheetController(worksheet, view);
           } else {
