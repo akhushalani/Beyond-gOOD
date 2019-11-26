@@ -9,10 +9,10 @@ import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Worksheet;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
-import edu.cs3500.spreadsheets.view.WorksheetView;
 import edu.cs3500.spreadsheets.view.WorksheetVisualView;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * A class for testing the functions and wiring of the WorksheetController.
@@ -55,35 +55,35 @@ public class WorksheetControllerTest {
     this.open = new ActionEvent(view, ActionEvent.ACTION_PERFORMED,
             "Open");
     this.log1 = new StringBuilder();
-    this.log1.append("setListeners\n" +
-            "cellsSelected\n" +
-            "getFirstSelected\n" +
-            "getEditText\n" +
-            "getFirstSelected\n" +
-            "notifyCellChanged: A1\n");
+    this.log1.append("setListeners\n"
+            + "cellsSelected\n"
+            + "getFirstSelected\n"
+            + "getEditText\n"
+            + "getFirstSelected\n"
+            + "notifyCellChanged: A1\n");
     this.log2 = new StringBuilder();
-    this.log2.append("setListeners\n" +
-            "cellsSelected\n" +
-            "getFirstSelected\n" +
-            "setEditText: 3\n");
+    this.log2.append("setListeners\n"
+            + "cellsSelected\n"
+            + "getFirstSelected\n"
+            + "setEditText: 3\n");
     this.log3 = new StringBuilder();
     this.log3.append("setListeners\n");
     this.log4 = new StringBuilder();
     this.log4.append("setListeners\n");
     this.log5 = new StringBuilder();
-    this.log5.append("setListeners\n" +
-            "cellsSelected\n" +
-            "getMinSelection\n" +
-            "getMaxSelection\n" +
-            "getMinSelection\n" +
-            "getMaxSelection\n" +
-            "notifyCellChanged: A1\n");
+    this.log5.append("setListeners\n"
+            + "cellsSelected\n"
+            + "getMinSelection\n"
+            + "getMaxSelection\n"
+            + "getMinSelection\n"
+            + "getMaxSelection\n"
+            + "notifyCellChanged: A1\n");
     this.log6 = new StringBuilder();
-    this.log6.append("referTo\n" +
-            "setCell\n");
+    this.log6.append("referTo\n"
+            + "setCell\n");
     this.log7 = new StringBuilder();
-    this.log7.append("getWorksheet\n" +
-            "getCellAt\n");
+    this.log7.append("getWorksheet\n"
+            + "getCellAt\n");
     this.log8 = new StringBuilder();
     this.log8.append("setCell\n");
   }
@@ -125,7 +125,7 @@ public class WorksheetControllerTest {
   }
 
   @Test
-  public void deleteCells() throws FileNotFoundException{
+  public void deleteCells() throws FileNotFoundException {
     this.initVars();
     wc.deleteCells();
     // Have all the functions in the view been called correctly?

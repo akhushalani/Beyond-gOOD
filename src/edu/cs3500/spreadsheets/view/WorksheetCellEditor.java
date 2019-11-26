@@ -44,7 +44,8 @@ public class WorksheetCellEditor extends DefaultCellEditor {
   }
 
   @Override
-  public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+  public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+                                               int row, int column) {
     textField.setSize(new Dimension(table.getCellRect(row, column, true).width,
             table.getCellRect(row, column, true).height));
     TableCellRenderer renderer = table.getCellRenderer(row, column);

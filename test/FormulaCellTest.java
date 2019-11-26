@@ -330,13 +330,16 @@ public class FormulaCellTest {
               loCell3.get(i).evaluate(ws, false));
     }
     ws.setCell(coord11, cell11);
-    assertEquals(cell11.getFormula().getPrintString(ws, coord11, false), cell11.evaluate(ws, false));
+    assertEquals(cell11.getFormula().getPrintString(ws, coord11, false),
+            cell11.evaluate(ws, false));
 
     ws.setCell(coord12, cell12);
-    assertEquals(cell12.getFormula().getPrintString(ws, coord11, false), cell12.evaluate(ws, false));
+    assertEquals(cell12.getFormula().getPrintString(ws, coord11, false),
+            cell12.evaluate(ws, false));
 
     ws.setCell(coord11, cell13);
-    assertEquals(cell13.getFormula().getPrintString(ws, coord11, false), cell13.evaluate(ws, false));
+    assertEquals(cell13.getFormula().getPrintString(ws, coord11, false),
+            cell13.evaluate(ws, false));
 
 
   }

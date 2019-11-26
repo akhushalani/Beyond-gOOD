@@ -37,7 +37,8 @@ public class WorksheetTextualView implements WorksheetView {
         if (model.getCellAt(entry.getKey()).evaluate(model.getModel(), false).length() > 7
                 && model.getCellAt(entry.getKey()).evaluate(model.getModel(), false).substring(0, 7)
                 .equals("ERROR: ")) {
-          ap.append("# " + model.getCellAt(entry.getKey()).evaluate(model.getModel(), false) + "\n");
+          ap.append("# " + model.getCellAt(entry.getKey())
+                  .evaluate(model.getModel(), false) + "\n");
           ap.append(entry.getKey().toString() + " "
                   + model.getCellAt(entry.getKey()).getRawContents() + "\n");
         } else {

@@ -21,7 +21,7 @@ public class WorksheetMenuBar extends JMenuBar {
 
   /**
    * A public constructor for a WorksheetMenuBar.
-   * @param bg
+   * @param bg background color of the menu bar
    */
   public WorksheetMenuBar(Color bg) {
     super();

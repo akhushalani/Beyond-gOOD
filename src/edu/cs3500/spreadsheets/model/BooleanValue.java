@@ -35,7 +35,7 @@ public class BooleanValue extends AbstractValue<Boolean> {
         return "#false";
       }
     } else {
-      if(this.value) {
+      if (this.value) {
         return "true";
       } else {
         return "false";

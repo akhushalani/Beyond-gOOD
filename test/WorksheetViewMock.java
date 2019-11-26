@@ -2,10 +2,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.DocumentListener;
 
 import edu.cs3500.spreadsheets.model.Coord;
-import edu.cs3500.spreadsheets.model.Worksheet;
 import edu.cs3500.spreadsheets.view.WorksheetView;
 
 /**
@@ -124,7 +124,8 @@ public class WorksheetViewMock implements WorksheetView {
   }
 
   @Override
-  public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
+  public void setListeners(ActionListener clicks, CellEditorListener cellEdits,
+                           DocumentListener docEdits, KeyListener keys) {
     try {
       this.log.append("setListeners\n");
     }
@@ -142,5 +143,10 @@ public class WorksheetViewMock implements WorksheetView {
       e.printStackTrace();
     }
     delegate.setWindowTitle(title);
+  }
+
+  @Override
+  public boolean isEditing() {
+    return delegate.isEditing();
   }
 }

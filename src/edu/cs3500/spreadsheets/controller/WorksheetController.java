@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
@@ -69,6 +68,8 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
       case "Open":
         open();
         break;
+      default:
+        // do nothing here
     }
   }
 
@@ -122,7 +123,6 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
   public void confirmCell() {
     if (view.cellsSelected()) {
       Coord sel = view.getFirstSelected();
-      ArrayList<Coord> refs = model.referTo(sel);
       if (view.getEditText().equals("")) {
         model.setCell(view.getFirstSelected(), null);
       } else {
@@ -140,9 +140,6 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
         }
       }
       view.notifyCellChanged(sel);
-          /*for (Coord ref : refs) {
-            view.notifyCellChanged(ref);
-          }*/
     }
   }
 

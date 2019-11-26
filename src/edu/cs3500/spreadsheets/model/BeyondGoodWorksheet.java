@@ -98,6 +98,7 @@ public class BeyondGoodWorksheet implements Worksheet {
     this.cyclicCoords.add(coord);
   }
 
+  @Override
   public void removeCyclicReference(Coord coord) {
     if (this.cyclicCoords.contains(coord)) {
       this.cyclicCoords.remove(coord);
@@ -116,7 +117,7 @@ public class BeyondGoodWorksheet implements Worksheet {
     for (Coord ref : cell.references()) {
       cyclic = cyclic || referenceBetween(location, ref);
     }
-    // Isn't this redundant?
+
     return cell.cyclicReference(location) || cyclic;
   }
 
@@ -194,7 +195,8 @@ public class BeyondGoodWorksheet implements Worksheet {
       for (Coord ref : refs) {
         refs.addAll(directlyReferTo(ref, refs));
       }
-    } while (refsSize != refs.size());
+    }
+    while (refsSize != refs.size());
 
     return refs;
   }
@@ -251,6 +253,8 @@ public class BeyondGoodWorksheet implements Worksheet {
         }
         attributes.get(coord).setAlignment(CellAttributes.RIGHT);
         break;
+      default:
+        // do nothing here
     }
   }
 
@@ -266,7 +270,7 @@ public class BeyondGoodWorksheet implements Worksheet {
     return attributes.get(coord);
   }
 
- @Override
+  @Override
   public HashMap<Coord, CellAttributes> getAttributes() {
     return attributes;
   }

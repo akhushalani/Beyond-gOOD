@@ -1,8 +1,10 @@
-import java.io.IOException;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import edu.cs3500.spreadsheets.model.Cell;
+import edu.cs3500.spreadsheets.model.CellAttribute;
+import edu.cs3500.spreadsheets.model.CellAttributes;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Formula;
 import edu.cs3500.spreadsheets.model.Worksheet;
@@ -96,5 +98,32 @@ public class WorksheetModelMock implements Worksheet {
   @Override
   public void removeCyclicReference(Coord coord) {
     this.log.append("removeCyclicReference\n");
+  }
+
+  @Override
+  public void setAttributes(Coord coord, CellAttributes attributeSet) {
+    this.log.append("setAttributes\n");
+  }
+
+  @Override
+  public void toggleAttribute(CellAttribute attribute, Coord coord) {
+    this.log.append("toggleAttribute\n");
+  }
+
+  @Override
+  public void setColor(CellAttribute attribute, Color color, Coord coord) {
+    this.log.append("setColor\n");
+  }
+
+  @Override
+  public CellAttributes getAttributeSet(Coord coord) {
+    this.log.append("getAttributeSet\n");
+    return delegate.getAttributeSet(coord);
+  }
+
+  @Override
+  public HashMap<Coord, CellAttributes> getAttributes() {
+    this.log.append("getAttributes\n");
+    return delegate.getAttributes();
   }
 }

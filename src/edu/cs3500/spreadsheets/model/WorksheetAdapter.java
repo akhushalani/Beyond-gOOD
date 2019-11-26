@@ -3,9 +3,16 @@ package edu.cs3500.spreadsheets.model;
 import java.awt.Color;
 import java.util.HashMap;
 
+/**
+ * An immutable adapter class for passing the worksheet model to views.
+ */
 public final class WorksheetAdapter {
   private final Worksheet worksheet;
 
+  /**
+   * Public constructor for the WorksheetAdapter.
+   * @param worksheet the model being wrapped
+   */
   public WorksheetAdapter(Worksheet worksheet) {
     this.worksheet = worksheet;
   }

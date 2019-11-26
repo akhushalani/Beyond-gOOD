@@ -95,7 +95,8 @@ public final class CellAttributes {
     }
 
     if (italic) {
-      component.setFont(component.getFont().deriveFont(component.getFont().getStyle() + Font.ITALIC));
+      component.setFont(component.getFont()
+              .deriveFont(component.getFont().getStyle() + Font.ITALIC));
     }
 
     if (underline) {
@@ -138,6 +139,8 @@ public final class CellAttributes {
       case RIGHT:
         alignment = attributeSet.alignment;
         break;
+      default:
+        // do nothing here
     }
   }
 }
