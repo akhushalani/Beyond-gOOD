@@ -1,4 +1,4 @@
-package edu.cs3500.spreadsheets.view;
+package edu.cs3500.spreadsheets.model;
 
 import java.awt.Color;
 import java.awt.Font;

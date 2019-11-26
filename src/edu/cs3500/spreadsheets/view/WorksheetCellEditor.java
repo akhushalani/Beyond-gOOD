@@ -8,6 +8,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 
 import edu.cs3500.spreadsheets.model.Coord;
@@ -57,5 +58,9 @@ public class WorksheetCellEditor extends DefaultCellEditor {
       rawContents = model.getCellAt(new Coord(column + 1, row + 1)).getRawContents();
     }
     return super.getTableCellEditorComponent(table, rawContents, isSelected, row, column);
+  }
+
+  public void addDocumentListener(DocumentListener dl) {
+    this.textField.getDocument().addDocumentListener(dl);
   }
 }

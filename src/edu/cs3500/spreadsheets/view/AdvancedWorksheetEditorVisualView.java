@@ -9,8 +9,10 @@ import java.awt.event.KeyListener;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.DocumentListener;
 
+import edu.cs3500.spreadsheets.model.CellAttribute;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
@@ -67,8 +69,8 @@ public class AdvancedWorksheetEditorVisualView extends JFrame implements Workshe
             worksheetPanel.getTableModel().toggleAttribute(CellAttribute.RIGHT));
 
     attributeBar.getTextColorButton().addActionListener(e -> {
-      Color oldColor = worksheetPanel.getTableModel().getAttributes()
-              .get(worksheetPanel.getTableModel().getFirstSelection()).getTextColor();
+      Color oldColor = model
+              .getAttributeSet(worksheetPanel.getTableModel().getFirstSelection()).getTextColor();
       Color color = JColorChooser.showDialog(attributeBar, "Choose text color", oldColor);
       worksheetPanel.getTableModel().setColor(CellAttribute.TEXT_COLOR, color);
     });
@@ -132,19 +134,27 @@ public class AdvancedWorksheetEditorVisualView extends JFrame implements Workshe
   }
 
   @Override
-  public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
+  public void setListeners(ActionListener clicks, CellEditorListener cellEdits,
+                           DocumentListener docEdits, KeyListener keys) {
     editBar.getConfirmButton().addActionListener(clicks);
     editBar.getRejectButton().addActionListener(clicks);
     editBar.getEditField().addActionListener(clicks);
-    editBar.getEditField().getDocument().addDocumentListener(cellEdits);
+    menuBar.getNewFile().addActionListener(clicks);
     menuBar.getSave().addActionListener(clicks);
     menuBar.getOpen().addActionListener(clicks);
-    worksheetPanel.addKeyListener(keys);
+    worksheetPanel.getTable().addKeyListener(keys);
+    worksheetPanel.getCellEditor().addDocumentListener(docEdits);
+    worksheetPanel.getCellEditor().addCellEditorListener(cellEdits);
   }
 
   @Override
   public void setWindowTitle(String title) {
     this.title = title;
     setTitle(title);
+  }
+
+  @Override
+  public boolean isEditing() {
+    return worksheetPanel.getTable().isEditing();
   }
 }

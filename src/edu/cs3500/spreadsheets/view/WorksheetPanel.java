@@ -29,6 +29,7 @@ public class WorksheetPanel extends JPanel {
   private JTextField coordDisplay;
   private InfiniteScrollingTableModel tableModel;
   private RowHeaderTable table;
+  private WorksheetCellEditor cellEditor;
 
   /**
    * A public constructor for a WorksheetPanel.
@@ -73,7 +74,7 @@ public class WorksheetPanel extends JPanel {
     table.getTableHeader().setDefaultRenderer(new HeaderRenderer(headerRenderer, tableModel));
 
     TableCellRenderer cellRenderer = table.getDefaultRenderer(Object.class);
-    table.setDefaultRenderer(Object.class, new RowHeaderTableCellRenderer(cellRenderer));
+    table.setDefaultRenderer(Object.class, new RowHeaderTableCellRenderer(cellRenderer, model));
 
     ScrollableRowHeaderTable scrollableTable = new ScrollableRowHeaderTable(scrollPane);
 
@@ -82,9 +83,15 @@ public class WorksheetPanel extends JPanel {
     scrollableTable.getRowHeader().setGridColor(Color.lightGray);
     scrollableTable.getRowHeader().setIntercellSpacing(new Dimension(-1, -1));
 
-    ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
-            .adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
-                    table.getRowHeight(), 1000, 1000);
+    if (!model.getWorksheet().isEmpty()) {
+      ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
+              .adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
+                      table.getRowHeight(), 1000, 1000);
+    } else {
+      ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
+              .adjustToFrame(30,
+                      table.getRowHeight(), 1000, 1000);
+    }
 
     frame.addComponentListener(new ComponentAdapter() {
       @Override
@@ -179,7 +186,8 @@ public class WorksheetPanel extends JPanel {
       }
     });
 
-    scrollableTable.getTable().setDefaultEditor(Object.class, WorksheetCellEditor.make(model));
+    cellEditor = WorksheetCellEditor.make(model);
+    scrollableTable.getTable().setDefaultEditor(Object.class, cellEditor);
 
     scrollableTable.getTable().getColumnModel().getSelectionModel()
             .addListSelectionListener(selectionListener);
@@ -224,5 +232,13 @@ public class WorksheetPanel extends JPanel {
    */
   public JTable getTable() {
     return table;
+  }
+
+  /**
+   * Gets the worksheet cell editor component.
+   * @return the cell editor
+   */
+  public WorksheetCellEditor getCellEditor() {
+    return cellEditor;
   }
 }

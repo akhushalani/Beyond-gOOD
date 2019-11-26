@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -92,4 +93,34 @@ public interface Worksheet {
    * @param coord the cell to remove
    */
   void removeCyclicReference(Coord coord);
+
+  /**
+   * Toggles an attribute for the selected cells.
+   * @param attribute the attribute to toggle.
+   */
+  void toggleAttribute(CellAttribute attribute, Coord coord);
+
+  /**
+   * Sets the value of a color attribute for the selected cells.
+   * @param attribute the color attribute to set
+   * @param color the color value to assign to the cells
+   */
+  void setColor(CellAttribute attribute, Color color, Coord coord);
+
+  /**
+   * Gets the attributes of a cell in the worksheet.
+   * @return a map from the coordinates in the worksheet to their attributes
+   */
+  CellAttributes getAttributeSet(Coord coord);
+
+  /**
+   * Gets the attributes of the cells in the worksheet.
+   * @return a map from the coordinates in the worksheet to their attributes
+   */
+  HashMap<Coord, CellAttributes> getAttributes();
+
+  /**
+   * Sets the attributes of a cell in the worksheet.
+   */
+  void setAttributes(Coord coord, CellAttributes attributeSet);
 }

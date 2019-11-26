@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
@@ -57,8 +58,8 @@ public class WorksheetEditorVisualView extends JFrame implements WorksheetView {
         }
       }
     });
-    editBar.getConfirmButton().setActionCommand("Confirm Button");
-    editBar.getEditField().setActionCommand("Confirm Button");
+    editBar.getConfirmButton().setActionCommand("Confirm");
+    editBar.getEditField().setActionCommand("Confirm");
 
     editBar.getRejectButton().getModel().addChangeListener(new ChangeListener() {
       @Override
@@ -93,14 +94,17 @@ public class WorksheetEditorVisualView extends JFrame implements WorksheetView {
   }
 
   @Override
-  public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
+  public void setListeners(ActionListener clicks, CellEditorListener cellEdits,
+                           DocumentListener docEdits, KeyListener keys) {
     editBar.getConfirmButton().addActionListener(clicks);
     editBar.getRejectButton().addActionListener(clicks);
     editBar.getEditField().addActionListener(clicks);
-    editBar.getEditField().getDocument().addDocumentListener(cellEdits);
+    menuBar.getNewFile().addActionListener(clicks);
     menuBar.getSave().addActionListener(clicks);
     menuBar.getOpen().addActionListener(clicks);
     worksheetPanel.getTable().addKeyListener(keys);
+    worksheetPanel.getCellEditor().addDocumentListener(docEdits);
+    worksheetPanel.getCellEditor().addCellEditorListener(cellEdits);
   }
 
   @Override
@@ -152,5 +156,10 @@ public class WorksheetEditorVisualView extends JFrame implements WorksheetView {
   public void setWindowTitle(String title) {
     this.title = title;
     setTitle(title);
+  }
+
+  @Override
+  public boolean isEditing() {
+    return worksheetPanel.getTable().isEditing();
   }
 }

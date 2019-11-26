@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.awt.Color;
 import java.util.HashMap;
 
 public final class WorksheetAdapter {
@@ -39,6 +40,46 @@ public final class WorksheetAdapter {
    */
   public int getWidth() {
     return worksheet.getWidth();
+  }
+
+  /**
+   * Toggles an attribute for the selected cells.
+   * @param attribute the attribute to toggle.
+   */
+  public void toggleAttribute(CellAttribute attribute, Coord coord) {
+    worksheet.toggleAttribute(attribute, coord);
+  }
+
+  /**
+   * Sets the value of a color attribute for the selected cells.
+   * @param attribute the color attribute to set
+   * @param color the color value to assign to the cells
+   */
+  public void setColor(CellAttribute attribute, Color color, Coord coord) {
+    worksheet.setColor(attribute, color, coord);
+  }
+
+  /**
+   * Gets the attributes of a cell in the worksheet.
+   * @return a map from the coordinates in the worksheet to their attributes
+   */
+  public CellAttributes getAttributeSet(Coord coord) {
+    return worksheet.getAttributeSet(coord);
+  }
+
+  /**
+   * Gets the attributes of the cells in the worksheet.
+   * @return a map from the coordinates in the worksheet to their attributes
+   */
+  public HashMap<Coord, CellAttributes> getAttributes() {
+    return worksheet.getAttributes();
+  }
+
+  /**
+   * Sets the attributes of a cell in the worksheet.
+   */
+  public void setAttributes(Coord coord, CellAttributes attributeSet) {
+    worksheet.setAttributes(coord, attributeSet);
   }
 
   public Worksheet getModel() {

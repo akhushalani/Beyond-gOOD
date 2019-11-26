@@ -1,5 +1,6 @@
 package edu.cs3500.spreadsheets.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ public class BeyondGoodWorksheet implements Worksheet {
   private HashMap<Coord, Cell> worksheet;
   private HashMap<Coord, Formula> calculatedReferences;
   private ArrayList<Coord> cyclicCoords;
+  private HashMap<Coord, CellAttributes> attributes;
 
   /**
    * Represents the default Constructor for a BeyondGoodWorkSheet, which establishes a HashMap of
@@ -23,6 +25,7 @@ public class BeyondGoodWorksheet implements Worksheet {
     this.worksheet = new HashMap<>();
     this.calculatedReferences = new HashMap<>();
     this.cyclicCoords = new ArrayList<>();
+    this.attributes = new HashMap<>();
   }
 
   /**
@@ -35,6 +38,7 @@ public class BeyondGoodWorksheet implements Worksheet {
     this.worksheet = worksheet;
     this.calculatedReferences = new HashMap<>();
     this.cyclicCoords = new ArrayList<>();
+    this.attributes = new HashMap<>();
   }
 
   @Override
@@ -206,5 +210,69 @@ public class BeyondGoodWorksheet implements Worksheet {
     }
 
     return refs;
+  }
+
+  @Override
+  public void toggleAttribute(CellAttribute attribute, Coord coord) {
+    switch (attribute) {
+      case BOLD:
+        if (attributes.get(coord) == null) {
+          attributes.put(coord, new CellAttributes());
+        }
+        attributes.get(coord).toggleBold();
+        break;
+      case ITALIC:
+        if (attributes.get(coord) == null) {
+          attributes.put(coord, new CellAttributes());
+        }
+        attributes.get(coord).toggleItalic();
+        break;
+      case UNDERLINE:
+        if (attributes.get(coord) == null) {
+          attributes.put(coord, new CellAttributes());
+        }
+        attributes.get(coord).toggleUnderline();
+        break;
+      case LEFT:
+        if (attributes.get(coord) == null) {
+          attributes.put(coord, new CellAttributes());
+        }
+        attributes.get(coord).setAlignment(CellAttributes.LEFT);
+        break;
+      case CENTER:
+        if (attributes.get(coord) == null) {
+          attributes.put(coord, new CellAttributes());
+        }
+        attributes.get(coord).setAlignment(CellAttributes.CENTER);
+        break;
+      case RIGHT:
+        if (attributes.get(coord) == null) {
+          attributes.put(coord, new CellAttributes());
+        }
+        attributes.get(coord).setAlignment(CellAttributes.RIGHT);
+        break;
+    }
+  }
+
+  @Override
+  public void setColor(CellAttribute attribute, Color color, Coord coord) {
+    if (attribute == CellAttribute.TEXT_COLOR) {
+      attributes.get(coord).setTextColor(color);
+    }
+  }
+
+  @Override
+  public CellAttributes getAttributeSet(Coord coord) {
+    return attributes.get(coord);
+  }
+
+ @Override
+  public HashMap<Coord, CellAttributes> getAttributes() {
+    return attributes;
+  }
+
+  @Override
+  public void setAttributes(Coord coord, CellAttributes attributeSet) {
+    attributes.put(coord, attributeSet);
   }
 }

@@ -10,20 +10,23 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.table.TableCellRenderer;
 
 import edu.cs3500.spreadsheets.model.Coord;
+import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
 /**
  * A class for rendering cells in a RowHeaderTable.
  */
 public class RowHeaderTableCellRenderer implements TableCellRenderer {
   private final TableCellRenderer renderer;
+  private final WorksheetAdapter model;
 
   /**
    * Public constructor for the RowHeaderTableCellRendererClass.
    *
    * @param renderer default TableCellRenderer in the class
    */
-  public RowHeaderTableCellRenderer(TableCellRenderer renderer) {
+  public RowHeaderTableCellRenderer(TableCellRenderer renderer, WorksheetAdapter model) {
     this.renderer = renderer;
+    this.model = model;
   }
 
   @Override
@@ -135,9 +138,9 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
     }
 
     Coord location = new Coord(column + 1, row + 1);
-    if (tableModel.getAttributes().containsKey(location)
-            && tableModel.getAttributes().get(location) != null) {
-      return tableModel.getAttributes().get(location).apply(component);
+    if (model.getAttributes().containsKey(location)
+            && model.getAttributeSet(location) != null) {
+      return model.getAttributeSet(location).apply(component);
     }
 
     return component;

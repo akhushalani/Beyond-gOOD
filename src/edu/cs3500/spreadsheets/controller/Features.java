@@ -16,6 +16,11 @@ public interface Features {
   void rejectCell();
 
   /**
+   * Creates a new worksheet file.
+   */
+  void newFile();
+
+  /**
    * Saves the current worksheet to a new file.
    */
   void save();

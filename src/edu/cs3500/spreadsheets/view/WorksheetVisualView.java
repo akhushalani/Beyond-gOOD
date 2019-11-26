@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.DocumentListener;
 
 import edu.cs3500.spreadsheets.model.Coord;
@@ -84,7 +85,8 @@ public class WorksheetVisualView extends JFrame implements WorksheetView {
   }
 
   @Override
-  public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
+  public void setListeners(ActionListener clicks, CellEditorListener cellEdits,
+                           DocumentListener docEdits, KeyListener keys) {
     throw new UnsupportedOperationException();
   }
 
@@ -92,5 +94,10 @@ public class WorksheetVisualView extends JFrame implements WorksheetView {
   public void setWindowTitle(String title) {
     this.title = title;
     setTitle(title);
+  }
+
+  @Override
+  public boolean isEditing() {
+    throw new UnsupportedOperationException();
   }
 }
