@@ -4,6 +4,7 @@ package edu.cs3500.spreadsheets.controller;
  * The features of a worksheet editor.
  */
 public interface Features {
+
   /**
    * Confirms the formula entered into the edit field and edits the cell.
    */

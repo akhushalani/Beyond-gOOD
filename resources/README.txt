@@ -113,4 +113,11 @@ Model Structure:
         represents a Table that is scrollable and has Row Headers. Its constructor takes in a
         JScrollPane scrollpane that contains the table.
 
+Assignment 7:
+Changes to model:
+- Added a method to the Worksheet interface that returns all the references to a cell at a given
+        Coord.
+Changes to view:
+-
+
 
