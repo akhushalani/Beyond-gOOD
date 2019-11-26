@@ -27,7 +27,7 @@ import edu.cs3500.spreadsheets.sexp.CellSexpVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
 import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.ValueCellSexpVisitor;
-import edu.cs3500.spreadsheets.view.AdvancedWorksheetEditorVisualView;
+import edu.cs3500.spreadsheets.view.WorksheetEditorVisualView;
 import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 import edu.cs3500.spreadsheets.view.WorksheetView;
 
@@ -189,8 +189,8 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
   public void newFile() {
     System.out.println("New file");
     BeyondGoodWorksheet model = new BeyondGoodWorksheet();
-    AdvancedWorksheetEditorVisualView view
-            = new AdvancedWorksheetEditorVisualView(new WorksheetAdapter(model), "BeyondGood");
+    WorksheetEditorVisualView view
+            = new WorksheetEditorVisualView(new WorksheetAdapter(model), "BeyondGood");
     view.renderView();
     WorksheetController controller = new WorksheetController(model, view);
   }
@@ -206,8 +206,8 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
       try {
         Worksheet worksheet = WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
                 new FileReader(openPath));
-        AdvancedWorksheetEditorVisualView view
-                = new AdvancedWorksheetEditorVisualView(new WorksheetAdapter(worksheet), filename);
+        WorksheetEditorVisualView view
+                = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet), filename);
         view.renderView();
         WorksheetController controller = new WorksheetController(worksheet, view);
       } catch (FileNotFoundException fnfe) {
