@@ -26,10 +26,18 @@ import edu.cs3500.spreadsheets.view.AdvancedWorksheetEditorVisualView;
 import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 import edu.cs3500.spreadsheets.view.WorksheetView;
 
+/**
+ * A controller for a worksheet.
+ */
 public class WorksheetController implements ActionListener, DocumentListener, KeyListener {
   private Worksheet model;
   private WorksheetView view;
 
+  /**
+   * Public constructor for a WorksheetController.
+   * @param model a worksheet model
+   * @param view a worksheet view
+   */
   public WorksheetController(Worksheet model, WorksheetView view) {
     this.model = model;
     this.view = view;
@@ -137,6 +145,7 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
     // won't be called on a plain text document
   }
 
+  // Should be run when the document is changed.
   private void documentUpdated(DocumentEvent e) {
     Runnable doUpdate = () -> {
       view.setEditText(e.getDocument().toString());
@@ -147,20 +156,23 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
 
   @Override
   public void keyTyped(KeyEvent e) {
-    System.out.println("Delete typed");
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
-    System.out.println("Delete released");
   }
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+    if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
+      System.out.println("Delete pressed");
       if (view.cellsSelected()) {
-        for (int i = view.getMinSelection().col; i <= view.getMaxSelection().col; i++) {
-          for (int j = view.getMinSelection().row; j <= view.getMaxSelection().row; j++) {
+        int minCol = view.getMinSelection().col;
+        int maxCol = view.getMaxSelection().col;
+        int minRow = view.getMinSelection().row;
+        int maxRow = view.getMaxSelection().row;
+        for (int i = minCol; i <= maxCol; i++) {
+          for (int j = minRow; j <= maxRow; j++) {
             Coord c = new Coord(i, j);
             model.setCell(c, null);
             view.notifyCellChanged(c);
@@ -168,6 +180,5 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
         }
       }
     }
-    System.out.println("Delete pressed");
   }
 }

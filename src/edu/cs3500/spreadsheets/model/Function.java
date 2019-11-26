@@ -18,5 +18,9 @@ public interface Function<T> extends Formula {
    */
   T evaluateFunction(ArrayList<Formula> args, Worksheet worksheet, Coord cellLoc);
 
+  /**
+   * Gets the arguments to a function.
+   * @return the list of arguments
+   */
   ArrayList<Formula> getArguments();
 }

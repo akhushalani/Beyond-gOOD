@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.Cell;
@@ -116,6 +115,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
+  /**
+   * Toggles an attribute for the selected cells.
+   * @param attribute the attribute to toggle.
+   */
   public void toggleAttribute(CellAttribute attribute) {
     switch (attribute) {
       case BOLD:
@@ -172,23 +175,24 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
+  /**
+   * Sets the value of a color attribute for the selected cells.
+   * @param attribute the color attribute to set
+   * @param color the color value to assign to the cells
+   */
   public void setColor(CellAttribute attribute, Color color) {
-    switch (attribute) {
-      case BG_COLOR:
-        for (Coord selection : selected) {
-          attributes.get(selection).setBackgroundColor(color);
-          fireTableCellUpdated(selection.row - 1, selection.col - 1);
-        }
-        break;
-      case TEXT_COLOR:
-        for (Coord selection : selected) {
-          attributes.get(selection).setTextColor(color);
-          fireTableCellUpdated(selection.row - 1, selection.col - 1);
-        }
-        break;
+    if (attribute == CellAttribute.TEXT_COLOR) {
+      for (Coord selection : selected) {
+        attributes.get(selection).setTextColor(color);
+        fireTableCellUpdated(selection.row - 1, selection.col - 1);
+      }
     }
   }
 
+  /**
+   * Gets the attributes of the cells in the worksheet.
+   * @return a map from the coordinates in the worksheet to their attributes
+   */
   public HashMap<Coord, CellAttributes> getAttributes() {
     return attributes;
   }
@@ -206,6 +210,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     selected.clear();
   }
 
+  /**
+   * Gets the leftmost selected column index.
+   * @return the minimum selected column index
+   */
   public int minSelectionCol() {
     if (selected.size() == 0) {
       return -1;
@@ -221,6 +229,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
+  /**
+   * Gets the rightmost selected column index.
+   * @return the maximum selected column index
+   */
   public int maxSelectionCol() {
     if (selected.size() == 0) {
       return -1;
@@ -236,6 +248,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
+  /**
+   * Gets the top selected row index.
+   * @return the minimum selected row index
+   */
   public int minSelectionRow() {
     if (selected.size() == 0) {
       return -1;
@@ -251,6 +267,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
+  /**
+   * Gets the bottom selected row index.
+   * @return the maximum selected row index
+   */
   public int maxSelectionRow() {
     if (selected.size() == 0) {
       return -1;
@@ -266,18 +286,20 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     }
   }
 
+  /**
+   * Sets which cell in the current selection was selected first.
+   * @param firstSelection the location of the first selection
+   */
   public void setFirstSelection(Coord firstSelection) {
     this.firstSelection = firstSelection;
   }
 
+  /**
+   * Gets the cell that was selected first in the current selection.
+   * @return the location of the first selection
+   */
   public Coord getFirstSelection() {
     return firstSelection;
-  }
-
-  public void select(JTable table) {
-    table.getSelectionModel().setSelectionInterval(minSelectionRow(), maxSelectionRow());
-    table.getColumnModel().getSelectionModel()
-            .setSelectionInterval(minSelectionCol(), maxSelectionCol());
   }
 
   @Override
@@ -315,6 +337,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     //super.setValueAt(aValue, row, column);
   }
 
+  /**
+   * Notifies the table model that a cell's data has been updated.
+   * @param c the location of the updated cell
+   */
   public void cellUpdated(Coord c) {
     if (!attributes.containsKey(c)) {
       attributes.put(c, new CellAttributes());

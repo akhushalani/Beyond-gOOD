@@ -14,6 +14,10 @@ import javax.swing.JToolBar;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * A Toolbar for editing the attributes of a cell.
+ * FOR ASSIGNMENT 9, NOT ASSIGNMENT 7.
+ */
 public class WorksheetAttributeBar extends JToolBar {
   private JButton boldButton;
   private JButton italicButton;
@@ -23,6 +27,10 @@ public class WorksheetAttributeBar extends JToolBar {
   private JButton rightButton;
   private JButton textColorButton;
 
+  /**
+   * Public constructor for the WorksheetAttributeBar class.
+   * @param bg the background color of the toolbar
+   */
   public WorksheetAttributeBar(Color bg) {
     super();
     setBackground(bg);
@@ -214,30 +222,58 @@ public class WorksheetAttributeBar extends JToolBar {
     add(textColorButton);
   }
 
+  /**
+   * Gets the bold button in the toolbar.
+   * @return the bold button
+   */
   public JButton getBoldButton() {
     return boldButton;
   }
 
+  /**
+   * Gets the italic button in the toolbar.
+   * @return the italic button
+   */
   public JButton getItalicButton() {
     return italicButton;
   }
 
+  /**
+   * Gets the underline button in the toolbar.
+   * @return the underline button
+   */
   public JButton getUnderlineButton() {
     return underlineButton;
   }
 
+  /**
+   * Gets the left align button in the toolbar.
+   * @return the left align button
+   */
   public JButton getLeftButton() {
     return leftButton;
   }
 
+  /**
+   * Gets the center align button in the toolbar.
+   * @return the center align button
+   */
   public JButton getCenterButton() {
     return centerButton;
   }
 
+  /**
+   * Gets the right align button in the toolbar.
+   * @return the right align button
+   */
   public JButton getRightButton() {
     return rightButton;
   }
 
+  /**
+   * Gets the text color button in the toolbar.
+   * @return the text color button
+   */
   public JButton getTextColorButton() {
     return textColorButton;
   }

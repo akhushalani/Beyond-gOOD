@@ -62,41 +62,41 @@ public class WorksheetTextualView implements WorksheetView {
 
   @Override
   public Coord getFirstSelected() {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public Coord getMinSelection() {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public Coord getMaxSelection() {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public String getEditText() {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public void setEditText(String editText) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public void notifyCellChanged(Coord coord) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public void setWindowTitle(String title) {
-
+    throw new UnsupportedOperationException();
   }
 }

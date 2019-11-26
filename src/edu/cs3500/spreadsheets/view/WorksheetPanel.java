@@ -20,19 +20,29 @@ import javax.swing.table.TableCellRenderer;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
+/**
+ * A JPanel for viewing a worksheet.
+ */
 public class WorksheetPanel extends JPanel {
   private JScrollPane scrollPane;
   private JTextField editField;
   private JTextField coordDisplay;
   private InfiniteScrollingTableModel tableModel;
+  private RowHeaderTable table;
 
+  /**
+   * A public constructor for a WorksheetPanel.
+   * @param model a worksheet model adapter
+   * @param frame the frame in which the panel is displayed
+   * @param editable whether the worksheet is editable
+   */
   public WorksheetPanel(WorksheetAdapter model, JFrame frame, boolean editable) {
     this.editField = null;
     this.coordDisplay = null;
 
     tableModel = new InfiniteScrollingTableModel(model);
 
-    RowHeaderTable table = new RowHeaderTable(tableModel, false, editable);
+    table = new RowHeaderTable(tableModel, false, editable);
     scrollPane = new JScrollPane(table,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -81,8 +91,6 @@ public class WorksheetPanel extends JPanel {
       public void componentResized(ComponentEvent e) {
         tableModel.adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
                 table.getRowHeight(), frame.getWidth(), frame.getHeight());
-        ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
-                .select(scrollableTable.getTable());
       }
     });
 
@@ -151,8 +159,6 @@ public class WorksheetPanel extends JPanel {
       if (e.getValueIsAdjusting()
               && e.getValue() == scrollPane.getHorizontalScrollBar().getMaximum() - horizExtent) {
         tableModel.fireScrollRight();
-        ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
-                .select(scrollableTable.getTable());
       }
     });
 
@@ -161,8 +167,6 @@ public class WorksheetPanel extends JPanel {
       if (e.getValueIsAdjusting()
               && e.getValue() == scrollPane.getVerticalScrollBar().getMaximum() - vertExtent) {
         tableModel.fireScrollDown();
-        ((InfiniteScrollingTableModel) scrollableTable.getTable().getModel())
-                .select(scrollableTable.getTable());
       }
     });
 
@@ -182,19 +186,43 @@ public class WorksheetPanel extends JPanel {
     scrollableTable.getTable().getSelectionModel().addListSelectionListener(selectionListener);
   }
 
+  /**
+   * Gets the scroll pane containing the table.
+   * @return the scroll pane
+   */
   public JScrollPane getScrollPane() {
     return scrollPane;
   }
 
-  public void addEditField(JTextField editField) {
+  /**
+   * Attaches an edit field to the worksheet panel.
+   * @param editField the edit field to attach
+   */
+  public void attachEditField(JTextField editField) {
     this.editField = editField;
   }
 
-  public void addCoordDisplay(JTextField coordDisplay) {
+  /**
+   * Attaches a coord display to the worksheet panel.
+   * @param coordDisplay the coord display to attach
+   */
+  public void attachCoordDisplay(JTextField coordDisplay) {
     this.coordDisplay = coordDisplay;
   }
 
+  /**
+   * Gets the table model for the worksheet table.
+   * @return the table model
+   */
   public InfiniteScrollingTableModel getTableModel() {
     return tableModel;
+  }
+
+  /**
+   * Gets the worksheet table.
+   * @return the worksheet table
+   */
+  public JTable getTable() {
+    return table;
   }
 }

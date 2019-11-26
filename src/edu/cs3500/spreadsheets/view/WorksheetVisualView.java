@@ -58,12 +58,12 @@ public class WorksheetVisualView extends JFrame implements WorksheetView {
 
   @Override
   public String getEditText() {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public void setEditText(String editText) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -85,7 +85,7 @@ public class WorksheetVisualView extends JFrame implements WorksheetView {
 
   @Override
   public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override

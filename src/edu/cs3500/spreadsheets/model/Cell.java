@@ -41,6 +41,10 @@ public interface Cell {
    */
   boolean cyclicReference(Coord location);
 
+  /**
+   * Checks if a cell contains a direct cyclic reference.
+   * @return whether the cell contains a cyclic reference
+   */
   boolean directCyclicReference();
 
   /**

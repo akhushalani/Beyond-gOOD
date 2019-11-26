@@ -15,6 +15,9 @@ import javax.swing.event.DocumentListener;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
+/**
+ * An editable worksheet visual view.
+ */
 public class WorksheetEditorVisualView extends JFrame implements WorksheetView {
   private WorksheetAdapter model;
   private WorksheetPanel worksheetPanel;
@@ -74,8 +77,8 @@ public class WorksheetEditorVisualView extends JFrame implements WorksheetView {
     });
     editBar.getRejectButton().setActionCommand("Reject Button");
 
-    worksheetPanel.addCoordDisplay(editBar.getCoordDisplay());
-    worksheetPanel.addEditField(editBar.getEditField());
+    worksheetPanel.attachCoordDisplay(editBar.getCoordDisplay());
+    worksheetPanel.attachEditField(editBar.getEditField());
 
     menuBar = new WorksheetMenuBar(bg);
 
@@ -97,7 +100,7 @@ public class WorksheetEditorVisualView extends JFrame implements WorksheetView {
     editBar.getEditField().getDocument().addDocumentListener(cellEdits);
     menuBar.getSave().addActionListener(clicks);
     menuBar.getOpen().addActionListener(clicks);
-    this.addKeyListener(keys);
+    worksheetPanel.getTable().addKeyListener(keys);
   }
 
   @Override

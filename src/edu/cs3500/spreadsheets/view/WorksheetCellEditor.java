@@ -13,16 +13,29 @@ import javax.swing.table.TableCellRenderer;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
+/**
+ * A cell editor for a worksheet.
+ */
 public class WorksheetCellEditor extends DefaultCellEditor {
   private JTextField textField;
   private WorksheetAdapter model;
 
+  /**
+   * Public constructor for a WorksheetCellEditor.
+   * @param textField a textfield for editing
+   * @param model a worksheet model adapter
+   */
   public WorksheetCellEditor(JTextField textField, WorksheetAdapter model) {
     super(textField);
     this.textField = textField;
     this.model = model;
   }
 
+  /**
+   * Method for creating a worksheet cell editor.
+   * @param model a worksheet model adaptor
+   * @return a new worksheet cell editor
+   */
   public static WorksheetCellEditor make(WorksheetAdapter model) {
     JTextField textField = new JTextField();
 

@@ -3,16 +3,25 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
+/**
+ * A menu bar for a worksheet visual view.
+ */
 public class WorksheetMenuBar extends JMenuBar {
   private JMenuItem save;
   private JMenuItem open;
   private Color bg;
 
+  /**
+   * A public constructor for a WorksheetMenuBar.
+   * @param bg
+   */
   public WorksheetMenuBar(Color bg) {
     super();
 
@@ -25,20 +34,32 @@ public class WorksheetMenuBar extends JMenuBar {
 
     save = new JMenuItem("Save");
     save.setActionCommand("Save");
+    save.setAccelerator(KeyStroke.getKeyStroke('S',
+            Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
     fileMenu.add(save);
 
     open = new JMenuItem("Open");
     open.setActionCommand("Open");
+    open.setAccelerator(KeyStroke.getKeyStroke('O',
+            Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
     fileMenu.add(open);
 
     setForeground(Color.WHITE);
     setOpaque(false);
   }
 
+  /**
+   * Gets the save menu item from the toolbar.
+   * @return the save menu item
+   */
   public JMenuItem getSave() {
     return save;
   }
 
+  /**
+   * Gets the open menu item from the toolbar.
+   * @return the open menu item
+   */
   public JMenuItem getOpen() {
     return open;
   }

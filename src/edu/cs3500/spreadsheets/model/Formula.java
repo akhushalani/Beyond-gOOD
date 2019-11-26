@@ -27,5 +27,11 @@ public interface Formula {
    */
   ValueType getValueType();
 
+  /**
+   * Accepts a visitor object.
+   * @param visitor the visitor object
+   * @param <R> the return type
+   * @return the result of the visitor
+   */
   <R> R accept(FormulaVisitor<R> visitor);
 }

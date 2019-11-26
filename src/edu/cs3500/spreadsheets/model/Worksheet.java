@@ -67,11 +67,29 @@ public interface Worksheet {
    */
   int getWidth();
 
+  /**
+   * Gets all the cells that refer directly or indirectly to a given cell.
+   * @param coord the cell to check for references to
+   * @return the list of referring cells
+   */
   ArrayList<Coord> referTo(Coord coord);
 
+  /**
+   * Checks if the worksheet contains a calculated cyclic reference in a given cell.
+   * @param coord the cell to check
+   * @return whether the cell contains a calculated cyclic reference
+   */
   boolean containsCyclicReference(Coord coord);
 
+  /**
+   * Adds a cell to the list of calculated cyclic references.
+   * @param coord the cell which contains the reference
+   */
   void addCyclicReference(Coord coord);
 
+  /**
+   * Removes a cell from the list of calculated cyclic references.
+   * @param coord the cell to remove
+   */
   void removeCyclicReference(Coord coord);
 }

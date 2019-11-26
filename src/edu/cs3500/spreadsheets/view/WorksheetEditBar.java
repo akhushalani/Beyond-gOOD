@@ -10,12 +10,19 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
+/**
+ * A toolbar for editing a worksheet.
+ */
 public class WorksheetEditBar extends JToolBar {
   private JTextField coordDisplay;
   private JButton confirmButton;
   private JButton rejectButton;
   private JTextField editField;
 
+  /**
+   * A public constructor for the WorksheetEditBar class.
+   * @param bg background color of the toolbar
+   */
   public WorksheetEditBar(Color bg) {
     super();
     setBackground(bg);
@@ -59,18 +66,34 @@ public class WorksheetEditBar extends JToolBar {
     add(editField);
   }
 
+  /**
+   * Gets the coord display in the edit bar.
+   * @return the coord display
+   */
   public JTextField getCoordDisplay() {
     return coordDisplay;
   }
 
+  /**
+   * Gets the confirm cell button in the edit bar.
+   * @return the confirm cell button
+   */
   public JButton getConfirmButton() {
     return confirmButton;
   }
 
+  /**
+   * Gets the reject cell button in the edit bar.
+   * @return the reject cell button
+   */
   public JButton getRejectButton() {
     return rejectButton;
   }
 
+  /**
+   * Gets the edit field in the edit bar.
+   * @return the edit field
+   */
   public JTextField getEditField() {
     return editField;
   }

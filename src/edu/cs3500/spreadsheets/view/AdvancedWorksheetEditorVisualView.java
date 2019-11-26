@@ -14,6 +14,10 @@ import javax.swing.event.DocumentListener;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
+/**
+ * A worksheet editor visual view with some advanced features like editing cell attributes.
+ * FOR ASSIGNMENT 9, NOT ASSIGNMENT 7.
+ */
 public class AdvancedWorksheetEditorVisualView extends JFrame implements WorksheetView {
   private WorksheetAdapter model;
   private WorksheetPanel worksheetPanel;
@@ -69,8 +73,8 @@ public class AdvancedWorksheetEditorVisualView extends JFrame implements Workshe
       worksheetPanel.getTableModel().setColor(CellAttribute.TEXT_COLOR, color);
     });
 
-    worksheetPanel.addCoordDisplay(editBar.getCoordDisplay());
-    worksheetPanel.addEditField(editBar.getEditField());
+    worksheetPanel.attachCoordDisplay(editBar.getCoordDisplay());
+    worksheetPanel.attachEditField(editBar.getEditField());
 
     menuBar = new WorksheetMenuBar(bg);
 
