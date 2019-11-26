@@ -14,6 +14,9 @@ import edu.cs3500.spreadsheets.view.WorksheetVisualView;
 
 import static org.junit.Assert.*;
 
+/**
+ * A class for testing the functions and wiring of the WorksheetController.
+ */
 public class WorksheetControllerTest {
   Worksheet model1;
   WorksheetModelMock mockmodel;
@@ -89,7 +92,9 @@ public class WorksheetControllerTest {
   public void confirmCell() throws FileNotFoundException {
     this.initVars();
     wc.confirmCell();
+    // Have all the functions in the view been called correctly?
     assertEquals(log1.toString(), mockview.log.toString());
+    // Have all the functions in the model been called correctly?
     assertEquals(log6.toString(), mockmodel.log.toString());
   }
 
@@ -97,7 +102,9 @@ public class WorksheetControllerTest {
   public void rejectCell() throws FileNotFoundException {
     this.initVars();
     wc.rejectCell();
+    // Have all the functions in the view been called correctly?
     assertEquals(log2.toString(), mockview.log.toString());
+    // Have all the functions in the model been called correctly?
     assertEquals(log7.toString(), mockmodel.log.toString());
   }
 
@@ -105,6 +112,7 @@ public class WorksheetControllerTest {
   public void save() throws FileNotFoundException {
     this.initVars();
     wc.save();
+    // Have all the functions in the view been called correctly?
     assertEquals(log3.toString(), mockview.log.toString());
   }
 
@@ -112,6 +120,7 @@ public class WorksheetControllerTest {
   public void open() throws FileNotFoundException {
     this.initVars();
     wc.open();
+    // Have all the functions in the view been called correctly?
     assertEquals(log4.toString(), mockview.log.toString());
   }
 
@@ -119,7 +128,9 @@ public class WorksheetControllerTest {
   public void deleteCells() throws FileNotFoundException{
     this.initVars();
     wc.deleteCells();
+    // Have all the functions in the view been called correctly?
     assertEquals(log5.toString(), mockview.log.toString());
+    // Have all the functions in the model been called correctly?
     assertEquals(log8.toString(), mockmodel.log.toString());
   }
 }

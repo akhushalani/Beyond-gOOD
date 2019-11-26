@@ -8,10 +8,19 @@ import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Worksheet;
 import edu.cs3500.spreadsheets.view.WorksheetView;
 
+/**
+ * Represents an instance of a WorksheetView that has no true functionality and is only used for
+ *      testing.
+ */
 public class WorksheetViewMock implements WorksheetView {
   private WorksheetView delegate;
   public Appendable log;
 
+  /**
+   * A basic constructor for the mock view of the Worksheet, which instantiates an empty log.
+   * @param delegate a non-mock Worksheet that any true functionality of the mock
+   *                 will be drawn from.
+   */
   public WorksheetViewMock(WorksheetView delegate) {
     this.delegate = delegate;
     this.log = new StringBuilder();
