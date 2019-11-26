@@ -1,3 +1,5 @@
+Scroll down for Assignment 7 content
+
 Model Structure:
 - Interface Worksheet represents a worksheet like those that appear in Excel.
 - Class BeyondGoodWorksheet represents a BeyondGood implementation of the Worksheet
@@ -118,6 +120,29 @@ Changes to model:
 - Added a method to the Worksheet interface that returns all the references to a cell at a given
         Coord.
 Changes to view:
--
+- Refactored the main panel from the previous view into its own JPanel class and instantiated that
+        in the old and new visual view classes.
+- Created the edit and menu bars.
+- Attached those to the new view and connected these features to the controller.
+
+Controller:
+- Implemented a Features interface that handles all of the main functionality of our editor
+- Implemented the controller that takes in a model and a view and can perform the following
+        functions:
+            - Confirm a cell formula
+            - Reject a cell formula
+            - Create a new file
+            - Save a file
+            - Open a file
+            - Delete a cell or selection of cells
+- Had our controller implement ActionListener, CellEditorListener, DocumentListener, and KeyListener
+        to listen for all the different types of user input that could occur as the user interacts
+        with the view.
+- We then set all of those listeners on the view.
+- Additionally, all of the extra credit functionality has been implemented, including:
+            - The ability to save a file
+            - Load a file
+            - Use the arrow keys to move cell selection
+            - The ability to use the delete key to clear cell contents.
 
 
