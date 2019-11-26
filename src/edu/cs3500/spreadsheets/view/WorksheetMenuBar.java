@@ -14,6 +14,7 @@ import javax.swing.KeyStroke;
  * A menu bar for a worksheet visual view.
  */
 public class WorksheetMenuBar extends JMenuBar {
+  private JMenuItem newFile;
   private JMenuItem save;
   private JMenuItem open;
   private Color bg;
@@ -32,6 +33,12 @@ public class WorksheetMenuBar extends JMenuBar {
     fileMenu.setOpaque(false);
     add(fileMenu);
 
+    newFile = new JMenuItem("New");
+    newFile.setActionCommand("New File");
+    newFile.setAccelerator(KeyStroke.getKeyStroke('N',
+            Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+    fileMenu.add(newFile);
+
     save = new JMenuItem("Save");
     save.setActionCommand("Save");
     save.setAccelerator(KeyStroke.getKeyStroke('S',
@@ -46,6 +53,14 @@ public class WorksheetMenuBar extends JMenuBar {
 
     setForeground(Color.WHITE);
     setOpaque(false);
+  }
+
+  /**
+   * Gets the new file menu item from the toolbar.
+   * @return the new file menu item
+   */
+  public JMenuItem getNewFile() {
+    return newFile;
   }
 
   /**

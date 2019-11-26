@@ -3,6 +3,7 @@ package edu.cs3500.spreadsheets.view;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.DocumentListener;
 
 import edu.cs3500.spreadsheets.model.Coord;
@@ -67,14 +68,22 @@ public interface WorksheetView {
   /**
    * Adds the feature listeners to the view.
    * @param clicks the listener for button actions
-   * @param cellEdits the listener for changes to the edit field text
+   * @param cellEdits the listener for changes to an individual cell editor
+   * @param docEdits the listener for changes to the edit field text
    * @param keys the keyboard listener
    */
-  void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys);
+  void setListeners(ActionListener clicks, CellEditorListener cellEdits,
+                    DocumentListener docEdits, KeyListener keys);
 
   /**
    * Sets the title of the window containing the view.
    * @param title the title to set
    */
   void setWindowTitle(String title);
+
+  /**
+   * Checks if a cell is being directly edited through its own cell editor.
+   * @return whether a cell is being edited
+   */
+  boolean isEditing();
 }

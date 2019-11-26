@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 import edu.cs3500.spreadsheets.model.Cell;
+import edu.cs3500.spreadsheets.model.CellAttribute;
+import edu.cs3500.spreadsheets.model.CellAttributes;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
@@ -21,7 +23,6 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
   private int colCount;
   private ArrayList<Coord> selected;
   private Coord firstSelection;
-  private HashMap<Coord, CellAttributes> attributes;
 
   /**
    * Public constructor for the InfiniteScrollingTableModel class.
@@ -34,14 +35,13 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
     rowCount = this.worksheet.getHeight();
     selected = new ArrayList<>();
     firstSelection = null;
-    attributes = new HashMap<>();
 
     for (Map.Entry<Coord, Cell> entry : worksheet.getWorksheet().entrySet()) {
-      attributes.put(entry.getKey(), new CellAttributes());
+      worksheet.setAttributes(entry.getKey(), new CellAttributes());
       try {
         Double value = Double.parseDouble(worksheet.getCellAt(entry.getKey())
                 .evaluate(worksheet.getModel(), false));
-        attributes.get(entry.getKey()).setAlignment(CellAttributes.RIGHT);
+        worksheet.getAttributeSet(entry.getKey()).setAlignment(CellAttributes.RIGHT);
       } catch (NumberFormatException | NullPointerException ignored) {
 
       }
@@ -120,57 +120,14 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
    * @param attribute the attribute to toggle.
    */
   public void toggleAttribute(CellAttribute attribute) {
-    switch (attribute) {
-      case BOLD:
-        if (attributes.get(firstSelection) == null) {
-          attributes.put(firstSelection, new CellAttributes());
-        }
-        attributes.get(firstSelection).toggleBold();
-        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
-        break;
-      case ITALIC:
-        if (attributes.get(firstSelection) == null) {
-          attributes.put(firstSelection, new CellAttributes());
-        }
-        attributes.get(firstSelection).toggleItalic();
-        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
-        break;
-      case UNDERLINE:
-        if (attributes.get(firstSelection) == null) {
-          attributes.put(firstSelection, new CellAttributes());
-        }
-        attributes.get(firstSelection).toggleUnderline();
-        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
-        break;
-      case LEFT:
-        if (attributes.get(firstSelection) == null) {
-          attributes.put(firstSelection, new CellAttributes());
-        }
-        attributes.get(firstSelection).setAlignment(CellAttributes.LEFT);
-        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
-        break;
-      case CENTER:
-        if (attributes.get(firstSelection) == null) {
-          attributes.put(firstSelection, new CellAttributes());
-        }
-        attributes.get(firstSelection).setAlignment(CellAttributes.CENTER);
-        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
-        break;
-      case RIGHT:
-        if (attributes.get(firstSelection) == null) {
-          attributes.put(firstSelection, new CellAttributes());
-        }
-        attributes.get(firstSelection).setAlignment(CellAttributes.RIGHT);
-        fireTableCellUpdated(firstSelection.row - 1, firstSelection.col - 1);
-        break;
-    }
+    worksheet.toggleAttribute(attribute, firstSelection);
 
     for (Coord selection : selected) {
-      if (attributes.get(selection) == null) {
-        attributes.put(selection, new CellAttributes());
+      if (worksheet.getAttributeSet(selection) == null) {
+        worksheet.setAttributes(selection, new CellAttributes());
       }
-      attributes.get(selection)
-              .useAttributes(attributes.get(firstSelection), attribute);
+      worksheet.getAttributeSet(selection)
+              .useAttributes(worksheet.getAttributeSet(firstSelection), attribute);
       fireTableCellUpdated(selection.row - 1, selection.col - 1);
     }
   }
@@ -181,20 +138,10 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
    * @param color the color value to assign to the cells
    */
   public void setColor(CellAttribute attribute, Color color) {
-    if (attribute == CellAttribute.TEXT_COLOR) {
-      for (Coord selection : selected) {
-        attributes.get(selection).setTextColor(color);
-        fireTableCellUpdated(selection.row - 1, selection.col - 1);
-      }
+    for (Coord selection : selected) {
+      worksheet.getAttributeSet(selection).setTextColor(color);
+      fireTableCellUpdated(selection.row - 1, selection.col - 1);
     }
-  }
-
-  /**
-   * Gets the attributes of the cells in the worksheet.
-   * @return a map from the coordinates in the worksheet to their attributes
-   */
-  public HashMap<Coord, CellAttributes> getAttributes() {
-    return attributes;
   }
 
   /**
@@ -334,7 +281,7 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
 
   @Override
   public void setValueAt(Object aValue, int row, int column) {
-    //super.setValueAt(aValue, row, column);
+    // disallows cell editing from the editor
   }
 
   /**
@@ -342,13 +289,13 @@ public class InfiniteScrollingTableModel extends DefaultTableModel {
    * @param c the location of the updated cell
    */
   public void cellUpdated(Coord c) {
-    if (!attributes.containsKey(c)) {
-      attributes.put(c, new CellAttributes());
+    if (!worksheet.getAttributes().containsKey(c)) {
+      worksheet.setAttributes(c, new CellAttributes());
     }
     try {
       Double value = Double.parseDouble(worksheet.getCellAt(c)
               .evaluate(worksheet.getModel(), false));
-      attributes.get(c).setAlignment(CellAttributes.RIGHT);
+      worksheet.getAttributeSet(c).setAlignment(CellAttributes.RIGHT);
     } catch (NumberFormatException | NullPointerException ignored) {
 
     }

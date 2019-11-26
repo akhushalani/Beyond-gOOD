@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.DocumentListener;
 
 import edu.cs3500.spreadsheets.model.Cell;
@@ -91,12 +92,18 @@ public class WorksheetTextualView implements WorksheetView {
   }
 
   @Override
-  public void setListeners(ActionListener clicks, DocumentListener cellEdits, KeyListener keys) {
+  public void setListeners(ActionListener clicks, CellEditorListener cellEdits,
+                           DocumentListener docEdits, KeyListener keys) {
     throw new UnsupportedOperationException();
   }
 
   @Override
   public void setWindowTitle(String title) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isEditing() {
     throw new UnsupportedOperationException();
   }
 }

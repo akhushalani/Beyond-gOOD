@@ -10,9 +10,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 
+import edu.cs3500.spreadsheets.model.BeyondGoodWorksheet;
 import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Worksheet;
@@ -22,14 +27,15 @@ import edu.cs3500.spreadsheets.sexp.CellSexpVisitor;
 import edu.cs3500.spreadsheets.sexp.Parser;
 import edu.cs3500.spreadsheets.sexp.Sexp;
 import edu.cs3500.spreadsheets.sexp.ValueCellSexpVisitor;
-import edu.cs3500.spreadsheets.view.WorksheetEditorVisualView;
+import edu.cs3500.spreadsheets.view.AdvancedWorksheetEditorVisualView;
 import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 import edu.cs3500.spreadsheets.view.WorksheetView;
 
 /**
  * A controller for a worksheet.
  */
-public class WorksheetController implements ActionListener, DocumentListener, KeyListener, Features {
+public class WorksheetController implements ActionListener, CellEditorListener, DocumentListener,
+        KeyListener, Features {
   private Worksheet model;
   private WorksheetView view;
 
@@ -41,17 +47,21 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
   public WorksheetController(Worksheet model, WorksheetView view) {
     this.model = model;
     this.view = view;
-    this.view.setListeners(this, this, this);
+    this.view.setListeners(this, this, this, this);
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
-      case "Confirm Button":
+      case "Confirm":
+        System.out.println("Confirm action performed");
         confirmCell();
         break;
-      case "Reject Button":
+      case "Reject":
         rejectCell();
+        break;
+      case "New File":
+        newFile();
         break;
       case "Save":
         save();
@@ -80,23 +90,30 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
   // Should be run when the document is changed.
   private void documentUpdated(DocumentEvent e) {
     Runnable doUpdate = () -> {
-      view.setEditText(e.getDocument().toString());
+      try {
+        view.setEditText(e.getDocument().getText(0, e.getDocument().getLength()));
+      } catch (BadLocationException ex) {
+        ex.printStackTrace();
+      }
     };
 
-    //SwingUtilities.invokeLater(doUpdate);
+    SwingUtilities.invokeLater(doUpdate);
   }
 
   @Override
   public void keyTyped(KeyEvent e) {
+    // don't have to check for keys being typed
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
+    // don't have to check for keys being released
   }
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
+    if ((e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE)
+            && !view.isEditing()) {
       deleteCells();
     }
   }
@@ -169,6 +186,16 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
   }
 
   @Override
+  public void newFile() {
+    System.out.println("New file");
+    BeyondGoodWorksheet model = new BeyondGoodWorksheet();
+    AdvancedWorksheetEditorVisualView view
+            = new AdvancedWorksheetEditorVisualView(new WorksheetAdapter(model), "BeyondGood");
+    view.renderView();
+    WorksheetController controller = new WorksheetController(model, view);
+  }
+
+  @Override
   public void open() {
     JFileChooser open = new JFileChooser();
     int openVal = open.showOpenDialog(null);
@@ -179,8 +206,8 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
       try {
         Worksheet worksheet = WorksheetReader.read(new BeyondGoodWorksheetBuilder(),
                 new FileReader(openPath));
-        WorksheetEditorVisualView view
-                = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet), filename);
+        AdvancedWorksheetEditorVisualView view
+                = new AdvancedWorksheetEditorVisualView(new WorksheetAdapter(worksheet), filename);
         view.renderView();
         WorksheetController controller = new WorksheetController(worksheet, view);
       } catch (FileNotFoundException fnfe) {
@@ -204,5 +231,17 @@ public class WorksheetController implements ActionListener, DocumentListener, Ke
         }
       }
     }
+  }
+
+  @Override
+  public void editingStopped(ChangeEvent e) {
+    System.out.println("Confirm cell edit");
+    confirmCell();
+  }
+
+  @Override
+  public void editingCanceled(ChangeEvent e) {
+    System.out.println("Reject cell edit");
+    rejectCell();
   }
 }
