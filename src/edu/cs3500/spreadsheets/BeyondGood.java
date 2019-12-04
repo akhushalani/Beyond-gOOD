@@ -11,6 +11,10 @@ import edu.cs3500.spreadsheets.model.BeyondGoodWorksheetBuilder;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 import edu.cs3500.spreadsheets.model.WorksheetReader;
+import edu.cs3500.spreadsheets.provider.controller.ProviderWorksheetController;
+import edu.cs3500.spreadsheets.provider.model.ProviderWorksheetAdapter;
+import edu.cs3500.spreadsheets.provider.view.ControllableView;
+import edu.cs3500.spreadsheets.provider.view.SpreadsheetView;
 import edu.cs3500.spreadsheets.view.WorksheetEditorVisualView;
 import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 import edu.cs3500.spreadsheets.view.WorksheetVisualView;
@@ -49,7 +53,16 @@ public class BeyondGood {
                   = new WorksheetEditorVisualView(new WorksheetAdapter(worksheet), "BeyondGood");
           view.renderView();
           WorksheetController controller = new WorksheetController(worksheet, view);
-        } else {
+        } else if (args[0].equals("-provider")) {
+          worksheet = new BeyondGoodWorksheet();
+          ProviderWorksheetAdapter providerWorksheet = new ProviderWorksheetAdapter(worksheet);
+          ControllableView view = new ControllableView(providerWorksheet);
+          ProviderWorksheetController controller
+                  = new ProviderWorksheetController(providerWorksheet, view);
+          view.render();
+          controller.goController();
+        }
+        else {
           outputString.append("Invalid argument.\n");
         }
       } else if (args.length > 2 && args[0].equals("-in")) {
@@ -112,6 +125,19 @@ public class BeyondGood {
           } else {
             outputString.append("Too many arguments were specified.\n");
           }
+        } else if (args[2].equals("-provider")) {
+          if (args.length == 3) {
+            ProviderWorksheetAdapter providerWorksheet = new ProviderWorksheetAdapter(worksheet);
+            ControllableView view = new ControllableView(providerWorksheet);
+            ProviderWorksheetController controller
+                    = new ProviderWorksheetController(providerWorksheet, view);
+            view.render();
+            controller.goController();
+          } else {
+            outputString.append("Too many arguments were specified.\n");
+          }
+        } else {
+          outputString.append("Invalid argument provided.\n");
         }
       } else {
         outputString.append("Insufficient arguments, no file name specified.\n");
@@ -121,8 +147,12 @@ public class BeyondGood {
     System.out.print(outputString.toString());
   }
 
-  // Takes a Cell Reference as a String and returns its Coord equivalent.
-  private static Coord parseCoord(String s) {
+  /**
+   * Takes a Cell Reference as a String and returns its Coord equivalent.
+   * @param s represents the String to parse.
+   * @return the Coord parsed from the given String.
+   */
+  public static final Coord parseCoord(String s) {
     int firstNum = 0;
     int lastLetter = 0;
 
@@ -150,7 +180,7 @@ public class BeyondGood {
 
   // Returns a boolean value that represents whether a given String contains valid Cell
   // Reference(s).
-  private static boolean validReference(String s) {
+  public static final boolean validReference(String s) {
     Pattern p = Pattern.compile("[^a-zA-Z0-9]");
     boolean validChars = !p.matcher(s).find();
 
