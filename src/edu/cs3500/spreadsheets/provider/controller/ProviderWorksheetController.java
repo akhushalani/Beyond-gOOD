@@ -11,14 +11,16 @@ import edu.cs3500.spreadsheets.provider.model.Worksheet;
 import edu.cs3500.spreadsheets.provider.view.WorksheetView;
 
 /**
- *
+ * A controller that implements the providers controller interface while still admnistrating
+ *          the functionality of our model and view.
  */
 public class ProviderWorksheetController implements Controller, ActionListener, MouseListener {
   private WorksheetView view;
   private Worksheet model;
 
   /**
-   *
+   * A public constructor for the ProviderWorksheet controller that takes in a model and view whose
+   *          communication it administrates.
    * @param model a Worksheet model
    * @param view a Worksheet view
    */
@@ -52,6 +54,8 @@ public class ProviderWorksheetController implements Controller, ActionListener, 
       case "decline":
         view.setInputField();
         break;
+      default:
+        // do nothing here
     }
   }
 
@@ -81,6 +85,7 @@ public class ProviderWorksheetController implements Controller, ActionListener, 
     // do nothing
   }
 
+  // Returns the Coord of a selected Rectangle in the worksheet.
   private Coord getSelectedCoord(Rectangle selected) {
     int row = -1;
     int col = -1;

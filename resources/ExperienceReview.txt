@@ -1,0 +1,19 @@
+	Experience Review:
+	    In terms of changes we may have wanted to make, our methodology for checking for cyclic
+	references is not organized as well as we would like to. Some of our cyclic reference checking
+	is done in the Cell,
+	while some of it is done in the Worksheet. As a result, it is not entirely clear whether some
+	of it is redundant. We also wish we had been able to use the trackpad gestures in order to
+	operate infinite scrolling. As is, we can only use the scrollbars, and this is not immediately
+	apparent to the user upon running our BeyondGood implementation. We learned from our provider
+	code a different, more bottom up approach to building the WorksheetView that perhaps provides
+	a bit more flexibility in terms of the structure of the code. This may have come in handy at
+	various points during implementing our view, in particular when it came to editing cells
+	without using the edit bar at the top of the Worksheet. With JTable, we had to disable
+    this built in functionality and then rebuild it in our image. For our providers, they
+	built it themselves from the start, and this likely saved them time.
+        Our experience with our providers was fairly positive. Though we had some problems with the
+    way they chose to implement their code, especially with regard to their controller, they were
+    respectful and professional. They were also responsive when we asked for further code, and got
+    the starter code to us very early. In general, a lot of communication wasn’t needed in order to
+    the assignment, however. They deserve nothing short of top marks.

@@ -21,6 +21,10 @@ import static edu.cs3500.spreadsheets.BeyondGood.validReference;
 public class ProviderWorksheetAdapter implements Worksheet {
   private edu.cs3500.spreadsheets.model.Worksheet delegate;
 
+  /**
+   * A public constructor for a ProviderWorksheetAdapter.
+   * @param delegate the delegate from which the majority of the class' functionality is extracted
+   */
   public ProviderWorksheetAdapter(edu.cs3500.spreadsheets.model.Worksheet delegate) {
     this.delegate = delegate;
   }
@@ -111,6 +115,8 @@ public class ProviderWorksheetAdapter implements Worksheet {
     return false;
   }
 
+  // Takes in a Coord and a list of references and returns the references with the Coords references
+  // appended.
   private ArrayList<Coord> gatherReferences(Coord c, ArrayList<Coord> refs) {
     for (Coord x : delegate.getCellAt(c).references()) {
       refs.add(x);

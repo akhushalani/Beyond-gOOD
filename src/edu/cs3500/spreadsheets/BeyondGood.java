@@ -14,7 +14,6 @@ import edu.cs3500.spreadsheets.model.WorksheetReader;
 import edu.cs3500.spreadsheets.provider.controller.ProviderWorksheetController;
 import edu.cs3500.spreadsheets.provider.model.ProviderWorksheetAdapter;
 import edu.cs3500.spreadsheets.provider.view.ControllableView;
-import edu.cs3500.spreadsheets.provider.view.SpreadsheetView;
 import edu.cs3500.spreadsheets.view.WorksheetEditorVisualView;
 import edu.cs3500.spreadsheets.view.WorksheetTextualView;
 import edu.cs3500.spreadsheets.view.WorksheetVisualView;
@@ -178,8 +177,14 @@ public class BeyondGood {
     return new Coord(col, row);
   }
 
-  // Returns a boolean value that represents whether a given String contains valid Cell
-  // Reference(s).
+
+
+  /**
+   * Returns a boolean value that represents whether a given String contains valid Cell
+   * Reference(s).
+   * @param s represents the String to be evaluated.
+   * @return a boolean whether or not the String is a valid reference.
+   */
   public static final boolean validReference(String s) {
     Pattern p = Pattern.compile("[^a-zA-Z0-9]");
     boolean validChars = !p.matcher(s).find();

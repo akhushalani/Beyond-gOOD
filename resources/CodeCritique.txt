@@ -1,0 +1,35 @@
+Code Critique:
+        Overall, we were successful working with our provider's code, and feel that their
+    implementation
+    was generally serviceable. However, we did encounter a few questionable design choices that they
+    may wish to reconsider. Primarily, their controller interface, which had only one method, was
+    fairly non specific in the functionality that it was intended to support. Its one method,
+    "goController", held the entirety of the implemented code, outside of the listeners, necessary
+    to implement their worksheet with a controller. While this ultimately did not stop us from
+    successfully implementing their code, it was suboptimal for our understanding.
+        A lesser issue
+    we encountered is that their "AValue" class has a method that returns an Sexp, which is
+    generally suboptimal as the String form raw contents of the cell would have served the same
+    purpose while being less labor intensive and not requiring repeated conversion. We were able to
+    avoid this pitfall because our implementation of the equivalent object held its own raw
+    contents, and thus the functionality could be delegated. Therefore, this could have
+    been avoided using a String for the raw contents rather than the Sexp, which they could easily
+    parse using Parser.parse whenever necessary.
+        It is also difficult to retrieve the actual value of an AValue in its primitive form from
+    the AValue class. It returns, when evaluated, the specific type form of the AValue
+    (such as a BooleanValue, StringValue, or DoubleValue). This makes
+    it harder to adapt than if the actual String, boolean, or double was returned.
+    The way they provided for functions is also slightly problematic, as, despite their Function
+    object, they implement their functions within the concrete implementations of the value classes.
+    This could be done in a more loosely coupled manner by simply implementing the functions'
+    functionality and type checking within the function objects rather than in the value classes.
+        Their view was sound, however, it is not particularly user friendly. Their is no exception
+    catching (which could be fixed with a symbol catch expression), and the user has to manually
+    add rows and columns, which could be fixed by adding dynamic row and column addition as the
+    user scrolls. The performance of the view is also suboptimal, as scrolling is very slow. This
+    is likely because anytime a controller action occurs, the entire Worksheet gets re-evaluated.
+    The = sign, which is a fixture in Excel for indicating the use of a Formula, is also absent from
+    their final product. This complicates the life of the user, as it is unclear when a value is an
+    evaluated formula and a raw value. Finally, documentation was also a minor obstacle, as
+    JavaDoc is missing from multiple functions and constructors. We were able to work around this,
+    but it may prove to be a bigger problem in a larger codebase.
