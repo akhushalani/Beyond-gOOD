@@ -1,10 +1,17 @@
 package edu.cs3500.spreadsheets.view;
 
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
+import javax.swing.JScrollBar;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.TableColumnModelListener;
 
 import edu.cs3500.spreadsheets.model.Coord;
 
@@ -72,8 +79,10 @@ public interface WorksheetView {
    * @param docEdits the listener for changes to the edit field text
    * @param keys the keyboard listener
    */
-  void setListeners(ActionListener clicks, CellEditorListener cellEdits,
-                    DocumentListener docEdits, KeyListener keys);
+  void setListeners(ActionListener clicks, CellEditorListener cellEdits, DocumentListener docEdits,
+                    FocusListener focus, KeyListener keys, MouseInputAdapter rowResize,
+                    TableColumnModelListener colResize, AdjustmentListener horizScroll,
+                    AdjustmentListener vertScroll, ComponentAdapter resizeListener);
 
   /**
    * Sets the title of the window containing the view.
@@ -82,8 +91,61 @@ public interface WorksheetView {
   void setWindowTitle(String title);
 
   /**
+   * Gets the title of the window containing the view.
+   * @return the window title
+   */
+  String getWindowTitle();
+
+  /**
    * Checks if a cell is being directly edited through its own cell editor.
    * @return whether a cell is being edited
    */
   boolean isEditing();
+
+  /**
+   * Opens the cell editor for a given cell.
+   * @param coord the location of the cell to start the editor for
+   */
+  void startEditing(Coord coord);
+
+  /**
+   * Closes the active cell editor.
+   */
+  void stopEditing();
+
+  /**
+   * Sets the text of the active cell editor.
+   * @param text the text to set the cell editor to
+   */
+  void setCellEditorText(String text);
+
+  RowHeaderTable getRowHeader();
+
+  RowHeaderTable getTable();
+
+  int getMinRowHeight();
+
+  int getDefaultColumnWidth();
+
+  void resizeCells();
+
+  JScrollBar getHorizontalScrollBar();
+
+  JScrollBar getVerticalScrollBar();
+
+  void fireScrollRight();
+
+  void fireScrollDown();
+
+  void adjustToFrame(int colWidth, int rowHeight);
+
+  boolean tableWidthSufficient();
+
+  void addGraph(BeyondGoodGraph graph);
+
+  void removeGraph(BeyondGoodGraph graph);
+
+  HashMap<String, BeyondGoodGraph> getGraphs();
+
+  void updateGraph(String key);
 }

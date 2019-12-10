@@ -32,7 +32,8 @@ public class ValueCellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitSymbol(String s) {
-    throw new IllegalArgumentException("Cell must be a value, reference, or function.");
+    String editedRaw = "\"" + s + "\"";
+    return new FormulaCell(location, new StringValue(s), editedRaw, worksheet);
   }
 
   @Override
@@ -47,7 +48,12 @@ public class ValueCellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitNumber(double d) {
-    return new FormulaCell(location, new DoubleValue(d), rawContents, worksheet);
+    if (d == Math.floor(d) && !Double.isInfinite(d)) {
+      String editedRaw = "" + ((int) Math.floor(d));
+      return new FormulaCell(location, new DoubleValue(d), editedRaw, worksheet);
+    } else {
+      return new FormulaCell(location, new DoubleValue(d), rawContents, worksheet);
+    }
   }
 
   @Override

@@ -26,6 +26,10 @@ public class WorksheetAttributeBar extends JToolBar {
   private JButton centerButton;
   private JButton rightButton;
   private JButton textColorButton;
+  private JButton pieChartButton;
+  private JButton barGraphButton;
+  private JButton lineGraphButton;
+  private JButton scatterPlotButton;
 
   /**
    * Public constructor for the WorksheetAttributeBar class.
@@ -220,6 +224,108 @@ public class WorksheetAttributeBar extends JToolBar {
     });
     textColorButton.setMargin(margins);
     add(textColorButton);
+
+    addSeparator();
+
+    pieChartButton = new JButton();
+    pieChartButton.setIcon(new ImageIcon("resources/icons/pie_chart.png"));
+    pieChartButton.setBackground(bg);
+    pieChartButton.setOpaque(true);
+    pieChartButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+    pieChartButton.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+    pieChartButton.setRolloverEnabled(true);
+    pieChartButton.getModel().addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        if (pieChartButton.getModel().isRollover()) {
+          pieChartButton.setBorder(BorderFactory.createCompoundBorder(
+                  BorderFactory.createLineBorder(Color.DARK_GRAY, 1, true),
+                  BorderFactory.createEmptyBorder(3, 6, 2, 6)));
+          pieChartButton.setBackground(Color.DARK_GRAY);
+        } else {
+          pieChartButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+          pieChartButton.setBackground(bg);
+        }
+      }
+    });
+    pieChartButton.setMargin(margins);
+    pieChartButton.setActionCommand("Pie Chart");
+    add(pieChartButton);
+
+    barGraphButton = new JButton();
+    barGraphButton.setIcon(new ImageIcon("resources/icons/bar_graph.png"));
+    barGraphButton.setBackground(bg);
+    barGraphButton.setOpaque(true);
+    barGraphButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+    barGraphButton.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+    barGraphButton.setRolloverEnabled(true);
+    barGraphButton.getModel().addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        if (barGraphButton.getModel().isRollover()) {
+          barGraphButton.setBorder(BorderFactory.createCompoundBorder(
+                  BorderFactory.createLineBorder(Color.DARK_GRAY, 1, true),
+                  BorderFactory.createEmptyBorder(3, 6, 2, 6)));
+          barGraphButton.setBackground(Color.DARK_GRAY);
+        } else {
+          barGraphButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+          barGraphButton.setBackground(bg);
+        }
+      }
+    });
+    barGraphButton.setMargin(margins);
+    barGraphButton.setActionCommand("Bar Graph");
+    add(barGraphButton);
+
+    lineGraphButton = new JButton();
+    lineGraphButton.setIcon(new ImageIcon("resources/icons/line_graph.png"));
+    lineGraphButton.setBackground(bg);
+    lineGraphButton.setOpaque(true);
+    lineGraphButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+    lineGraphButton.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+    lineGraphButton.setRolloverEnabled(true);
+    lineGraphButton.getModel().addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        if (lineGraphButton.getModel().isRollover()) {
+          lineGraphButton.setBorder(BorderFactory.createCompoundBorder(
+                  BorderFactory.createLineBorder(Color.DARK_GRAY, 1, true),
+                  BorderFactory.createEmptyBorder(3, 6, 2, 6)));
+          lineGraphButton.setBackground(Color.DARK_GRAY);
+        } else {
+          lineGraphButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+          lineGraphButton.setBackground(bg);
+        }
+      }
+    });
+    lineGraphButton.setMargin(margins);
+    lineGraphButton.setActionCommand("Line Graph");
+    add(lineGraphButton);
+
+    scatterPlotButton = new JButton();
+    scatterPlotButton.setIcon(new ImageIcon("resources/icons/scatter_plot.png"));
+    scatterPlotButton.setBackground(bg);
+    scatterPlotButton.setOpaque(true);
+    scatterPlotButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+    scatterPlotButton.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+    scatterPlotButton.setRolloverEnabled(true);
+    scatterPlotButton.getModel().addChangeListener(new ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        if (scatterPlotButton.getModel().isRollover()) {
+          scatterPlotButton.setBorder(BorderFactory.createCompoundBorder(
+                  BorderFactory.createLineBorder(Color.DARK_GRAY, 1, true),
+                  BorderFactory.createEmptyBorder(3, 6, 2, 6)));
+          scatterPlotButton.setBackground(Color.DARK_GRAY);
+        } else {
+          scatterPlotButton.setBorder(BorderFactory.createEmptyBorder(4, 7, 3, 7));
+          scatterPlotButton.setBackground(bg);
+        }
+      }
+    });
+    scatterPlotButton.setMargin(margins);
+    scatterPlotButton.setActionCommand("Scatter Plot");
+    add(scatterPlotButton);
   }
 
   /**
@@ -276,5 +382,37 @@ public class WorksheetAttributeBar extends JToolBar {
    */
   public JButton getTextColorButton() {
     return textColorButton;
+  }
+
+  /**
+   * Gets the pie chart button in the toolbar.
+   * @return the pie chart button
+   */
+  public JButton getPieChartButton() {
+    return pieChartButton;
+  }
+
+  /**
+   * Gets the bar graph button in the toolbar.
+   * @return the bar graph button
+   */
+  public JButton getBarGraphButton() {
+    return barGraphButton;
+  }
+
+  /**
+   * Gets the line graph button in the toolbar.
+   * @return the line graph button
+   */
+  public JButton getLineGraphButton() {
+    return lineGraphButton;
+  }
+
+  /**
+   * Gets the scatter plot button in the toolbar.
+   * @return the scatter plot button
+   */
+  public JButton getScatterPlotButton() {
+    return scatterPlotButton;
   }
 }

@@ -2,13 +2,14 @@ package edu.cs3500.spreadsheets.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -29,7 +30,10 @@ public class WorksheetPanel extends JPanel {
   private JTextField coordDisplay;
   private InfiniteScrollingTableModel tableModel;
   private RowHeaderTable table;
+  private ScrollableRowHeaderTable scrollableTable;
   private WorksheetCellEditor cellEditor;
+  private int defaultColumnWidth;
+  private JFrame frame;
 
   /**
    * A public constructor for a WorksheetPanel.
@@ -40,6 +44,7 @@ public class WorksheetPanel extends JPanel {
   public WorksheetPanel(WorksheetAdapter model, JFrame frame, boolean editable) {
     this.editField = null;
     this.coordDisplay = null;
+    this.frame = frame;
 
     tableModel = new InfiniteScrollingTableModel(model);
 
@@ -73,10 +78,12 @@ public class WorksheetPanel extends JPanel {
     headerRenderer.setHorizontalAlignment(JLabel.CENTER);
     table.getTableHeader().setDefaultRenderer(new HeaderRenderer(headerRenderer, tableModel));
 
+    defaultColumnWidth = table.getColumnModel().getColumn(0).getWidth();
+
     TableCellRenderer cellRenderer = table.getDefaultRenderer(Object.class);
     table.setDefaultRenderer(Object.class, new RowHeaderTableCellRenderer(cellRenderer, model));
 
-    ScrollableRowHeaderTable scrollableTable = new ScrollableRowHeaderTable(scrollPane);
+    scrollableTable = new ScrollableRowHeaderTable(scrollPane);
 
     scrollableTable.getRowHeader().getTableHeader()
             .setDefaultRenderer(new HeaderRenderer(headerRenderer, tableModel));
@@ -92,14 +99,6 @@ public class WorksheetPanel extends JPanel {
               .adjustToFrame(30,
                       table.getRowHeight(), 1000, 1000);
     }
-
-    frame.addComponentListener(new ComponentAdapter() {
-      @Override
-      public void componentResized(ComponentEvent e) {
-        tableModel.adjustToFrame(table.getColumnModel().getColumn(1).getWidth(),
-                table.getRowHeight(), frame.getWidth(), frame.getHeight());
-      }
-    });
 
     ListSelectionListener selectionListener = new ListSelectionListener() {
       @Override
@@ -161,31 +160,6 @@ public class WorksheetPanel extends JPanel {
       }
     };
 
-    scrollPane.getHorizontalScrollBar().addAdjustmentListener(e -> {
-      int horizExtent = scrollPane.getHorizontalScrollBar().getModel().getExtent();
-      if (e.getValueIsAdjusting()
-              && e.getValue() == scrollPane.getHorizontalScrollBar().getMaximum() - horizExtent) {
-        tableModel.fireScrollRight();
-      }
-    });
-
-    scrollPane.getVerticalScrollBar().addAdjustmentListener(e -> {
-      int vertExtent = scrollPane.getVerticalScrollBar().getModel().getExtent();
-      if (e.getValueIsAdjusting()
-              && e.getValue() == scrollPane.getVerticalScrollBar().getMaximum() - vertExtent) {
-        tableModel.fireScrollDown();
-      }
-    });
-
-    frame.addMouseWheelListener(e -> {
-      int notches = e.getWheelRotation();
-      if (notches > 0 && !e.isShiftDown()) {
-        tableModel.fireScrollDown();
-      } else if (notches > 0) {
-        tableModel.fireScrollRight();
-      }
-    });
-
     cellEditor = WorksheetCellEditor.make(model);
     scrollableTable.getTable().setDefaultEditor(Object.class, cellEditor);
 
@@ -230,8 +204,16 @@ public class WorksheetPanel extends JPanel {
    * Gets the worksheet table.
    * @return the worksheet table
    */
-  public JTable getTable() {
+  public RowHeaderTable getTable() {
     return table;
+  }
+
+  public RowHeaderTable getRowHeader() {
+    return scrollableTable.getRowHeader();
+  }
+
+  public int getMinRowHeight() {
+    return scrollableTable.getMinRowHeight();
   }
 
   /**
@@ -240,5 +222,35 @@ public class WorksheetPanel extends JPanel {
    */
   public WorksheetCellEditor getCellEditor() {
     return cellEditor;
+  }
+
+  public int getDefaultColumnWidth() {
+    return defaultColumnWidth;
+  }
+
+  public void addScrollListeners(AdjustmentListener horizListener,
+                                 AdjustmentListener vertListener) {
+    scrollPane.getHorizontalScrollBar().addAdjustmentListener(horizListener);
+    scrollPane.getVerticalScrollBar().addAdjustmentListener(vertListener);
+  }
+
+  public void addResizeListener(ComponentAdapter resizeListener) {
+    frame.addComponentListener(resizeListener);
+  }
+
+  public JScrollBar getHorizontalScrollBar() {
+    return scrollPane.getHorizontalScrollBar();
+  }
+
+  public JScrollBar getVerticalScrollBar() {
+    return scrollPane.getVerticalScrollBar();
+  }
+
+  public int getFrameWidth() {
+    return frame.getWidth();
+  }
+
+  public int getFrameHeight() {
+    return frame.getHeight();
   }
 }

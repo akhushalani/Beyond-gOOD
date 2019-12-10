@@ -123,4 +123,22 @@ public interface Worksheet {
    * Sets the attributes of a cell in the worksheet.
    */
   void setAttributes(Coord coord, CellAttributes attributeSet);
+
+  void resizeRow(int row, double size);
+
+  void resizeColumn(int column, double size);
+
+  HashMap<Integer, Double> getRowSizes();
+
+  HashMap<Integer, Double> getColumnSizes();
+
+  void addGraph(Coord start, Coord end, GraphType graph);
+
+  void removeGraph(ArrayList<Coord> range, GraphType graph);
+
+  ArrayList<String> getGraphsToUpdate();
+
+  void clearGraphsToUpdate();
+
+  HashMap<ArrayList<Coord>, ArrayList<GraphType>> getGraphs();
 }

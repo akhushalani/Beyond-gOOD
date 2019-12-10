@@ -1,6 +1,7 @@
 package edu.cs3500.spreadsheets.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -91,5 +92,33 @@ public final class WorksheetAdapter {
 
   public Worksheet getModel() {
     return this.worksheet;
+  }
+
+  public void resizeColumn(int col, double size) {
+    worksheet.resizeColumn(col, size);
+  }
+
+  public void resizeRow(int row, double size) {
+    worksheet.resizeRow(row, size);
+  }
+
+  public HashMap<Integer, Double> getColumnSizes() {
+    return worksheet.getColumnSizes();
+  }
+
+  public HashMap<Integer, Double> getRowSizes() {
+    return worksheet.getRowSizes();
+  }
+
+  public ArrayList<String> getGraphsToUpdate() {
+    return worksheet.getGraphsToUpdate();
+  }
+
+  public void clearGraphsToUpdate() {
+    worksheet.clearGraphsToUpdate();
+  }
+
+  public HashMap<ArrayList<Coord>, ArrayList<GraphType>> getGraphs() {
+    return worksheet.getGraphs();
   }
 }

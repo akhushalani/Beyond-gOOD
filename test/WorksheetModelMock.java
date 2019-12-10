@@ -7,6 +7,7 @@ import edu.cs3500.spreadsheets.model.CellAttribute;
 import edu.cs3500.spreadsheets.model.CellAttributes;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.Formula;
+import edu.cs3500.spreadsheets.model.GraphType;
 import edu.cs3500.spreadsheets.model.Worksheet;
 
 /**
@@ -103,6 +104,55 @@ public class WorksheetModelMock implements Worksheet {
   @Override
   public void setAttributes(Coord coord, CellAttributes attributeSet) {
     this.log.append("setAttributes\n");
+  }
+
+  @Override
+  public void resizeRow(int row, double size) {
+    this.log.append("resizeRow\n");
+  }
+
+  @Override
+  public void resizeColumn(int column, double size) {
+    this.log.append("resizeColumn\n");
+  }
+
+  @Override
+  public HashMap<Integer, Double> getRowSizes() {
+    this.log.append("getRowSizes\n");
+    return delegate.getRowSizes();
+  }
+
+  @Override
+  public HashMap<Integer, Double> getColumnSizes() {
+    this.log.append("getColumnSizes\n");
+    return delegate.getColumnSizes();
+  }
+
+  @Override
+  public void addGraph(Coord start, Coord end, GraphType graph) {
+    this.log.append("addGraph\n");
+  }
+
+  @Override
+  public void removeGraph(ArrayList<Coord> range, GraphType graph) {
+    this.log.append("removeGraph\n");
+  }
+
+  @Override
+  public ArrayList<String> getGraphsToUpdate() {
+    this.log.append("getGraphsToUpdate\n");
+    return delegate.getGraphsToUpdate();
+  }
+
+  @Override
+  public void clearGraphsToUpdate() {
+    this.log.append("clearGraphsToUpdate\n");
+  }
+
+  @Override
+  public HashMap<ArrayList<Coord>, ArrayList<GraphType>> getGraphs() {
+    this.log.append("getGraphs\n");
+    return delegate.getGraphs();
   }
 
   @Override

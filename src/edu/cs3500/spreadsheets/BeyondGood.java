@@ -121,8 +121,11 @@ public class BeyondGood {
     System.out.print(outputString.toString());
   }
 
-  // Takes a Cell Reference as a String and returns its Coord equivalent.
-  private static Coord parseCoord(String s) {
+  /**
+   * Takes a Cell Reference as a String and returns its Coord equivalent.
+   * @param s String to parse into Coord value.
+   */
+  public static Coord parseCoord(String s) {
     int firstNum = 0;
     int lastLetter = 0;
 

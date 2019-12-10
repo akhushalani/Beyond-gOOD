@@ -27,6 +27,12 @@ public final class WorksheetReader {
      */
     WorksheetBuilder<T> createCell(int col, int row, String contents);
 
+    WorksheetBuilder<T> addColumnSize(String contents);
+
+    WorksheetBuilder<T> addRowSize(String contents);
+
+    WorksheetBuilder<T> addGraph(String contents);
+
     /**
      * Finalizes the construction of the worksheet and returns it.
      * @return the fully-filled-in worksheet
@@ -60,27 +66,41 @@ public final class WorksheetReader {
     final Pattern cellRef = Pattern.compile("([A-Za-z]+)([1-9][0-9]*)");
     scan.useDelimiter("\\s+");
     while (scan.hasNext()) {
-      int col;
-      int row;
       while (scan.hasNext("#.*")) {
         scan.nextLine();
         scan.skip("\\s*");
       }
-      String cell = scan.next();
-      Matcher m = cellRef.matcher(cell);
-      if (m.matches()) {
-        col = Coord.colNameToIndex(m.group(1));
-        row = Integer.parseInt(m.group(2));
+      if (scan.hasNext("~~.*")) {
+        String contents = scan.nextLine();
+        contents = contents.substring(2);
+        builder = builder.addColumnSize(contents);
+      } else if (scan.hasNext("~.*")) {
+        String contents = scan.nextLine();
+        contents = contents.substring(1);
+        builder = builder.addRowSize(contents);
+      } else if (scan.hasNext("@@.*")) {
+        String contents = scan.nextLine();
+        contents = contents.substring(2);
+        builder = builder.addGraph(contents);
       } else {
-        throw new IllegalStateException();
-      }
-      scan.skip("\\s*");
-      while (scan.hasNext("#.*")) {
-        scan.nextLine();
+        int col;
+        int row;
+        String cell = scan.next();
+        Matcher m = cellRef.matcher(cell);
+        if (m.matches()) {
+          col = Coord.colNameToIndex(m.group(1));
+          row = Integer.parseInt(m.group(2));
+        } else {
+          throw new IllegalStateException();
+        }
         scan.skip("\\s*");
+        while (scan.hasNext("#.*")) {
+          scan.nextLine();
+          scan.skip("\\s*");
+        }
+        String contents = scan.nextLine();
+        builder = builder.createCell(col, row, contents);
       }
-      String contents = scan.nextLine();
-      builder = builder.createCell(col, row, contents);
     }
 
     return builder.createWorksheet();

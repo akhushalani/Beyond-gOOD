@@ -51,7 +51,12 @@ public class CellSexpVisitor implements SexpVisitor<Cell> {
 
   @Override
   public Cell visitNumber(double d) {
-    return new FormulaCell(location, new DoubleValue(d), rawContents, worksheet);
+    if (d == Math.floor(d) && !Double.isInfinite(d)) {
+      String editedRaw = "" + ((int) Math.floor(d));
+      return new FormulaCell(location, new DoubleValue(d), editedRaw, worksheet);
+    } else {
+      return new FormulaCell(location, new DoubleValue(d), rawContents, worksheet);
+    }
   }
 
   @Override

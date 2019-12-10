@@ -29,6 +29,7 @@ public class WorksheetCellEditor extends DefaultCellEditor {
   public WorksheetCellEditor(JTextField textField, WorksheetAdapter model) {
     super(textField);
     this.textField = textField;
+    this.textField.getDocument().putProperty("owner", "cellEditor");
     this.model = model;
   }
 
@@ -61,7 +62,16 @@ public class WorksheetCellEditor extends DefaultCellEditor {
     return super.getTableCellEditorComponent(table, rawContents, isSelected, row, column);
   }
 
+  public void setText(String text) {
+    textField.setText(text);
+  }
+
   public void addDocumentListener(DocumentListener dl) {
     this.textField.getDocument().addDocumentListener(dl);
+  }
+
+  public void selectAll() {
+    this.textField.selectAll();
+    System.out.println("Text selected");
   }
 }

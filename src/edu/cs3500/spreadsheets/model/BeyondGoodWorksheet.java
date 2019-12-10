@@ -16,6 +16,10 @@ public class BeyondGoodWorksheet implements Worksheet {
   private HashMap<Coord, Formula> calculatedReferences;
   private ArrayList<Coord> cyclicCoords;
   private HashMap<Coord, CellAttributes> attributes;
+  private HashMap<Integer, Double> columnSizes;
+  private HashMap<Integer, Double> rowSizes;
+  private HashMap<ArrayList<Coord>, ArrayList<GraphType>> graphs;
+  private ArrayList<String> graphsToUpdate;
 
   /**
    * Represents the default Constructor for a BeyondGoodWorkSheet, which establishes a HashMap of
@@ -26,6 +30,10 @@ public class BeyondGoodWorksheet implements Worksheet {
     this.calculatedReferences = new HashMap<>();
     this.cyclicCoords = new ArrayList<>();
     this.attributes = new HashMap<>();
+    this.columnSizes = new HashMap<>();
+    this.rowSizes = new HashMap<>();
+    this.graphs = new HashMap<>();
+    this.graphsToUpdate = new ArrayList<>();
   }
 
   /**
@@ -39,6 +47,30 @@ public class BeyondGoodWorksheet implements Worksheet {
     this.calculatedReferences = new HashMap<>();
     this.cyclicCoords = new ArrayList<>();
     this.attributes = new HashMap<>();
+    this.columnSizes = new HashMap<>();
+    this.rowSizes = new HashMap<>();
+    this.graphs = new HashMap<>();
+    this.graphsToUpdate = new ArrayList<>();
+  }
+
+  /**
+   * Represents a constructor for BeyondGoodWorkSheet that takes in an already existent worksheet
+   *    as a HashMap and returns a new WorkSheet using said input.
+   * @param     worksheet represents a previously existing worksheet as a HashMap of Coords to
+   *                      Cells.
+   */
+  public BeyondGoodWorksheet(HashMap<Coord, Cell> worksheet,
+                             HashMap<Integer, Double> columnSizes,
+                             HashMap<Integer, Double> rowSizes,
+                             HashMap<ArrayList<Coord>, ArrayList<GraphType>> graphs) {
+    this.worksheet = worksheet;
+    this.calculatedReferences = new HashMap<>();
+    this.cyclicCoords = new ArrayList<>();
+    this.attributes = new HashMap<>();
+    this.columnSizes = columnSizes;
+    this.rowSizes = rowSizes;
+    this.graphs = graphs;
+    this.graphsToUpdate = new ArrayList<>();
   }
 
   @Override
@@ -53,6 +85,15 @@ public class BeyondGoodWorksheet implements Worksheet {
       worksheet.remove(coord);
     } else if (!cyclicReference(coord, cell)) {
       worksheet.put(coord, cell);
+      for (Map.Entry<ArrayList<Coord>, ArrayList<GraphType>> graphEntry : graphs.entrySet()) {
+        if (coordInRange(coord, graphEntry.getKey())) {
+          for (GraphType type : graphEntry.getValue()) {
+            String graphToUpdate = graphEntry.getKey().get(0).toString() + ":"
+                    + graphEntry.getKey().get(1).toString() + "_" + type.name();
+            graphsToUpdate.add(graphToUpdate);
+          }
+        }
+      }
     } else {
       throw new IllegalArgumentException("Error in cell " + coord.toString()
               + ": Cell contains a cyclic reference.");
@@ -272,11 +313,78 @@ public class BeyondGoodWorksheet implements Worksheet {
 
   @Override
   public HashMap<Coord, CellAttributes> getAttributes() {
-    return attributes;
+    return (HashMap<Coord, CellAttributes>) attributes.clone();
   }
 
   @Override
   public void setAttributes(Coord coord, CellAttributes attributeSet) {
     attributes.put(coord, attributeSet);
+  }
+
+  @Override
+  public void resizeRow(int row, double size) {
+    rowSizes.put(row, size);
+  }
+
+  @Override
+  public void resizeColumn(int column, double size) {
+    columnSizes.put(column, size);
+  }
+
+  @Override
+  public HashMap<Integer, Double> getRowSizes() {
+    return (HashMap<Integer, Double>) rowSizes.clone();
+  }
+
+  @Override
+  public HashMap<Integer, Double> getColumnSizes() {
+    return (HashMap<Integer, Double>) columnSizes.clone();
+  }
+
+  @Override
+  public void addGraph(Coord start, Coord end, GraphType graph) {
+    ArrayList<Coord> coords = new ArrayList<>();
+    coords.add(start);
+    coords.add(end);
+    if (graphs.containsKey(coords)) {
+      if (!graphs.get(coords).contains(graph)) {
+        graphs.get(coords).add(graph);
+      }
+    } else {
+      ArrayList<GraphType> types = new ArrayList<>();
+      types.add(graph);
+      graphs.put(coords, types);
+    }
+  }
+
+  @Override
+  public void removeGraph(ArrayList<Coord> range, GraphType graph) {
+    if (graphs.containsKey(range) && graphs.get(range).contains(graph)) {
+      graphs.get(range).remove(graph);
+    }
+  }
+
+  private boolean coordInRange(Coord coord, ArrayList<Coord> range) {
+    if (range.size() != 2) {
+      throw new IllegalArgumentException("Invalid range");
+    }
+
+    return coord.row >= range.get(0).row && coord.col >= range.get(0).col
+            && coord.row <= range.get(1).row && coord.col <= range.get(1).col;
+  }
+
+  @Override
+  public ArrayList<String> getGraphsToUpdate() {
+    return (ArrayList<String>) graphsToUpdate.clone();
+  }
+
+  @Override
+  public void clearGraphsToUpdate() {
+    graphsToUpdate.clear();
+  }
+
+  @Override
+  public HashMap<ArrayList<Coord>, ArrayList<GraphType>> getGraphs() {
+    return (HashMap<ArrayList<Coord>, ArrayList<GraphType>>) graphs.clone();
   }
 }

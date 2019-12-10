@@ -45,13 +45,13 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
       int right = 4;
       Color selectColor = new Color(0, 7, 224);
 
-      if (row == tableModel.minSelectionRow()) {
+      if (row == tableModel.minSelectionRow() && row != 0) {
         b = BorderFactory.createCompoundBorder(b,
                 BorderFactory.createMatteBorder(2, 0, 0, 0, selectColor));
         top -= 2;
       }
 
-      if (column == tableModel.minSelectionCol()) {
+      if (column == tableModel.minSelectionCol() && column != 0) {
         b = BorderFactory.createCompoundBorder(b,
                 BorderFactory.createMatteBorder(0, 2, 0, 0, selectColor));
         left -= 2;
@@ -99,6 +99,8 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
                   && column == tableModel.maxSelectionCol() - 1
                   && tableModel.getFirstSelection().col - 1 != tableModel.minSelectionCol()) {
             b = BorderFactory.createCompoundBorder(b,
+                    BorderFactory.createMatteBorder(0, 0, 0, 1, Color.WHITE));
+            b = BorderFactory.createCompoundBorder(b,
                     BorderFactory.createMatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY));
           } else {
             b = BorderFactory.createCompoundBorder(b,
@@ -114,13 +116,14 @@ public class RowHeaderTableCellRenderer implements TableCellRenderer {
                   && row == tableModel.maxSelectionRow() - 1
                   && tableModel.getFirstSelection().row - 1 != tableModel.minSelectionRow()) {
             b = BorderFactory.createCompoundBorder(b,
+                    BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+            b = BorderFactory.createCompoundBorder(b,
                     BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
-
           } else {
             b = BorderFactory.createCompoundBorder(b,
                     BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY));
           }
-          bottom -= 1;
+          bottom -= 2;
         }
       }
 
