@@ -1,5 +1,7 @@
 package edu.cs3500.spreadsheets.controller;
 
+import edu.cs3500.spreadsheets.model.GraphType;
+
 /**
  * The features of a worksheet editor.
  */
@@ -34,4 +36,10 @@ public interface Features {
    * Deletes the selected cells.
    */
   void deleteCells();
+
+  /**
+   * Creates a graph of a given type.
+   * @param type the type of graph to create
+   */
+  void createGraph(GraphType type);
 }

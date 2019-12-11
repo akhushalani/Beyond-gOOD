@@ -24,6 +24,7 @@ public class RowHeaderTable extends JTable {
    */
   public RowHeaderTable(TableModel tableModel, boolean headerTable, boolean editable) {
     super(tableModel);
+    this.tableModel = tableModel;
     this.headerTable = headerTable;
     this.editable = editable;
   }
@@ -60,8 +61,10 @@ public class RowHeaderTable extends JTable {
   public boolean isCellEditable(int rowIndex, int vColIndex) {
     if (tableModel == null) {
       return editable;
+    } else if (headerTable) {
+      return false;
     } else {
-      InfiniteScrollingTableModel model = (InfiniteScrollingTableModel) tableModel;
+      InfiniteScrollingTableModel model = (InfiniteScrollingTableModel) getModel();
       if (model.minSelectionCol() == -1 || model.minSelectionRow() == -1) {
         return editable;
       } else {
@@ -69,6 +72,20 @@ public class RowHeaderTable extends JTable {
                 && rowIndex == model.getFirstSelection().row - 1
                 && vColIndex == model.getFirstSelection().col - 1;
       }
+    }
+  }
+
+  @Override
+  public Rectangle getCellRect(int row, int column, boolean includeSpacing) {
+    return super.getCellRect(row, column, includeSpacing);
+  }
+
+  @Override
+  public void removeEditor() {
+    int editingColumn = getEditingColumn();
+    super.removeEditor();
+    if (editingColumn >= 0) {
+      repaint();
     }
   }
 }

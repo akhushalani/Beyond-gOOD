@@ -1,13 +1,15 @@
 package edu.cs3500.spreadsheets.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.CompoundBorder;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 
@@ -20,6 +22,7 @@ import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 public class WorksheetCellEditor extends DefaultCellEditor {
   private JTextField textField;
   private WorksheetAdapter model;
+  private int width;
 
   /**
    * Public constructor for a WorksheetCellEditor.
@@ -47,18 +50,31 @@ public class WorksheetCellEditor extends DefaultCellEditor {
   @Override
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
                                                int row, int column) {
-    textField.setSize(new Dimension(table.getCellRect(row, column, true).width,
-            table.getCellRect(row, column, true).height));
-    TableCellRenderer renderer = table.getCellRenderer(row, column);
-    Component c = renderer.getTableCellRendererComponent(table, value,
-            isSelected, true, row, column);
-    textField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, c.getFont().getSize()));
-    textField.setBorder(((JComponent) c).getBorder());
-
     String rawContents = "";
     if (model.getWorksheet().containsKey(new Coord(column + 1, row + 1))) {
       rawContents = model.getCellAt(new Coord(column + 1, row + 1)).getRawContents();
     }
+
+    TableCellRenderer renderer = table.getCellRenderer(row, column);
+    Component c = renderer.getTableCellRendererComponent(table, value,
+            isSelected, true, row, column);
+    textField.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, c.getFont().getSize()));
+
+    width = table.getCellRect(row, column, true).width;
+    int i = column;
+    while (textField.getFontMetrics(textField.getFont()).stringWidth(rawContents) > width) {
+      i++;
+      width += table.getCellRect(row, i, true).width;
+    }
+    textField.setSize(new Dimension(width, table.getCellRect(row, column, true).height));
+    CompoundBorder b = BorderFactory.createCompoundBorder();
+    b = BorderFactory.createCompoundBorder(b,
+            BorderFactory.createMatteBorder(2, 2, 2, 2, new Color(0, 7, 224)));
+    b = BorderFactory.createCompoundBorder(b,
+            BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    textField.setBorder(b);
+
+
     return super.getTableCellEditorComponent(table, rawContents, isSelected, row, column);
   }
 
@@ -73,5 +89,9 @@ public class WorksheetCellEditor extends DefaultCellEditor {
   public void selectAll() {
     this.textField.selectAll();
     System.out.println("Text selected");
+  }
+
+  public int getWidth() {
+    return width;
   }
 }

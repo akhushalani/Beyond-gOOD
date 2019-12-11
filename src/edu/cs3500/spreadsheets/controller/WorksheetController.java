@@ -307,6 +307,7 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
     }
   }
 
+  @Override
   public void createGraph(GraphType type) {
     WorksheetAdapter modelAdapter = new WorksheetAdapter(model);
     BeyondGoodGraph graph = new BeyondGoodGraph(modelAdapter,
@@ -345,6 +346,7 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
     this.editFieldHasFocus = false;
   }
 
+  // A listener for column resizing.
   private class ColumnWidthListener implements TableColumnModelListener {
 
     @Override
@@ -377,7 +379,8 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
     }
   }
 
-  public final class RowHeightListener extends MouseInputAdapter {
+  // A listener for row resizing.
+  private class RowHeightListener extends MouseInputAdapter {
     private Cursor resizeCursor = Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR);
 
     private int mouseYDelta;
@@ -455,6 +458,7 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
     }
   }
 
+  // A listener for horizontal scrolling.
   private class HorizontalScrollListener implements AdjustmentListener {
     @Override
     public void adjustmentValueChanged(AdjustmentEvent e) {
@@ -467,6 +471,7 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
     }
   }
 
+  // A listener for vertical scrolling.
   private class VerticalScrollListener implements AdjustmentListener {
     @Override
     public void adjustmentValueChanged(AdjustmentEvent e) {
@@ -475,11 +480,11 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
               && e.getValue() == view.getVerticalScrollBar().getMaximum() - vertExtent) {
         view.fireScrollDown();
         view.resizeCells();
-        //System.out.println("# of rows: " + view.getTable().getRowCount());
       }
     }
   }
 
+  // A listener for when the editor view is resized.
   private class FrameResizeListener extends ComponentAdapter {
     @Override
     public void componentResized(ComponentEvent e) {
@@ -494,10 +499,11 @@ public class WorksheetController implements ActionListener, CellEditorListener, 
     }
   }
 
+  // A listener object for when graph windows are closed.
   private class GraphManager implements WindowListener {
     private BeyondGoodGraph graph;
 
-    public GraphManager(BeyondGoodGraph graph) {
+    GraphManager(BeyondGoodGraph graph) {
       this.graph = graph;
     }
 

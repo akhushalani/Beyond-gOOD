@@ -119,33 +119,91 @@ public interface WorksheetView {
    */
   void setCellEditorText(String text);
 
+  /**
+   * Gets the fixed row header table in the worksheet view.
+   * @return the row header JTable
+   */
   RowHeaderTable getRowHeader();
 
+  /**
+   * Gets the main data table in the worksheet view.
+   * @return the main JTable
+   */
   RowHeaderTable getTable();
 
+  /**
+   * Gets the minimum row height of the table.
+   * @return the minimum row height
+   */
   int getMinRowHeight();
 
+  /**
+   * Gets the initial column width of the columns in the view.
+   * @return the default column width
+   */
   int getDefaultColumnWidth();
 
+  /**
+   * Resizes all of the cells in the view as specified by the model.
+   */
   void resizeCells();
 
+  /**
+   * Gets the horizontal scroll bar in the view.
+   * @return the horizontal JScrollBar
+   */
   JScrollBar getHorizontalScrollBar();
 
+  /**
+   * Gets the vertical scroll bar in the view.
+   * @return the vertical JScrollBar
+   */
   JScrollBar getVerticalScrollBar();
 
+  /**
+   * To be called when the horizontal scroll bar is scrolled all the way to the right.
+   */
   void fireScrollRight();
 
+  /**
+   * To be called when the vertical scroll bar is scrolled all the way down.
+   */
   void fireScrollDown();
 
+  /**
+   * Adjusts the number of cells displayed to the frame.
+   * @param colWidth the minimum column width
+   * @param rowHeight the minimum row height
+   */
   void adjustToFrame(int colWidth, int rowHeight);
 
+  /**
+   * Determines whether the table is wide enough to fill the frame.
+   * @return whether the table width is sufficient for the frame
+   */
   boolean tableWidthSufficient();
 
+  /**
+   * Adds a graph to the view.
+   * @param graph the graph object to add
+   */
   void addGraph(BeyondGoodGraph graph);
 
+  /**
+   * Removes a graph from the view.
+   * @param graph the graph object to remove
+   */
   void removeGraph(BeyondGoodGraph graph);
 
+  /**
+   * Gets the map of graphs in the view.
+   * @return a map of graph keys to graph objects
+   */
   HashMap<String, BeyondGoodGraph> getGraphs();
 
+  /**
+   * Updates a graph in the view.
+   * @param key the key of the graph to update
+   */
   void updateGraph(String key);
 }

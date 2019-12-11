@@ -5,6 +5,9 @@ import java.util.List;
 import edu.cs3500.spreadsheets.BeyondGood;
 import edu.cs3500.spreadsheets.model.Coord;
 
+/**
+ * A visitor for getting a Coord from an SSymbol.
+ */
 public class CoordSexpVisitor implements SexpVisitor<Coord> {
   @Override
   public Coord visitBoolean(boolean b) {

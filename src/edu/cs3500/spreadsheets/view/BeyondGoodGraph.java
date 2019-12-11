@@ -26,7 +26,7 @@ import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.GraphType;
 import edu.cs3500.spreadsheets.model.WorksheetAdapter;
 
-public class BeyondGoodGraph {
+public class BeyondGoodGraph implements GraphView {
   private WorksheetAdapter model;
   private Coord start;
   private Coord end;
@@ -184,9 +184,9 @@ public class BeyondGoodGraph {
     plot.setDomainCrosshairPaint(Color.GRAY);
   }
 
-  public void createScatterPlot() {
+  private void createScatterPlot() {
     if (end.col - start.col < 1) {
-      throw new IllegalArgumentException("Data must be in two columns.");
+      throw new IllegalArgumentException("Data must be in at least two columns.");
     }
     ArrayList<String> series = new ArrayList<>();
     for (int i = start.col + 1; i <= end.col; i++) {
@@ -220,6 +220,7 @@ public class BeyondGoodGraph {
     plot.setOutlinePaint(Color.WHITE);
   }
 
+  @Override
   public void updateGraph() {
     createGraph(type);
     if (graph != null) {
@@ -227,6 +228,7 @@ public class BeyondGoodGraph {
     }
   }
 
+  @Override
   public void renderGraph() {
     if (graph != null) {
       chartPanel = new ChartPanel(graph);
@@ -237,6 +239,7 @@ public class BeyondGoodGraph {
     }
   }
 
+  @Override
   public ArrayList<Coord> getRange() {
     ArrayList<Coord> range = new ArrayList<>();
     range.add(start);
@@ -245,14 +248,17 @@ public class BeyondGoodGraph {
     return range;
   }
 
+  @Override
   public void addWindowListener(WindowListener listener) {
     frame.addWindowListener(listener);
   }
 
+  @Override
   public GraphType getType() {
     return type;
   }
 
+  @Override
   public String getKey() {
     return start.toString() + ":" + end.toString() + "_" + type.name();
   }

@@ -2,9 +2,16 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.List;
 
+/**
+ * A visitor for getting a double from an SNumber.
+ */
 public class DoubleSexpVisitor implements SexpVisitor<Double> {
   private boolean row;
 
+  /**
+   * A public constructor for a DoubleSexpVisitor.
+   * @param row whether the double is for a row size.
+   */
   public DoubleSexpVisitor(boolean row) {
     this.row = row;
   }

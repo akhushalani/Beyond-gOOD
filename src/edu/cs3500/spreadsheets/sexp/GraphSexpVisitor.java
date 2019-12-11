@@ -7,10 +7,17 @@ import java.util.List;
 import edu.cs3500.spreadsheets.model.Coord;
 import edu.cs3500.spreadsheets.model.GraphType;
 
+/**
+ * A visitor that accumulates a map of graphs for the model.
+ */
 public class GraphSexpVisitor
         implements SexpVisitor<HashMap<ArrayList<Coord>, ArrayList<GraphType>>> {
   private HashMap<ArrayList<Coord>, ArrayList<GraphType>> graphs;
 
+  /**
+   * Public constructor for the GraphSexpVisitor class.
+   * @param graphs the accumulated map of graphs to add to
+   */
   public GraphSexpVisitor(HashMap<ArrayList<Coord>, ArrayList<GraphType>> graphs) {
     this.graphs = graphs;
   }

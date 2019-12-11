@@ -4,6 +4,9 @@ import java.util.List;
 
 import edu.cs3500.spreadsheets.model.GraphType;
 
+/**
+ * A visitor to return a GraphType from an SSymbol.
+ */
 public class GraphTypeSexpVisitor implements SexpVisitor<GraphType> {
 
   @Override

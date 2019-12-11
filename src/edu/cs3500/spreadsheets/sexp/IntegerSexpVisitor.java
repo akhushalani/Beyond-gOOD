@@ -2,6 +2,9 @@ package edu.cs3500.spreadsheets.sexp;
 
 import java.util.List;
 
+/**
+ * A visitor for returning an integer from an SNumber.
+ */
 public class IntegerSexpVisitor implements SexpVisitor<Integer> {
   @Override
   public Integer visitBoolean(boolean b) {

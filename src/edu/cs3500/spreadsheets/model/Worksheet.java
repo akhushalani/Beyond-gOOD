@@ -124,21 +124,61 @@ public interface Worksheet {
    */
   void setAttributes(Coord coord, CellAttributes attributeSet);
 
+  /**
+   * Resizes a row.
+   * @param row the row being resized
+   * @param size the ratio the row has been resized by compared to the default row height.
+   */
   void resizeRow(int row, double size);
 
+  /**
+   * Resizes a column.
+   * @param column the column being resized
+   * @param size the ratio the column has been resized by compared to the default column width.
+   */
   void resizeColumn(int column, double size);
 
+  /**
+   * Gets the row sizes in a worksheet.
+   * @return a map of row indexes to their size ratios
+   */
   HashMap<Integer, Double> getRowSizes();
 
+  /**
+   * Gets the column sizes in a worksheet.
+   * @return a map of column indexes to their size ratios
+   */
   HashMap<Integer, Double> getColumnSizes();
 
+  /**
+   * Adds a graph to the worksheet.
+   * @param start the top left Coord of the data being graphed
+   * @param end the bottom right Coord of the data being graphed
+   * @param graph the type of graph being added
+   */
   void addGraph(Coord start, Coord end, GraphType graph);
 
+  /**
+   * Removes a graph from the worksheet.
+   * @param range a list of the top left and bottom right Coords of the graph
+   * @param graph the graph type
+   */
   void removeGraph(ArrayList<Coord> range, GraphType graph);
 
+  /**
+   * Gets all the graphs that should be updated after a data change.
+   * @return the list of graph keys to be updated
+   */
   ArrayList<String> getGraphsToUpdate();
 
+  /**
+   * Clears the list of graphs to update.
+   */
   void clearGraphsToUpdate();
 
+  /**
+   * Gets the map of graphs in the worksheet.
+   * @return a map of Coord ranges to lists of graph types found at those ranges
+   */
   HashMap<ArrayList<Coord>, ArrayList<GraphType>> getGraphs();
 }
